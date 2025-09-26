@@ -1,5 +1,5 @@
 from threading import Thread
-import paho.mqtt.client as paho
+import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 import json
 import can
@@ -71,7 +71,7 @@ class MQTT_to_CAN (Thread): # Conversion from MQTT to CAN
             print("CAN message failed")    
         
     def run (self):
-        client = paho.Client()
+        client = mqtt.Client(callback_api_version=mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5)
         
         # difined function for MQTT        
         client.on_connect = self.on_connect
@@ -206,7 +206,10 @@ if __name__ == '__main__':
     can_filters = [
     {"can_id": 0x1310, "can_mask": 0x0, "extended": False},
     ]
+
+
     bus = can.interface.Bus(bustype='socketcan', channel='can0', bitrate=500000, filter=can_filters)
+    
     path = Path.cwd()/'Test/Interface_MQTT_CAN/conversion.json' # MQTT/CAN transltion json file
     
     r_mqtt = MQTT_to_CAN(bus, path, "localhost")
