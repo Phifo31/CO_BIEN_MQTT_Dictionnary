@@ -85,10 +85,7 @@
             "arbitration_id": 1510,
             "topic": "imu/config",
             "data": {
-                "qw": "int16",
-                "qx": "int16",
-                "qy": "int16",
-                "qz": "int16"
+                "isImmobile": "bool"
             }
         },
         "update": {
