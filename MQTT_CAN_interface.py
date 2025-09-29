@@ -249,7 +249,7 @@ if __name__ == '__main__':
     from pathlib import Path
     import os
     
-    # For software testing - use virtual CAN interface --ok
+    # For software testing - use virtual CAN interface
     print("Initializing virtual CAN interface for software testing...")
     
     can_filters = [
