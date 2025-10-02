@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 # Path to your JSON file
-path_example = Path.cwd() / '/home/iris/Desktop/CoBien/CoBien_MQTT_Dictionnary/CO_BIEN_MQTT_Dictionnary/mqtt_examples/led.json'
+path_example = Path.cwd() / '/home/iris/Desktop/CO_BIEN_MQTT_Dictionnary/mqtt_examples/led.json'
 
 # Create client with callback API version 2 (current version)
 client = mqtt.Client(callback_api_version=mqtt.CallbackAPIVersion.VERSION2, protocol=mqtt.MQTTv5)

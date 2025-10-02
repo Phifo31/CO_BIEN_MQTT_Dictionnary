@@ -57,6 +57,9 @@ class MQTT_to_CAN(Thread):  # Conversion from MQTT to CAN
                         payload.append(int(value[5:7], 16))
                     elif conv[topic[0]][topic[1]]['data'][keys[i]] == "int":
                         payload.append(value)
+                    elif conv[topic[0]][topic[1]]['data'][keys[i]] == "int16":
+                        payload.append((value >> 8) & 0xFF)  # octet haut
+                        payload.append(value & 0xFF)         # octet bas
                     elif conv[topic[0]][topic[1]]['data'][keys[i]] == "bool":  # for boolean variable : 1=True and 0=False
                         if value:
                             payload.append(1)
@@ -109,6 +112,10 @@ class MQTT_to_CAN(Thread):  # Conversion from MQTT to CAN
             client.subscribe("proximity/update", qos=1)
             client.subscribe("imu/config", qos=1)
             client.subscribe("imu/update", qos=1)
+            client.subscribe("threshold/config", qos=1)
+            client.subscribe("threshold/update", qos=1)
+            client.subscribe("time/config", qos=1)
+            client.subscribe("time/update", qos=1)
 
             while not self.disconnect[0]:
                 client.loop(timeout=1.0)
@@ -261,7 +268,7 @@ if __name__ == '__main__':
     print("Virtual CAN interface initialized successfully")
 
     # Update path to your actual conversion file
-    path = Path.cwd() / '/home/iris/Desktop/CoBien/CoBien_MQTT_Dictionnary/CO_BIEN_MQTT_Dictionnary/conversion.json'  # MQTT/CAN translation json file
+    path = Path.cwd() / '/home/iris/Desktop/CO_BIEN_MQTT_Dictionnary/mqtt_examples/imu_changes.json'  # MQTT/CAN translation json file
     
 
     if not path.exists():

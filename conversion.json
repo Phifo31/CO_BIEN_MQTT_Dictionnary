@@ -80,6 +80,7 @@
         }
     },
 
+
     "imu": {
         "config": {
             "arbitration_id": 1510,
@@ -95,8 +96,39 @@
                 
             }
         }
+    },
+
+    "threshold": {
+        "config": {
+            "arbitration_id": 1610,
+            "topic": "threshold/config",
+            "data": {
+                "MOTION_THRESHOLD": "float"
+            }
+        },
+        "update": {
+            "arbitration_id": 1620,
+            "topic": "threshold/update",
+            "data": {
+                
+            }
+        }
+    },
+
+    "time": {
+        "config": {
+            "arbitration_id": 1710,
+            "topic": "time/config",
+            "data": {
+                "IMMOBILE_TIME_MS": "int16"
+            }
+        },
+        "update": {
+            "arbitration_id": 1720,
+            "topic": "time/update",
+            "data": {
+                
+            }
+        }
     }
 }
-   
-
-  
