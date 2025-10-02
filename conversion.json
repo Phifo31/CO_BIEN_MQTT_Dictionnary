@@ -103,7 +103,7 @@
             "arbitration_id": 1610,
             "topic": "threshold/config",
             "data": {
-                "MOTION_THRESHOLD": "float"
+                "MOTION_THRESHOLD": "int16"
             }
         },
         "update": {
