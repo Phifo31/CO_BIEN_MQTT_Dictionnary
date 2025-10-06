@@ -39,7 +39,8 @@ int main(int argc, char **argv) {
   mqtt_ctx_t mqtt = (mqtt_ctx_t){0};
   if (!mqtt_init(&mqtt, &table, mqtt_host, mqtt_port, /*keepalive*/60)) return 1;
   /* (optionnel) régler les QoS (défaut 1/1) */
-  mqtt_set_qos(&mqtt, /*qos_sub*/1, /*qos_pub*/1);
+  mqtt_set_qos(&mqtt, 1, 1);
+
 
   /* 3) CAN (SocketCAN en prod, FAKE_CAN si compilé ainsi) */
   can_ctx_t can = (can_ctx_t){0};
