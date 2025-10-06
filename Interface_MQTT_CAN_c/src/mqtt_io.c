@@ -18,31 +18,41 @@ static int ends_with(const char *s, const char *suffix) {
   return (ls >= lt) && (strcmp(s + (ls - lt), suffix) == 0);
 }
 
-/* topic "base" = topic sans le suffixe "/cmd" */
-static void topic_base_from_cmd(const char *cmd_topic, char *base, size_t base_sz) {
-  const char *suffix = "/cmd";
-  size_t L = strlen(cmd_topic);
-  size_t S = strlen(suffix);
-  if (L >= S && strcmp(cmd_topic + (L - S), suffix) == 0) {
-    size_t nb = L - S;
-    if (nb >= base_sz) nb = base_sz - 1;
-    memcpy(base, cmd_topic, nb);
-    base[nb] = '\0';
-  } else {
-    snprintf(base, base_sz, "%s", cmd_topic);
+/* Déduit le "topic de base" accepté côté entrée:
+   - "<base>/state"  -> ignoré (base = "")
+   - "<base>/cmd"    -> retourne <base>
+   - "<base>"        -> retourne <base> (compat ancien format)
+*/
+static void topic_base_from_input(const char *input, char *base, size_t base_sz) {
+  if (!input || !base || base_sz == 0) return;
+  base[0] = '\0';
+
+  if (ends_with(input, "/state")) {
+    /* On n'ingère jamais /state côté MQTT->CAN */
+    return;
   }
+  if (ends_with(input, "/cmd")) {
+    size_t L = strlen(input), S = 4; /* "/cmd" */
+    size_t nb = (L >= S) ? (L - S) : 0;
+    if (nb >= base_sz) nb = base_sz - 1;
+    memcpy(base, input, nb);
+    base[nb] = '\0';
+    return;
+  }
+  /* Sinon, on considère que c'est le topic de base (ancien format) */
+  snprintf(base, base_sz, "%s", input);
 }
 
-/* topic state = base + "/state" */
+/* Construit "<base>/state" (pour CAN->MQTT) */
 static void topic_state_from_base(const char *base, char *state, size_t state_sz) {
   const char *suf = "/state";
+  if (!base || !state || state_sz == 0) return;
   if (snprintf(state, state_sz, "%s%s", base, suf) >= (int)state_sz) {
-    /* tronqué, mais évite overflow */
     state[state_sz - 1] = '\0';
   }
 }
 
-/* ====== userdata passé aux callbacks (défini côté main, ici juste la forme) ====== */
+/* ====== userdata passé aux callbacks (même layout que dans main.c) ====== */
 typedef struct user_bundle_s {
   const table_t *table;
   can_ctx_t     *can;
@@ -62,7 +72,7 @@ static void on_disconnect(struct mosquitto *mosq, void *userdata, int rc) {
   LOGW("MQTT déconnecté rc=%d", rc);
 }
 
-/* Réception MQTT → CAN : on NE traite QUE les topics finissant par "/cmd" */
+/* Réception MQTT → CAN : accepte "<base>" ET "<base>/cmd", ignore "<base>/state" */
 static void on_message(struct mosquitto *mosq, void *userdata, const struct mosquitto_message *msg) {
   (void)mosq;
   if (!userdata || !msg || !msg->topic) return;
@@ -70,19 +80,20 @@ static void on_message(struct mosquitto *mosq, void *userdata, const struct mosq
   user_bundle_t *ub = (user_bundle_t*)userdata;
   if (!ub->table || !ub->can) return;
 
-  /* Filtre strict: uniquement ".../cmd" (évite toute boucle) */
-  if (!ends_with(msg->topic, "/cmd")) return;
-
   char base_topic[256];
-  topic_base_from_cmd(msg->topic, base_topic, sizeof(base_topic));
-
-  const entry_t *e = table_find_by_topic(ub->table, base_topic);
-  if (!e) {
-    LOGW("Topic inconnu (cmd): %s (base=%s)", msg->topic, base_topic);
+  topic_base_from_input(msg->topic, base_topic, sizeof(base_topic));
+  if (base_topic[0] == '\0') {
+    /* /state (ou invalide) -> ignoré pour éviter tout écho */
     return;
   }
 
-  /* Parse JSON */
+  const entry_t *e = table_find_by_topic(ub->table, base_topic);
+  if (!e) {
+    LOGW("Topic inconnu (mqtt->can): %s (base=%s)", msg->topic, base_topic);
+    return;
+  }
+
+  /* Parse payload JSON */
   cJSON *in = NULL;
   if (msg->payload && msg->payloadlen > 0) {
     char *buf = (char*)malloc((size_t)msg->payloadlen + 1);
@@ -94,7 +105,7 @@ static void on_message(struct mosquitto *mosq, void *userdata, const struct mosq
   }
   if (!in) { LOGW("Payload JSON invalide sur %s", msg->topic); return; }
 
-  /* Pack → 8 octets */
+  /* Pack -> 8 octets */
   uint8_t out8[8] = {0};
   bool ok_pack = pack_payload(out8, e, in);
   cJSON_Delete(in);
