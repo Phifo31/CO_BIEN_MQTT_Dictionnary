@@ -12,36 +12,50 @@
 static volatile int g_running = 1;
 static void on_sigint(int sig){ (void)sig; g_running = 0; }
 
+/* Bundle passé au client MQTT (utilisé par on_message) */
+typedef struct user_bundle_s {
+  const table_t *table;
+  can_ctx_t     *can;
+  mqtt_ctx_t    *mqtt;  /* optionnel, pratique */
+} user_bundle_t;
+
 int main(int argc, char **argv) {
   const char *cfg_path = (argc>1) ? argv[1] : "config/conversion.json";
   const char *mqtt_host= "localhost";
   int         mqtt_port= 1883;
-  const char *ifname   = "can0";  // change en "can0" si bus réel
+  const char *ifname   = "can0";   // "can0" pour bus réel, "vcan0" si bus virtuel
 
   signal(SIGINT,  on_sigint);
   signal(SIGTERM, on_sigint);
 
-  table_t table = {0};
+  /* 1) Charger la table (conversion.json) */
+  table_t table = (table_t){0};
   if (!table_load(&table, cfg_path)) {
     LOGE("Echec chargement table");
     return 1;
   }
 
-  mqtt_ctx_t mqtt = {0};
-  if (!mqtt_init(&mqtt, &table, mqtt_host, mqtt_port, /*QoS*/1)) return 1;
+  /* 2) MQTT */
+  mqtt_ctx_t mqtt = (mqtt_ctx_t){0};
+  if (!mqtt_init(&mqtt, &table, mqtt_host, mqtt_port, /*keepalive*/60)) return 1;
+  /* (optionnel) régler les QoS (défaut 1/1) */
+  mqtt_set_qos(&mqtt, /*qos_sub*/1, /*qos_pub*/1);
 
-  // associer userdata: table+can pour la callback on_message
-  can_ctx_t can = {0};
+  /* 3) CAN (SocketCAN en prod, FAKE_CAN si compilé ainsi) */
+  can_ctx_t can = (can_ctx_t){0};
   if (!can_init(&can, &table, &mqtt, ifname)) return 1;
 
-  typedef struct { const table_t *table; can_ctx_t *can; } user_bundle_t;
-  user_bundle_t ub = { .table = &table, .can = &can };
+  /* 4) Lier les modules pour la callback MQTT -> CAN */
+  user_bundle_t ub = { .table = &table, .can = &can, .mqtt = &mqtt };
   mqtt_set_user_data(&mqtt, &ub);
 
-  // s'abonner
-  mqtt_subscribe_all(&mqtt); // ici wildcard '#', sinon itérer les topics exacts
+  /* 5) S'abonner (large) — on_message ne TRAITE que les topics finissant par "/cmd" */
+  if (!mqtt_subscribe_all(&mqtt)) {
+    LOGE("Subscribe échoué");
+    return 1;
+  }
 
-  // thread RX CAN
+  /* 6) Thread de réception CAN (CAN -> MQTT) */
   pthread_t th_rx;
   pthread_create(&th_rx, NULL, can_rx_loop, &can);
 
@@ -49,8 +63,8 @@ int main(int argc, char **argv) {
   while (g_running) { sleep(1); }
 
   LOGI("Arrêt…");
-  // teardown
-  pthread_cancel(th_rx); // ou meilleur: utiliser un flag + read timeouts
+  /* Teardown */
+  pthread_cancel(th_rx);            /* simple; sinon, prévoir un flag d'arrêt côté can_rx_loop */
   pthread_join(th_rx, NULL);
   can_cleanup(&can);
   mqtt_cleanup(&mqtt);
