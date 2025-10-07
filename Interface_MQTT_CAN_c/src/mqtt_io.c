@@ -233,3 +233,9 @@ void mqtt_cleanup(mqtt_ctx_t *ctx) {
   }
   mosquitto_lib_cleanup();
 }
+
+#ifdef UNIT_TEST
+void mqtt__get_on_message_cb(void (**cb)(struct mosquitto*, void*, const struct mosquitto_message*)) {
+  *cb = on_message;
+}
+#endif

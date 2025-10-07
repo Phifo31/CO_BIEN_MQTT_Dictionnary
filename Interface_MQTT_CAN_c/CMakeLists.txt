@@ -1,21 +1,37 @@
 cmake_minimum_required(VERSION 3.15)
 project(cobien_bridge C)
 
+# Build type & warnings
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "" FORCE)
+endif()
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
-add_compile_options(-Wall -Wextra -Wpedantic -O2)
+add_compile_options(-Wall -Wextra -Wpedantic)
 
-# libmosquitto (sudo apt install libmosquitto-dev)
-find_library(MOSQUITTO_LIB mosquitto)
-if (NOT MOSQUITTO_LIB)
-  message(FATAL_ERROR "libmosquitto introuvable. Installe libmosquitto-dev.")
+# Sanitizers activables en Debug/RelWithDebInfo
+option(ENABLE_ASAN  "AddressSanitizer" ON)
+option(ENABLE_UBSAN "UndefinedBehaviorSanitizer" ON)
+if(CMAKE_BUILD_TYPE MATCHES "Debug|RelWithDebInfo")
+  if(ENABLE_ASAN)
+    add_compile_options(-fsanitize=address)
+    add_link_options(-fsanitize=address)
+  endif()
+  if(ENABLE_UBSAN)
+    add_compile_options(-fsanitize=undefined)
+    add_link_options(-fsanitize=undefined)
+  endif()
 endif()
 
-# Option backend CAN simulé (FIFOs)
-option(FAKE_CAN "Use FIFO fake CAN backend instead of SocketCAN" OFF)
-
+# Includes
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
+# Trouver libmosquitto
+find_library(MOSQUITTO_LIB mosquitto REQUIRED)
+# Trouver cJSON (paquet libcjson-dev OU install source /usr/local)
+find_library(CJSON_LIB cjson REQUIRED)
+
+# Binaire principal
 add_executable(cobien-bridge
   src/main.c
   src/pack.c
@@ -23,22 +39,11 @@ add_executable(cobien-bridge
   src/mqtt_io.c
   src/can_io.c
 )
-
-# Passe le define au code si tu fais: cmake -DFAKE_CAN=ON ..
-if(FAKE_CAN)
-  target_compile_definitions(cobien-bridge PRIVATE FAKE_CAN=1)
-endif()
-
-# Liens
-# - mosquitto (MQTT)
-# - cjson (sudo apt install libcjson-dev)
-# - pthread (threads)
 target_link_libraries(cobien-bridge
   ${MOSQUITTO_LIB}
-  cjson
+  ${CJSON_LIB}
   pthread
 )
 
-# Installation simple
-install(TARGETS cobien-bridge RUNTIME DESTINATION bin)
-install(FILES config/conversion.json DESTINATION /etc/cobien/)
+enable_testing()
+add_subdirectory(tests)

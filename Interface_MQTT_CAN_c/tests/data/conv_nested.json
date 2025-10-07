@@ -1,0 +1,3 @@
+{ "system": { "devices": [
+  { "topic": "led/config", "arbitration_id": "0x51E", "data": { "fields": [] } }
+]}}
