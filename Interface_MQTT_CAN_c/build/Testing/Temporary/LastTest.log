@@ -1,22 +1,22 @@
-Start testing: Oct 07 16:41 CEST
+Start testing: Oct 07 17:11 CEST
 ----------------------------------------------------------
 1/4 Testing: test_table
 1/4 Test: test_table
 Command: "/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests/test_table"
 Directory: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c
-"test_table" start time: Oct 07 16:41 CEST
+"test_table" start time: Oct 07 17:11 CEST
 Output:
 ----------------------------------------------------------
 [==========] Running 3 test(s).
 [ RUN      ] test_table_load_ok
-[2025-10-07 16:41:24] [INFO] Table chargée: 13 topics, 13 IDs
+[2025-10-07 17:11:22] [INFO] Table chargée: 13 topics, 13 IDs
 [       OK ] test_table_load_ok
 [ RUN      ] test_table_missing_fields
-[2025-10-07 16:41:24] [INFO] Table chargée: 0 topics, 0 IDs
+[2025-10-07 17:11:22] [INFO] Table chargée: 0 topics, 0 IDs
 [       OK ] test_table_missing_fields
 [ RUN      ] test_table_nested_topic
-[2025-10-07 16:41:24] [WARN] Champ ignoré (type non supporté) : fields
-[2025-10-07 16:41:24] [INFO] Table chargée: 1 topics, 1 IDs
+[2025-10-07 17:11:22] [WARN] Champ ignoré (type non supporté) : fields
+[2025-10-07 17:11:22] [INFO] Table chargée: 1 topics, 1 IDs
 [       OK ] test_table_nested_topic
 [==========] 3 test(s) run.
 [  PASSED  ] 3 test(s).
@@ -24,7 +24,7 @@ Output:
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"test_table" end time: Oct 07 16:41 CEST
+"test_table" end time: Oct 07 17:11 CEST
 "test_table" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -32,221 +32,556 @@ Test Passed.
 2/4 Test: test_pack
 Command: "/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests/test_pack"
 Directory: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c
-"test_pack" start time: Oct 07 16:41 CEST
+"test_pack" start time: Oct 07 17:11 CEST
 Output:
 ----------------------------------------------------------
-[==========] Running 3 test(s).
+[==========] Running 5 test(s).
 [ RUN      ] test_pack_roundtrip_led_config
-[2025-10-07 16:41:24] [INFO] Table chargée: 13 topics, 13 IDs
+[2025-10-07 17:11:22] [INFO] Table chargée: 13 topics, 13 IDs
 [       OK ] test_pack_roundtrip_led_config
-[ RUN      ] test_pack_int16_endian_limits
-[  ERROR   ] --- 0xff != 0x7fff
-[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:56: error: Failure!
-[2025-10-07 16:41:24] [INFO] Table chargée: 13 topics, 13 IDs
-[  FAILED  ] test_pack_int16_endian_limits
+[ RUN      ] test_pack_onebyte_bounds
+[  ERROR   ] --- pack_payload(b, e, too_big)
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:66: error: Failure!
+[2025-10-07 17:11:22] [INFO] Table chargée: 13 topics, 13 IDs
+[  FAILED  ] test_pack_onebyte_bounds
 [ RUN      ] test_pack_enum_invalid
-[2025-10-07 16:41:24] [INFO] Table chargée: 13 topics, 13 IDs
-[2025-10-07 16:41:24] [WARN] Valeur enum inconnue 'BLINKXX' pour mode
+[2025-10-07 17:11:22] [INFO] Table chargée: 13 topics, 13 IDs
+[2025-10-07 17:11:22] [WARN] Valeur enum inconnue 'BLINKXX' pour mode
 [       OK ] test_pack_enum_invalid
-[==========] 3 test(s) run.
+[ RUN      ] test_pack_color_invalid
+[  ERROR   ] --- pack_payload(b, e, badhex)
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:106: error: Failure!
+[2025-10-07 17:11:22] [INFO] Table chargée: 13 topics, 13 IDs
+[2025-10-07 17:11:22] [WARN] Format hex invalide pour color
+[  FAILED  ] test_pack_color_invalid
+[ RUN      ] test_pack_int16_autoskip
+[  ERROR   ] --- 0xff != 0x7fff
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:129: error: Failure!
+[2025-10-07 17:11:22] [INFO] Table chargée: 13 topics, 13 IDs
+[  FAILED  ] test_pack_int16_autoskip
+[==========] 5 test(s) run.
 [  PASSED  ] 2 test(s).
-[  FAILED  ] 1 test(s), listed below:
-[  FAILED  ] test_pack_int16_endian_limits
+[  FAILED  ] 3 test(s), listed below:
+[  FAILED  ] test_pack_onebyte_bounds
+[  FAILED  ] test_pack_color_invalid
+[  FAILED  ] test_pack_int16_autoskip
 
- 1 FAILED TEST(S)
+ 3 FAILED TEST(S)
 
 =================================================================
-==20013==ERROR: LeakSanitizer: detected memory leaks
+==20926==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 128 byte(s) in 2 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x71eadb4c1c26 in cJSON_ParseWithLengthOpts (/lib/x86_64-linux-gnu/libcjson.so.1+0x3c26)
 
 Direct leak of 64 byte(s) in 1 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x784795685c12 in cJSON_CreateObject (/lib/x86_64-linux-gnu/libcjson.so.1+0x4c12)
-    #2 0x5e30ceaa31f1 in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:55
-    #3 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x71eadb4c2c12 in cJSON_CreateObject (/lib/x86_64-linux-gnu/libcjson.so.1+0x4c12)
+    #2 0x611cf78b5b6a in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:127
+    #3 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 936 byte(s) in 13 object(s) allocated from:
-    #0 0x784794cb4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
-    #1 0x5e30ceaa558a in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:137
-    #2 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #6 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78bcde7 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:141
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 936 byte(s) in 13 object(s) allocated from:
-    #0 0x784794cb4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
-    #1 0x5e30ceaaa471 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:141
-    #2 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #6 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78bcde7 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:141
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 936 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78b7f00 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:137
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 936 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78b7f00 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:137
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 936 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78bcde7 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:141
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 936 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78b7f00 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:137
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 640 byte(s) in 10 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x71eadb4c1894  (/lib/x86_64-linux-gnu/libcjson.so.1+0x3894)
 
 Indirect leak of 520 byte(s) in 13 object(s) allocated from:
-    #0 0x784794cb4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
-    #1 0x5e30ceaa5262 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:115
-    #2 0x5e30ceaa556c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #3 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #5 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #6 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #7 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78b7bd8 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:115
+    #2 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #5 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #6 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #7 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 520 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78b7bd8 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:115
+    #2 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #5 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #6 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #7 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 520 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78b7bd8 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:115
+    #2 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #5 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #6 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #7 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 512 byte(s) in 1 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x5e30ceaabed8 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
-    #2 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #6 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78b9a36 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 512 byte(s) in 1 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x5e30ceaa70c0 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
-    #2 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #6 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78be84e in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 512 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78b9a36 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 512 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78be84e in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 512 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78be84e in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 512 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78b9a36 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 360 byte(s) in 6 object(s) allocated from:
-    #0 0x784794cb4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
-    #1 0x5e30ceaa4523 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
-    #2 0x5e30ceaa4f11 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
-    #3 0x5e30ceaa54e4 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x5e30ceaa556c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #9 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
+    #1 0x611cf78b6e99 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
+    #2 0x611cf78b7887 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 360 byte(s) in 6 object(s) allocated from:
+    #0 0x71eadaab4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
+    #1 0x611cf78b6e99 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
+    #2 0x611cf78b7887 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 360 byte(s) in 6 object(s) allocated from:
+    #0 0x71eadaab4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
+    #1 0x611cf78b6e99 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
+    #2 0x611cf78b7887 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 192 byte(s) in 3 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x784795685848 in cJSON_CreateNumber (/lib/x86_64-linux-gnu/libcjson.so.1+0x4848)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x71eadb4c2848 in cJSON_CreateNumber (/lib/x86_64-linux-gnu/libcjson.so.1+0x4848)
 
 Indirect leak of 173 byte(s) in 13 object(s) allocated from:
-    #0 0x784794c5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x5e30ceaa52fb in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:116
-    #2 0x5e30ceaa556c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #3 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #5 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #6 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #7 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7c71 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:116
+    #2 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #5 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #6 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #7 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 173 byte(s) in 13 object(s) allocated from:
-    #0 0x784794c5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x5e30ceaa55fa in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:138
-    #2 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #6 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7f70 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:138
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 173 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7c71 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:116
+    #2 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #5 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #6 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #7 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 173 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7c71 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:116
+    #2 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #5 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #6 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #7 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 173 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7f70 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:138
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 173 byte(s) in 13 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7f70 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:138
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 167 byte(s) in 14 object(s) allocated from:
-    #0 0x784794c5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x5e30ceaa46f2 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
-    #2 0x5e30ceaa4f11 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
-    #3 0x5e30ceaa54e4 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x5e30ceaa556c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #9 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7068 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
+    #2 0x611cf78b7887 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 167 byte(s) in 14 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7068 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
+    #2 0x611cf78b7887 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 167 byte(s) in 14 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7068 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
+    #2 0x611cf78b7887 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 114 byte(s) in 14 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x71eadb4c0361  (/lib/x86_64-linux-gnu/libcjson.so.1+0x2361)
 
 Indirect leak of 96 byte(s) in 4 object(s) allocated from:
-    #0 0x784794cb4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
-    #1 0x5e30ceaa4987 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:66
-    #2 0x5e30ceaa4f52 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
-    #3 0x5e30ceaa54e4 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x5e30ceaa556c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #9 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78b72fd in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:66
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 96 byte(s) in 4 object(s) allocated from:
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78b72fd in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:66
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 96 byte(s) in 4 object(s) allocated from:
+    #0 0x71eadaab4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x611cf78b72fd in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:66
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 64 byte(s) in 1 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x5e30ceaab950 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
-    #2 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #6 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78b94ae in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 64 byte(s) in 1 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x5e30ceaa6b38 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
-    #2 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #6 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x71eadb4c2928 in cJSON_CreateString (/lib/x86_64-linux-gnu/libcjson.so.1+0x4928)
 
 Indirect leak of 64 byte(s) in 1 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x784795685928 in cJSON_CreateString (/lib/x86_64-linux-gnu/libcjson.so.1+0x4928)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x71eadb4c2928 in cJSON_CreateString (/lib/x86_64-linux-gnu/libcjson.so.1+0x4928)
+    #2 0x301756dd663b0fff  (<unknown module>)
 
 Indirect leak of 64 byte(s) in 1 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x784795685928 in cJSON_CreateString (/lib/x86_64-linux-gnu/libcjson.so.1+0x4928)
-    #2 0x5be2d8baeb0ceeff  (<unknown module>)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78be2c6 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78b94ae in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78be2c6 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78b94ae in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x611cf78be2c6 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
+    #2 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #6 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 42 byte(s) in 6 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x7847956839b0  (/lib/x86_64-linux-gnu/libcjson.so.1+0x29b0)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x71eadb4c09b0  (/lib/x86_64-linux-gnu/libcjson.so.1+0x29b0)
 
 Indirect leak of 27 byte(s) in 4 object(s) allocated from:
-    #0 0x784794c5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x5e30ceaa4a20 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:67
-    #2 0x5e30ceaa4f52 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
-    #3 0x5e30ceaa54e4 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x5e30ceaa556c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #9 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7396 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:67
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 27 byte(s) in 4 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7396 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:67
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 27 byte(s) in 4 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7396 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:67
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 24 byte(s) in 1 object(s) allocated from:
-    #0 0x784794cb4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
-    #1 0x5e30ceaa4523 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
-    #2 0x5e30ceaa4f52 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
-    #3 0x5e30ceaa54e4 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x5e30ceaa556c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #9 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaab4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
+    #1 0x611cf78b6e99 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 24 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
+    #1 0x611cf78b6e99 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 24 byte(s) in 1 object(s) allocated from:
+    #0 0x71eadaab4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
+    #1 0x611cf78b6e99 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 12 byte(s) in 2 object(s) allocated from:
-    #0 0x784794c5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x5e30ceaa46f2 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
-    #2 0x5e30ceaa4f52 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
-    #3 0x5e30ceaa54e4 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x5e30ceaa556c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x5e30ceaaf4e9 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x5e30ceaafdd0 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x5e30ceaa306c in test_pack_int16_endian_limits /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44
-    #9 0x7847956904e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7068 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5a6f in test_pack_int16_autoskip /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:117
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 12 byte(s) in 2 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7068 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b5722 in test_pack_color_invalid /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:94
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+
+Indirect leak of 12 byte(s) in 2 object(s) allocated from:
+    #0 0x71eadaa5b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x611cf78b7068 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
+    #2 0x611cf78b78c8 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x611cf78b7e5a in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x611cf78b7ee2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x611cf78c1e5f in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x611cf78c2746 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x611cf78b50fb in test_pack_onebyte_bounds /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:50
+    #9 0x71eadb4cd4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 8 byte(s) in 1 object(s) allocated from:
-    #0 0x784794cb4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x7847956839b0  (/lib/x86_64-linux-gnu/libcjson.so.1+0x29b0)
-    #2 0x5be2d8baeb0ceeff  (<unknown module>)
+    #0 0x71eadaab4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x71eadb4c09b0  (/lib/x86_64-linux-gnu/libcjson.so.1+0x29b0)
+    #2 0x301756dd663b0fff  (<unknown module>)
 
-SUMMARY: AddressSanitizer: 5010 byte(s) leaked in 113 allocation(s).
+SUMMARY: AddressSanitizer: 15044 byte(s) leaked in 339 allocation(s).
 <end of output>
-Test time =   0.13 sec
+Test time =   0.12 sec
 ----------------------------------------------------------
 Test Failed.
-"test_pack" end time: Oct 07 16:41 CEST
+"test_pack" end time: Oct 07 17:11 CEST
 "test_pack" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -254,14 +589,14 @@ Test Failed.
 3/4 Test: test_mqtt_filter
 Command: "/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests/test_mqtt_filter"
 Directory: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c
-"test_mqtt_filter" start time: Oct 07 16:41 CEST
+"test_mqtt_filter" start time: Oct 07 17:11 CEST
 Output:
 ----------------------------------------------------------
 [==========] Running 1 test(s).
 [ RUN      ] test_mqtt_filter_paths
-[2025-10-07 16:41:24] [INFO] Table chargée: 13 topics, 13 IDs
-[2025-10-07 16:41:24] [INFO] MQTT->CAN OK: topic=led/config id=0x51E
-[2025-10-07 16:41:24] [INFO] MQTT->CAN OK: topic=led/config id=0x51E
+[2025-10-07 17:11:22] [INFO] Table chargée: 13 topics, 13 IDs
+[2025-10-07 17:11:22] [INFO] MQTT->CAN OK: topic=led/config id=0x51E
+[2025-10-07 17:11:22] [INFO] MQTT->CAN OK: topic=led/config id=0x51E
 [       OK ] test_mqtt_filter_paths
 [==========] 1 test(s) run.
 [  PASSED  ] 1 test(s).
@@ -269,7 +604,7 @@ Output:
 Test time =   0.01 sec
 ----------------------------------------------------------
 Test Passed.
-"test_mqtt_filter" end time: Oct 07 16:41 CEST
+"test_mqtt_filter" end time: Oct 07 17:11 CEST
 "test_mqtt_filter" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -277,15 +612,15 @@ Test Passed.
 4/4 Test: test_mqtt_publish
 Command: "/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests/test_mqtt_publish"
 Directory: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c
-"test_mqtt_publish" start time: Oct 07 16:41 CEST
+"test_mqtt_publish" start time: Oct 07 17:11 CEST
 Output:
 ----------------------------------------------------------
 [==========] Running 1 test(s).
 [ RUN      ] test_mqtt_publish_state_topic
-[2025-10-07 16:41:24] [ERR ] CAN->MQTT publish échoué topic=led/config/state
+[2025-10-07 17:11:22] [ERR ] CAN->MQTT publish échoué topic=led/config/state
 [  ERROR   ] --- mqtt_on_can_message(&m, e, b)
-[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:47: error: Failure!
-[2025-10-07 16:41:24] [INFO] Table chargée: 13 topics, 13 IDs
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:41: error: Failure!
+[2025-10-07 17:11:22] [INFO] Table chargée: 13 topics, 13 IDs
 [  FAILED  ] test_mqtt_publish_state_topic
 [==========] 1 test(s) run.
 [  PASSED  ] 0 test(s).
@@ -295,170 +630,170 @@ Output:
  1 FAILED TEST(S)
 
 =================================================================
-==20017==ERROR: LeakSanitizer: detected memory leaks
+==20930==ERROR: LeakSanitizer: detected memory leaks
 
 Indirect leak of 936 byte(s) in 13 object(s) allocated from:
-    #0 0x7eed054b4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
-    #1 0x63ad60feedee in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:137
-    #2 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #6 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x63f1ad4ffe44 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:137
+    #2 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #6 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 936 byte(s) in 13 object(s) allocated from:
-    #0 0x7eed054b4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
-    #1 0x63ad60ff3cd5 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:141
-    #2 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #6 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x63f1ad504d2b in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:141
+    #2 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #6 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 520 byte(s) in 13 object(s) allocated from:
-    #0 0x7eed054b4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
-    #1 0x63ad60feeac6 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:115
-    #2 0x63ad60feedd0 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #3 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #5 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #6 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #7 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x63f1ad4ffb1c in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:115
+    #2 0x63f1ad4ffe26 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #3 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #5 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #6 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #7 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 512 byte(s) in 1 object(s) allocated from:
-    #0 0x7eed054b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x63ad60ff573c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
-    #2 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #6 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x63f1ad506792 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
+    #2 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #6 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 512 byte(s) in 1 object(s) allocated from:
-    #0 0x7eed054b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x63ad60ff0924 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
-    #2 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #6 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x63f1ad50197a in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
+    #2 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #6 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 360 byte(s) in 6 object(s) allocated from:
-    #0 0x7eed054b4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
-    #1 0x63ad60fedd87 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
-    #2 0x63ad60fee775 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
-    #3 0x63ad60feed48 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x63ad60feedd0 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #9 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
+    #1 0x63f1ad4feddd in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
+    #2 0x63f1ad4ff7cb in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
+    #3 0x63f1ad4ffd9e in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x63f1ad4ffe26 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #9 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 173 byte(s) in 13 object(s) allocated from:
-    #0 0x7eed0545b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x63ad60feeb5f in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:116
-    #2 0x63ad60feedd0 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #3 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #5 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #6 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #7 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab26245b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x63f1ad4ffbb5 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:116
+    #2 0x63f1ad4ffe26 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #3 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #5 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #6 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #7 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 173 byte(s) in 13 object(s) allocated from:
-    #0 0x7eed0545b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x63ad60feee5e in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:138
-    #2 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #6 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab26245b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x63f1ad4ffeb4 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:138
+    #2 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #6 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 167 byte(s) in 14 object(s) allocated from:
-    #0 0x7eed0545b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x63ad60fedf56 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
-    #2 0x63ad60fee775 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
-    #3 0x63ad60feed48 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x63ad60feedd0 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #9 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab26245b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x63f1ad4fefac in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
+    #2 0x63f1ad4ff7cb in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:87
+    #3 0x63f1ad4ffd9e in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x63f1ad4ffe26 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #9 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 96 byte(s) in 4 object(s) allocated from:
-    #0 0x7eed054b4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
-    #1 0x63ad60fee1eb in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:66
-    #2 0x63ad60fee7b6 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
-    #3 0x63ad60feed48 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x63ad60feedd0 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #9 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4a57 in __interceptor_calloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:154
+    #1 0x63f1ad4ff241 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:66
+    #2 0x63f1ad4ff80c in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x63f1ad4ffd9e in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x63f1ad4ffe26 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #9 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 64 byte(s) in 1 object(s) allocated from:
-    #0 0x7eed054b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x63ad60ff51b4 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
-    #2 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #6 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x63f1ad50620a in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:143
+    #2 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #6 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 64 byte(s) in 1 object(s) allocated from:
-    #0 0x7eed054b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
-    #1 0x63ad60ff039c in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
-    #2 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #3 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #4 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #5 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #6 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4887 in __interceptor_malloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:145
+    #1 0x63f1ad5013f2 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:139
+    #2 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #3 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #4 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #5 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #6 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 27 byte(s) in 4 object(s) allocated from:
-    #0 0x7eed0545b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x63ad60fee284 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:67
-    #2 0x63ad60fee7b6 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
-    #3 0x63ad60feed48 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x63ad60feedd0 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #9 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab26245b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x63f1ad4ff2da in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:67
+    #2 0x63f1ad4ff80c in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x63f1ad4ffd9e in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x63f1ad4ffe26 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #9 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 24 byte(s) in 1 object(s) allocated from:
-    #0 0x7eed054b4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
-    #1 0x63ad60fedd87 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
-    #2 0x63ad60fee7b6 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
-    #3 0x63ad60feed48 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x63ad60feedd0 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #9 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab2624b4c38 in __interceptor_realloc ../../../../src/libsanitizer/asan/asan_malloc_linux.cpp:164
+    #1 0x63f1ad4feddd in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:53
+    #2 0x63f1ad4ff80c in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x63f1ad4ffd9e in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x63f1ad4ffe26 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #9 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 Indirect leak of 12 byte(s) in 2 object(s) allocated from:
-    #0 0x7eed0545b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
-    #1 0x63ad60fedf56 in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
-    #2 0x63ad60fee7b6 in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
-    #3 0x63ad60feed48 in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
-    #4 0x63ad60feedd0 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
-    #5 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #6 0x63ad60ff8d4d in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
-    #7 0x63ad60ff9634 in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
-    #8 0x63ad60fe9d0e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:36
-    #9 0x7eed05f7f4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
+    #0 0x7ab26245b9a7 in __interceptor_strdup ../../../../src/libsanitizer/asan/asan_interceptors.cpp:454
+    #1 0x63f1ad4fefac in entry_push_field /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:58
+    #2 0x63f1ad4ff80c in parse_data_object_into_entry /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:90
+    #3 0x63f1ad4ffd9e in try_build_entry_from_block /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:122
+    #4 0x63f1ad4ffe26 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:135
+    #5 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #6 0x63f1ad509da3 in walk_and_collect /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:150
+    #7 0x63f1ad50a68a in table_load /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c:186
+    #8 0x63f1ad4fad2e in test_mqtt_publish_state_topic /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_publish.c:26
+    #9 0x7ab262e8a4e0  (/lib/x86_64-linux-gnu/libcmocka.so.0+0x54e0)
 
 SUMMARY: AddressSanitizer: 4576 byte(s) leaked in 100 allocation(s).
 <end of output>
 Test time =   0.12 sec
 ----------------------------------------------------------
 Test Failed.
-"test_mqtt_publish" end time: Oct 07 16:41 CEST
+"test_mqtt_publish" end time: Oct 07 17:11 CEST
 "test_mqtt_publish" time elapsed: 00:00:00
 ----------------------------------------------------------
 
-End testing: Oct 07 16:41 CEST
+End testing: Oct 07 17:11 CEST
