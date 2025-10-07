@@ -1,0 +1,1 @@
+/usr/bin/cc -g -fsanitize=address -fsanitize=undefined CMakeFiles/test_mqtt_filter.dir/test_mqtt_filter.c.o CMakeFiles/test_mqtt_filter.dir/__/src/mqtt_io.c.o CMakeFiles/test_mqtt_filter.dir/__/src/table.c.o CMakeFiles/test_mqtt_filter.dir/__/src/pack.c.o -o test_mqtt_filter  -lcmocka -lcjson -lmosquitto 

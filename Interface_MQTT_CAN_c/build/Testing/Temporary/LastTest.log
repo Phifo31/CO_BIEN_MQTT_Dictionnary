@@ -1,0 +1,121 @@
+Start testing: Oct 07 16:29 CEST
+----------------------------------------------------------
+1/4 Testing: test_table
+1/4 Test: test_table
+Command: "/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests/test_table"
+Directory: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests
+"test_table" start time: Oct 07 16:29 CEST
+Output:
+----------------------------------------------------------
+[==========] Running 3 test(s).
+[ RUN      ] test_table_load_ok
+[2025-10-07 16:29:36] [ERR ] Ouvrir tests/data/conv_ok.json: No such file or directory
+[  ERROR   ] --- table_load(&t, OK)
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_table.c:16: error: Failure!
+[  FAILED  ] test_table_load_ok
+[ RUN      ] test_table_missing_fields
+[2025-10-07 16:29:36] [ERR ] Ouvrir tests/data/conv_missing_fields.json: No such file or directory
+[       OK ] test_table_missing_fields
+[ RUN      ] test_table_nested_topic
+[2025-10-07 16:29:36] [ERR ] Ouvrir tests/data/conv_nested.json: No such file or directory
+[  ERROR   ] --- table_load(&t, NEST)
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_table.c:32: error: Failure!
+[  FAILED  ] test_table_nested_topic
+[==========] 3 test(s) run.
+[  PASSED  ] 1 test(s).
+[  FAILED  ] 2 test(s), listed below:
+[  FAILED  ] test_table_load_ok
+[  FAILED  ] test_table_nested_topic
+
+ 2 FAILED TEST(S)
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Failed.
+"test_table" end time: Oct 07 16:29 CEST
+"test_table" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/4 Testing: test_pack
+2/4 Test: test_pack
+Command: "/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests/test_pack"
+Directory: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests
+"test_pack" start time: Oct 07 16:29 CEST
+Output:
+----------------------------------------------------------
+[==========] Running 3 test(s).
+[ RUN      ] test_pack_roundtrip_led_config
+[2025-10-07 16:29:36] [ERR ] Ouvrir tests/data/conv_ok.json: No such file or directory
+[  ERROR   ] --- table_load(&t, CFG)
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:16: error: Failure!
+[  FAILED  ] test_pack_roundtrip_led_config
+[ RUN      ] test_pack_int16_endian_limits
+[2025-10-07 16:29:36] [ERR ] Ouvrir tests/data/conv_ok.json: No such file or directory
+[  ERROR   ] --- table_load(&t, CFG)
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:44: error: Failure!
+[  FAILED  ] test_pack_int16_endian_limits
+[ RUN      ] test_pack_enum_invalid
+[2025-10-07 16:29:36] [ERR ] Ouvrir tests/data/conv_ok.json: No such file or directory
+[  ERROR   ] --- table_load(&t, CFG)
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_pack.c:64: error: Failure!
+[  FAILED  ] test_pack_enum_invalid
+[==========] 3 test(s) run.
+[  PASSED  ] 0 test(s).
+[  FAILED  ] 3 test(s), listed below:
+[  FAILED  ] test_pack_roundtrip_led_config
+[  FAILED  ] test_pack_int16_endian_limits
+[  FAILED  ] test_pack_enum_invalid
+
+ 3 FAILED TEST(S)
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Failed.
+"test_pack" end time: Oct 07 16:29 CEST
+"test_pack" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/4 Testing: test_mqtt_filter
+3/4 Test: test_mqtt_filter
+Command: "/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests/test_mqtt_filter"
+Directory: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests
+"test_mqtt_filter" start time: Oct 07 16:29 CEST
+Output:
+----------------------------------------------------------
+[==========] Running 1 test(s).
+[ RUN      ] test_mqtt_filter_paths
+[2025-10-07 16:29:36] [ERR ] Ouvrir tests/data/conv_ok.json: No such file or directory
+[  ERROR   ] --- table_load(&t, "tests/data/conv_ok.json")
+[   LINE   ] --- /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests/test_mqtt_filter.c:51: error: Failure!
+[  FAILED  ] test_mqtt_filter_paths
+[==========] 1 test(s) run.
+[  PASSED  ] 0 test(s).
+[  FAILED  ] 1 test(s), listed below:
+[  FAILED  ] test_mqtt_filter_paths
+
+ 1 FAILED TEST(S)
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Failed.
+"test_mqtt_filter" end time: Oct 07 16:29 CEST
+"test_mqtt_filter" time elapsed: 00:00:00
+----------------------------------------------------------
+
+Unable to find executable: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests/test_mqtt_publish
+4/4 Testing: test_mqtt_publish
+4/4 Test: test_mqtt_publish
+Command: ""
+Directory: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/tests
+"test_mqtt_publish" start time: 
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_mqtt_publish" end time: Oct 07 16:29 CEST
+"test_mqtt_publish" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 07 16:29 CEST
