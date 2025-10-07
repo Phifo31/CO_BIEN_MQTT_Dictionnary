@@ -210,7 +210,7 @@ if __name__ == '__main__':
 
     bus = can.interface.Bus(bustype='socketcan', channel='can0', bitrate=500000, filter=can_filters)
     
-    path = Path.cwd()/'Test/Interface_MQTT_CAN/conversion.json' # MQTT/CAN transltion json file
+    path = Path.cwd()/'/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/conversion.json' # MQTT/CAN transltion json file
     
     r_mqtt = MQTT_to_CAN(bus, path, "localhost")
     r_can = CAN_to_MQTT(bus, path, "localhost")
