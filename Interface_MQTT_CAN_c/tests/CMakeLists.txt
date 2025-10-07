@@ -43,8 +43,11 @@ add_executable(test_mqtt_publish
 target_link_libraries(test_mqtt_publish ${CMOCKA_LIBRARIES} cjson mosquitto)
 target_compile_definitions(test_mqtt_publish PRIVATE UNIT_TEST=1)
 # wrap du symbole pour éviter "multiple definition"
-target_link_options(test_mqtt_publish PRIVATE -Wl,--wrap=mqtt_publish_json)
+# target_link_options(test_mqtt_publish PRIVATE -Wl,--wrap=mqtt_publish_json)
 add_test(NAME test_mqtt_publish COMMAND test_mqtt_publish)
+
+target_compile_definitions(test_mqtt_publish PRIVATE UNIT_TEST=1 mqtt_publish_json=__mock_mqtt_publish_json)
+
 
 # --- IMPORTANT: faire tourner les tests depuis la racine (pour que 'tests/data/...' existe) ---
 set_tests_properties(

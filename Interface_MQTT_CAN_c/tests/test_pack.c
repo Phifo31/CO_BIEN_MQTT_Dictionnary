@@ -18,7 +18,7 @@ static const char *CFG = "tests/data/conv_ok.json";
 static cJSON* parse_or_fail(const char *s){ cJSON *o=cJSON_Parse(s); assert_non_null(o); return o; }
 static const entry_t* ensure_entry_or_skip(const table_t *t, const char *topic){
   const entry_t *e = table_find_by_topic(t, topic);
-  if(!e) skip();  // auto-skip si l’entrée n’existe pas dans la table de test
+  if(!e) skip();
   return e;
 }
 
@@ -44,14 +44,13 @@ static void test_pack_roundtrip_led_config(void **state){
   table_free(&t);
 }
 
-/* Test 2 : bornes 1 octet (auto-skip si le pack "valide" échoue → champ non 1 octet) */
+/* Test 2 : bornes 1 octet (auto-skip si la variante valide échoue) */
 static void test_pack_onebyte_bounds(void **state){
   (void)state;
   table_t t={0}; assert_true(table_load(&t, CFG));
   const entry_t *e = ensure_entry_or_skip(&t, "led/config");
 
   uint8_t b[8];
-  /* Sanity valid → si ça échoue, on ne sait pas tester proprement -> skip */
   cJSON *sanity = parse_or_fail("{\"group_id\":1,\"intensity\":128,\"color\":\"#00FDFF\",\"mode\":\"ON\",\"interval\":10}");
   if(!pack_payload(b, e, sanity)){ cJSON_Delete(sanity); table_free(&t); skip(); return; }
   cJSON_Delete(sanity);
@@ -83,8 +82,7 @@ static void test_pack_enum_invalid(void **state){
   cJSON_Delete(sanity);
 
   cJSON *bad = parse_or_fail("{\"group_id\":1,\"intensity\":128,\"color\":\"#00FDFF\",\"mode\":\"BLINKXX\",\"interval\":10}");
-  assert_false(pack_payload(b, e, bad));
-  cJSON_Delete(bad);
+  assert_false(pack_payload(b, e, bad)); cJSON_Delete(bad);
   table_free(&t);
 }
 
@@ -111,7 +109,7 @@ static void test_pack_color_invalid(void **state){
   table_free(&t);
 }
 
-/* Test 5 : int16 auto-skip (se réactive seul si un vrai champ 16 bits apparaît) */
+/* Test 5 : int16 auto-skip (se réactive seul si un vrai 16 bits apparaît) */
 static void test_pack_int16_autoskip(void **state){
   (void)state;
   table_t t={0}; assert_true(table_load(&t, CFG));
