@@ -65,6 +65,16 @@ CMAKE_BINARY_DIR = /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
+	/home/iris/st/stm32cubeclt_1.19.0/CMake/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake cache editor..."
@@ -84,51 +94,6 @@ rebuild_cache:
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-.PHONY : list_install_components/fast
-
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
-	/home/iris/st/stm32cubeclt_1.19.0/CMake/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
-	/home/iris/st/stm32cubeclt_1.19.0/CMake/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
-	/home/iris/st/stm32cubeclt_1.19.0/CMake/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
-	/home/iris/st/stm32cubeclt_1.19.0/CMake/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
-	/home/iris/st/stm32cubeclt_1.19.0/CMake/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
-	/home/iris/st/stm32cubeclt_1.19.0/CMake/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -173,6 +138,58 @@ cobien-bridge: cmake_check_build_system
 cobien-bridge/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cobien-bridge.dir/build.make CMakeFiles/cobien-bridge.dir/build
 .PHONY : cobien-bridge/fast
+
+#=============================================================================
+# Target rules for targets named test_table
+
+# Build rule for target.
+test_table: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_table
+.PHONY : test_table
+
+# fast build rule for target.
+test_table/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_table.dir/build.make tests/CMakeFiles/test_table.dir/build
+.PHONY : test_table/fast
+
+#=============================================================================
+# Target rules for targets named test_pack
+
+# Build rule for target.
+test_pack: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_pack
+.PHONY : test_pack
+
+# fast build rule for target.
+test_pack/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_pack.dir/build.make tests/CMakeFiles/test_pack.dir/build
+.PHONY : test_pack/fast
+
+#=============================================================================
+# Target rules for targets named test_mqtt_filter
+
+# Build rule for target.
+test_mqtt_filter: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_mqtt_filter
+.PHONY : test_mqtt_filter
+
+# fast build rule for target.
+test_mqtt_filter/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_mqtt_filter.dir/build.make tests/CMakeFiles/test_mqtt_filter.dir/build
+.PHONY : test_mqtt_filter/fast
+
+#=============================================================================
+# Target rules for targets named test_mqtt_publish
+
+# Build rule for target.
+test_mqtt_publish: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_mqtt_publish
+.PHONY : test_mqtt_publish
+
+# fast build rule for target.
+test_mqtt_publish/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/test_mqtt_publish.dir/build.make tests/CMakeFiles/test_mqtt_publish.dir/build
+.PHONY : test_mqtt_publish/fast
 
 src/can_io.o: src/can_io.c.o
 .PHONY : src/can_io.o
@@ -301,12 +318,13 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
-	@echo "... install"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... test"
 	@echo "... cobien-bridge"
+	@echo "... test_mqtt_filter"
+	@echo "... test_mqtt_publish"
+	@echo "... test_pack"
+	@echo "... test_table"
 	@echo "... src/can_io.o"
 	@echo "... src/can_io.i"
 	@echo "... src/can_io.s"

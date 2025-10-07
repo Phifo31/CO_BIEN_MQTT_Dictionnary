@@ -157,6 +157,7 @@ cobien-bridge: CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o
 cobien-bridge: CMakeFiles/cobien-bridge.dir/src/can_io.c.o
 cobien-bridge: CMakeFiles/cobien-bridge.dir/build.make
 cobien-bridge: /usr/lib/x86_64-linux-gnu/libmosquitto.so
+cobien-bridge: /usr/lib/x86_64-linux-gnu/libcjson.so
 cobien-bridge: CMakeFiles/cobien-bridge.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable cobien-bridge"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cobien-bridge.dir/link.txt --verbose=$(VERBOSE)
