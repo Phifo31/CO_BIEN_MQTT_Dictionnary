@@ -1,9 +1,7 @@
-test_table 0 0
+test_table 1 0.00723332
 test_pack 0 0
-test_mqtt_filter 0 0
+test_mqtt_filter 1 0.0105359
 test_mqtt_publish 0 0
 ---
-test_table
 test_pack
-test_mqtt_filter
 test_mqtt_publish
