@@ -12,7 +12,7 @@
 #define RUN_TEST_TABLE         1
 #define RUN_TEST_PACK          1
 #define RUN_TEST_MQTT_FILTER   1
-// #define RUN_TEST_MQTT_PUBLISH  1
+#define RUN_TEST_MQTT_PUBLISH  1
 // ============================================
 
 // Emplacements possibles des binaires (selon où tu lances le runner).

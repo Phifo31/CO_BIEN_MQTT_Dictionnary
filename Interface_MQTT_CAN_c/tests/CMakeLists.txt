@@ -1,5 +1,4 @@
 # tests/CMakeLists.txt
-
 cmake_minimum_required(VERSION 3.15)
 
 find_package(PkgConfig REQUIRED)
@@ -58,7 +57,7 @@ if(ENABLE_TEST_MQTT_FILTER)
   endif()
 endif()
 
-# ---- test_mqtt_publish ----
+# ---- test_mqtt_publish (avec HOOK, sans --wrap) ----
 if(ENABLE_TEST_MQTT_PUBLISH)
   add_executable(test_mqtt_publish
     test_mqtt_publish.c
@@ -68,7 +67,7 @@ if(ENABLE_TEST_MQTT_PUBLISH)
   )
   target_link_libraries(test_mqtt_publish ${CMOCKA_LIBRARIES} cjson mosquitto)
   target_compile_definitions(test_mqtt_publish PRIVATE UNIT_TEST=1)
-  target_link_options(test_mqtt_publish PRIVATE -Wl,--wrap=mqtt_publish_json)
+  # NOTE: plus de target_link_options(... --wrap=...) ; on injecte mqtt_publish_hook côté test
   if(REGISTER_CTESTS)
     add_test(NAME test_mqtt_publish COMMAND test_mqtt_publish)
     set_tests_properties(test_mqtt_publish PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})

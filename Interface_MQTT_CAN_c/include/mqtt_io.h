@@ -17,6 +17,9 @@ typedef struct mqtt_ctx_s {
 typedef struct table_s table_t;
 typedef struct entry_s entry_t;
 typedef struct can_ctx_s can_ctx_t;
+typedef bool (*mqtt_publish_fn)(mqtt_ctx_t *ctx, const char *topic, const char *json_str);
+extern mqtt_publish_fn mqtt_publish_hook;
+
 
 /* API */
 bool mqtt_init(mqtt_ctx_t *ctx, const table_t *t, const char *host, int port, int keepalive);

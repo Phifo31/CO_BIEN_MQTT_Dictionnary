@@ -11,6 +11,9 @@
 #include <stdio.h>
 #include <stdint.h>
 
+/* Hook (injectable en test) : par défaut -> mqtt_publish_json */
+mqtt_publish_fn mqtt_publish_hook = NULL;
+
 /* ================= Helpers ================= */
 
 static int ends_with(const char *s, const char *suffix) {
@@ -161,6 +164,10 @@ bool mqtt_init(mqtt_ctx_t *ctx, const table_t *t, const char *host, int port, in
     ctx->mosq = NULL;
     return false;
   }
+
+  /* Initialise le hook si non fourni (prod = vrai publish) */
+  if (!mqtt_publish_hook) mqtt_publish_hook = mqtt_publish_json;
+
   return true;
 }
 
@@ -200,7 +207,9 @@ bool mqtt_on_can_message(mqtt_ctx_t *ctx, const entry_t *e, const uint8_t data[8
   char topic_state[256];
   topic_state_from_base(e->topic, topic_state, sizeof(topic_state));
 
-  bool ok = mqtt_publish_json(ctx, topic_state, out);
+  /* Utilise le hook si présent (tests), sinon la vraie fonction */
+  mqtt_publish_fn fn = mqtt_publish_hook ? mqtt_publish_hook : mqtt_publish_json;
+  bool ok = fn(ctx, topic_state, out);
   free(out);
 
   if (ok) LOGI("CAN->MQTT OK: id=0x%X topic=%s", e->can_id, topic_state);
@@ -233,7 +242,6 @@ void mqtt_cleanup(mqtt_ctx_t *ctx) {
   }
   mosquitto_lib_cleanup();
 }
-
 
 #ifdef UNIT_TEST
 void mqtt__get_on_message_cb(void (**cb)(struct mosquitto*, void*, const struct mosquitto_message*)) {
