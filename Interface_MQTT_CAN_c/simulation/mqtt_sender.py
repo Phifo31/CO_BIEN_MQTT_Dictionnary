@@ -6,7 +6,7 @@ import json, time, random, sys, subprocess
 from pathlib import Path
 
 # --- paramètres fixes ---
-TABLE_PATH = "config/conversion.json"
+TABLE_PATH = "./config/conversion.json"
 MQTT_HOST  = "localhost"
 MQTT_PORT  = 1883
 MQTT_QOS   = 1

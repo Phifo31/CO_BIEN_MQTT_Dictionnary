@@ -1,4 +1,4 @@
-# Install script for directory: /home/iris/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests
+# Install script for directory: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
