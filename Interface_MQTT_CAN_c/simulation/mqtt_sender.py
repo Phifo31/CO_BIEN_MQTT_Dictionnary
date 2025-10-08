@@ -1,22 +1,19 @@
 #!/usr/bin/env python3
-# mqtt_sender.py — publie en boucle (toutes les 1s) des JSON valides sur <topic>/cmd
-# Paramètres FIXES : table="config/conversion.json", host="localhost", port=1883, qos=1, period=1.0s
+# mqtt_sender.py — envoie en boucle (1s) des JSON valides sur <topic>/cmd
+# Table attendue à:  <racine_projet>/config/conversion.json
 
 import json, time, random, sys, subprocess
 from pathlib import Path
 
-# --- paramètres fixes ---
-from pathlib import Path
-
-# --- paramètres fixes (chemins robustes) ---
-ROOT_DIR   = Path(__file__).resolve().parents[1]      # dossier racine du projet
-TABLE_PATH = str(ROOT_DIR / "config" / "conversion.json")
+# ---- Chemins & paramètres fixes ----
+ROOT_DIR   = Path(__file__).resolve().parents[1]          # dossier racine du projet
+TABLE_PATH = ROOT_DIR / "config" / "conversion.json"
 MQTT_HOST  = "localhost"
 MQTT_PORT  = 1883
 MQTT_QOS   = 1
 PERIOD_S   = 1.0
 
-
+# ---- Install auto de paho-mqtt si besoin ----
 def ensure_paho():
     try:
         from paho.mqtt import client as mqtt  # noqa
@@ -32,70 +29,104 @@ def ensure_paho():
 
 if not ensure_paho():
     sys.exit(1)
-from paho.mqtt import client as mqtt  # import après install
+from paho.mqtt import client as mqtt
 
-PALETTE = ["#FF0000","#00FF00","#0000FF","#00FDFF","#FFFFFF","#FF00FF","#00FFFF","#FFA500","#00AA88"]
+# ---- Génération de valeurs cohérentes par type/champ ----
+PALETTE = ["#FF0000", "#00FF00", "#0000FF", "#00FDFF", "#FFFFFF", "#FF00FF", "#00FFFF", "#FFA500"]
 
-def load_entries(path):
-    obj = json.loads(Path(path).read_text(encoding="utf-8"))
-    out = []
+def clamp(v, lo, hi): return max(lo, min(hi, v))
+
+def rand_for_field(name: str, typ: str, enum_dict: dict | None):
+    t = (typ or "").lower()
+    if t in ("int", "uint8", "byte"):
+        if name in ("intensity", "brightness"):
+            return clamp(random.randint(0, 255), 0, 255)
+        if name in ("group_id", "group", "id", "pic_id"):
+            return clamp(random.randint(1, 4), 0, 255)
+        if name in ("interval", "period", "delay_ms", "touchthreshold", "proximitythreshold",
+                    "touchscaling", "proximityscaling"):
+            return clamp(random.randint(0, 50), 0, 255)
+        return clamp(random.randint(0, 255), 0, 255)
+    if t in ("bool", "boolean"):
+        return random.choice([False, True])
+    if t in ("hex", "rgb"):
+        return random.choice(PALETTE)
+    if t in ("int16", "i16", "uint16", "u16"):
+        # plage sûre int16 (ton bridge accepte 16 bits signés en big-endian)
+        return clamp(random.randint(0, 30000), -32768, 32767)
+    if t in ("enum", "dict"):
+        keys = list((enum_dict or {}).keys())
+        return random.choice(keys) if keys else "ON"
+    # par défaut: petit entier
+    return clamp(random.randint(0, 5), 0, 255)
+
+def load_entries(table_path: Path):
+    obj = json.loads(table_path.read_text(encoding="utf-8"))
+    entries = []
+
     def walk(node):
         if isinstance(node, dict):
-            if "topic" in node and isinstance(node.get("data"), list):
-                out.append({"topic": node["topic"].rstrip("/"), "data": node["data"], "id": node.get("id")})
+            # bloc avec topic + data => une "entrée"
+            if "topic" in node and "data" in node and isinstance(node["data"], dict):
+                topic = str(node["topic"]).rstrip("/")
+                data  = node["data"]
+                # normaliser la description des champs: {"name":..., "type":..., "dict":...}
+                fields = []
+                for k, v in data.items():
+                    if isinstance(v, str):
+                        fields.append({"name": k, "type": v, "dict": None})
+                    elif isinstance(v, dict) and v:  # enum/dict (ex: mode)
+                        fields.append({"name": k, "type": "enum", "dict": v})
+                    else:
+                        # champ vide: on l’ignore (payload n’en aura pas)
+                        pass
+                entries.append({"topic": topic, "fields": fields})
+            # continuer à explorer
             for v in node.values():
-                if isinstance(v, (dict, list)): walk(v)
+                if isinstance(v, (dict, list)):
+                    walk(v)
         elif isinstance(node, list):
-            for it in node: walk(it)
-    walk(obj)
-    return out
+            for it in node:
+                walk(it)
 
-def rand_for_field(fd):
-    name = fd.get("name") or fd.get("field") or "field"
-    t    = (fd.get("type") or "").lower()
-    if t in ("int","uint8","byte"):
-        if name in ("intensity","brightness"): v = random.randint(0,255)
-        elif name in ("group_id","group","id"): v = random.randint(1,4)
-        elif name in ("interval","period","delay_ms"): v = random.randint(0,50)
-        else: v = random.randint(0,255)
-        return name, v
-    if t in ("bool","boolean"): return name, random.choice([False, True])
-    if t in ("hex","rgb"):      return name, random.choice(PALETTE)
-    if t in ("int16","i16","uint16","u16"): return name, random.randint(0,2000)
-    if t in ("enum","dict"):
-        d = fd.get("dict") or fd.get("enum") or {}
-        keys = list(d.keys())
-        return name, (random.choice(keys) if keys else "UNKNOWN")
-    return name, random.randint(0,5)
+    walk(obj)
+    return entries
 
 def build_payload(entry):
     payload = {}
-    for f in entry["data"]:
-        k, v = rand_for_field(f)
-        payload[k] = v
+    for f in entry["fields"]:
+        name, typ, edict = f["name"], f["type"], f.get("dict")
+        val = rand_for_field(name, typ, edict)
+        payload[name] = val
+    # petites règles de cohérence (ex: intensity bornée)
     if "intensity" in payload:
-        try: payload["intensity"] = max(0, min(255, int(payload["intensity"])))
+        try: payload["intensity"] = clamp(int(payload["intensity"]), 0, 255)
         except: payload["intensity"] = 128
     return payload
 
 def main():
+    # charger la table
+    if not TABLE_PATH.exists():
+        print(f"[ERR ] Table introuvable: {TABLE_PATH}")
+        sys.exit(2)
     entries = load_entries(TABLE_PATH)
     if not entries:
-        print("[ERR ] Aucun topic trouvé dans la table.")
-        sys.exit(2)
+        print("[ERR ] Aucun topic trouvé dans la table (data vides ?).")
+        sys.exit(3)
 
+    # init MQTT
     cli = mqtt.Client()
     cli.connect(MQTT_HOST, MQTT_PORT, keepalive=30)
     cli.loop_start()
 
-    print(f"[INFO] {len(entries)} topic(s) détectés. Envoi toutes les {PERIOD_S:.1f}s sur '<topic>/cmd'. Ctrl+C pour arrêter.")
+    print(f"[INFO] {len(entries)} topic(s) détectés. Publication toutes les {PERIOD_S:.1f}s sur '<topic>/cmd'. Ctrl+C pour stopper.")
     try:
         while True:
             for e in entries:
-                topic = f"{e['topic']}/cmd"
-                payload = build_payload(e)
-                cli.publish(topic, json.dumps(payload, separators=(",",":")), qos=MQTT_QOS)
-                print(f"[MQTT] {topic}  {payload}")
+                topic_cmd = f"{e['topic']}/cmd"
+                payload   = build_payload(e)
+                cli.publish(topic_cmd, json.dumps(payload, separators=(",", ":")), qos=MQTT_QOS)
+                print(f"[MQTT] {topic_cmd}  {payload}")
                 time.sleep(PERIOD_S)
     except KeyboardInterrupt:
         pass
