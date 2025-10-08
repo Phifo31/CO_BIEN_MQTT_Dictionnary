@@ -11,7 +11,7 @@
 // ======= Sélection des tests à lancer =======
 #define RUN_TEST_TABLE         1
 // #define RUN_TEST_PACK          1
-// #define RUN_TEST_MQTT_FILTER   1
+#define RUN_TEST_MQTT_FILTER   1
 // #define RUN_TEST_MQTT_PUBLISH  1
 // ============================================
 
