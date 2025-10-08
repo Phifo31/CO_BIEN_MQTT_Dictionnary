@@ -6,11 +6,16 @@ import json, time, random, sys, subprocess
 from pathlib import Path
 
 # --- paramètres fixes ---
-TABLE_PATH = "./config/conversion.json"
+from pathlib import Path
+
+# --- paramètres fixes (chemins robustes) ---
+ROOT_DIR   = Path(__file__).resolve().parents[1]      # dossier racine du projet
+TABLE_PATH = str(ROOT_DIR / "config" / "conversion.json")
 MQTT_HOST  = "localhost"
 MQTT_PORT  = 1883
 MQTT_QOS   = 1
 PERIOD_S   = 1.0
+
 
 def ensure_paho():
     try:
