@@ -13,13 +13,19 @@
 #include "can_io.h"
 
 /* Stub CAN pour éviter unresolved */
-bool can_send(can_ctx_t *ctx, uint32_t can_id, const uint8_t data[8]){ (void)ctx;(void)can_id;(void)data; return true; }
-
-/* Mock publish: on renomme mqtt_publish_json -> __mock_mqtt_publish_json via -D dans CMake */
-static char g_topic[256]; static char g_payload[1024];
-bool __mock_mqtt_publish_json(mqtt_ctx_t *ctx, const char *topic, const char *json_str){
-  (void)ctx; snprintf(g_topic,sizeof(g_topic),"%s",topic?topic:""); snprintf(g_payload,sizeof(g_payload),"%s",json_str?json_str:""); return true;
+bool can_send(can_ctx_t *ctx, uint32_t can_id, const uint8_t data[8]){
+  (void)ctx; (void)can_id; (void)data; return true;
 }
+
+/* Wrap publish: le linker redirige mqtt_publish_json -> __wrap_mqtt_publish_json */
+static char g_topic[256]; static char g_payload[1024];
+bool __wrap_mqtt_publish_json(mqtt_ctx_t *ctx, const char *topic, const char *json_str){
+  (void)ctx;
+  snprintf(g_topic, sizeof(g_topic), "%s", topic ? topic : "");
+  snprintf(g_payload, sizeof(g_payload), "%s", json_str ? json_str : "");
+  return true;
+}
+
 
 static void test_mqtt_publish_state_topic(void **state){
   (void)state;
