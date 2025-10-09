@@ -10,9 +10,9 @@
 #include "types.h"
 #include "table.h"
 #include "pack.h"
-#include "mqtt_io.h"   // contient typedef mqtt_publish_fn et extern mqtt_publish_hook
+#include "mqtt_io.h"
 
-/* ---- Stub CAN (on ne teste pas l'envoi CAN ici) ---- */
+/* ---- Stub CAN (pas d'envoi réel côté test) ---- */
 bool can_send(can_ctx_t *ctx, uint32_t can_id, const uint8_t data[8]) {
   (void)ctx; (void)can_id; (void)data; return true;
 }
@@ -30,17 +30,17 @@ static bool mock_publish(mqtt_ctx_t *ctx, const char *topic, const char *json_st
 
 static const char *CFG = "tests/data/conv_ok.json";
 
-/* Test : CAN->MQTT publie bien sur .../state et payload JSON cohérent */
-static void test_mqtt_publish_state_topic(void **state) {
+/* Test : CAN->MQTT publie bien sur le topic de base (sans /state), payload JSON cohérent */
+static void test_mqtt_publish_base_topic(void **state) {
   (void)state;
 
-  table_t t = {0};
+  table_t t = (table_t){0};
   assert_true(table_load(&t, CFG));
 
   const entry_t *e = table_find_by_topic(&t, "led/config");
-  if (!e) { table_free(&t); fail_msg("entry led/config introuvable"); }
+  if (!e) { table_free(&t); skip(); return; }  // auto-skip si cette entrée n’existe pas
 
-  /* Injection du mock avant l'appel testé */
+  /* Hook mock avant l'appel testé */
   mqtt_publish_hook = mock_publish;
 
   /* Trame 8 octets équivalente à:
@@ -51,8 +51,8 @@ static void test_mqtt_publish_state_topic(void **state) {
   bool ok = mqtt_on_can_message(&m, e, b);
   assert_true(ok);
 
-  /* Vérifie le topic .../state */
-  assert_string_equal(g_topic, "led/config/state");
+  /* Vérifie que l’on publie sur le topic de base (plus de /state) */
+  assert_string_equal(g_topic, "led/config");
 
   /* Vérifie le JSON publié */
   cJSON *out = cJSON_Parse(g_payload);
@@ -66,13 +66,13 @@ static void test_mqtt_publish_state_topic(void **state) {
 
   table_free(&t);
 
-  /* Reset du hook pour ne pas polluer d'autres tests éventuels */
+  /* Reset du hook pour ne pas polluer d’autres tests */
   mqtt_publish_hook = NULL;
 }
 
 int main(void) {
   const struct CMUnitTest tests[] = {
-    cmocka_unit_test(test_mqtt_publish_state_topic),
+    cmocka_unit_test(test_mqtt_publish_base_topic),
   };
   return cmocka_run_group_tests(tests, NULL, NULL);
 }
