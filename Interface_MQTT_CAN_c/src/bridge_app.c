@@ -12,7 +12,17 @@
 
 
 // --- paramètres "fixes" (fais simple)
-static const char *CFG_PATH  = (argc>1) ? argv[1] : "config/conversion.json";
+static const char *CFG_DEFAULT = "config/conversion.json";
+const char *cfg_path = cfg_path_opt ? cfg_path_opt : CFG_DEFAULT;
+
+char cwd[512];
+if (getcwd(cwd, sizeof cwd)) LOGI("CWD: %s", cwd);
+LOGI("Chargement table: %s", cfg_path);
+
+if (!table_load(&g_table, cfg_path)) {
+  LOGE("Echec chargement table: %s", cfg_path);
+  return false;
+}
 static const char *IFNAME    = "can0";        // ou "vcan0" en test logiciel
 static const char *MQTT_HOST = "localhost";
 static const int   MQTT_PORT = 1883;
@@ -24,7 +34,8 @@ static can_ctx_t  g_can;
 
 static void on_sig(int s){ (void)s; g_running = 0; }
 
-bool my_setup(void) {
+bool my_setup(const char *cfg_path_opt)
+ {
   signal(SIGINT,  on_sig);
   signal(SIGTERM, on_sig);
 
