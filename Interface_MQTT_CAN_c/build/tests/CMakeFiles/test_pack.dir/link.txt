@@ -1,1 +1,1 @@
-/usr/bin/cc -g -fsanitize=address -fsanitize=undefined CMakeFiles/test_pack.dir/test_pack.c.o CMakeFiles/test_pack.dir/__/src/table.c.o CMakeFiles/test_pack.dir/__/src/pack.c.o -o test_pack  -lcmocka -lcjson 
+/usr/bin/cc -O2 -g -DNDEBUG -fsanitize=address -fsanitize=undefined CMakeFiles/test_pack.dir/test_pack.c.o CMakeFiles/test_pack.dir/__/src/table.c.o CMakeFiles/test_pack.dir/__/src/pack.c.o -o test_pack  -lcmocka -lcjson 

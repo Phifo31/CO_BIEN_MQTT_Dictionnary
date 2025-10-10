@@ -1,26 +1,28 @@
 #ifndef CAN_IO_H
 #define CAN_IO_H
 
-#include "table.h"
-#include "mqtt_io.h"
 #include <stdbool.h>
 #include <stdint.h>
+#include "table.h"
+#include "mqtt_io.h"
 
+/* Contexte SocketCAN simple */
 typedef struct can_ctx_s {
-  int           fd;         // socket CAN_RAW
-  const table_t *table;
-  mqtt_ctx_t    *mqtt;      // pour publier côté CAN->MQTT
-  char          ifname[16]; // "vcan0" ou "can0"
+  int fd;
 } can_ctx_t;
 
-bool can_init(can_ctx_t *ctx, const table_t *t, mqtt_ctx_t *mqtt, const char *ifname);
+/* Init interface (ex: "can0" ou "vcan0"). Non-bloquant. */
+bool can_init(can_ctx_t *c, const char *ifname);
 
-// Envoi d'une trame CAN (8 octets)
-bool can_send(can_ctx_t *ctx, uint32_t can_id, const uint8_t data[8]);
+/* Send 8 octets sur un CAN ID standard */
+bool can_send(can_ctx_t *c, uint32_t can_id, const uint8_t data[8]);
 
-// Boucle RX bloquante (thread) : reçoit et publie via MQTT
-void* can_rx_loop(void *arg);
+/* Pompe non-bloquante: lit au plus N trames et publie vers MQTT (via table) */
+void can_poll(can_ctx_t *c, const table_t *t, mqtt_ctx_t *m, int max_frames);
 
-void can_cleanup(can_ctx_t *ctx);
+int can_poll_burst(can_ctx_t *ctx, int max_frames, int timeout_ms);
+
+
+void can_cleanup(can_ctx_t *c);
 
 #endif

@@ -1,222 +1,176 @@
 #include "table.h"
 #include "log.h"
-#include <stdlib.h>
+#include <cjson/cJSON.h>
 #include <string.h>
-#include <errno.h>
-#include <stdint.h>
-#include <uthash.h>
+#include <stdlib.h>
 
-/* ===== Index UTHASH ===== */
-typedef struct topic_map_s {
-  char     *topic;   /* key */
-  entry_t  *entry;
-  UT_hash_handle hh;
-} topic_map_t;
+static char* sdup(const char *s){
+  if(!s) return NULL;
+  size_t n = strlen(s)+1;
+  char *p = (char*)malloc(n);
+  if(p) memcpy(p, s, n);
+  return p;
+}
 
-typedef struct id_map_s {
-  uint32_t  can_id;  /* key */
-  entry_t  *entry;
-  UT_hash_handle hh;
-} id_map_t;
+static enum_kv_t* enum_list_from_obj(cJSON *obj){
+  if(!cJSON_IsObject(obj)) return NULL;
+  enum_kv_t *head=NULL, *tail=NULL;
+  for(cJSON *it = obj->child; it; it=it->next){
+    if(!cJSON_IsNumber(it)) continue;
+    enum_kv_t *node = (enum_kv_t*)calloc(1,sizeof(enum_kv_t));
+    if(!node) break;
+    node->key = sdup(it->string);
+    node->value = (int)it->valuedouble;
+    if(!head) head=tail=node; else { tail->next=node; tail=node; }
+  }
+  return head;
+}
+static void enum_list_free(enum_kv_t *kv){
+  while(kv){ enum_kv_t *n=kv->next; free(kv->key); free(kv); kv=n; }
+}
 
-/* ===== Helpers ===== */
-static field_type_t parse_ftype(const char *s){
+static field_type_t parse_type(const char *s){
   if(!s) return FT_INT;
-  if(strcmp(s,"int")==0)   return FT_INT;
-  if(strcmp(s,"bool")==0)  return FT_BOOL;
-  if(strcmp(s,"hex")==0)   return FT_HEX;
-  if(strcmp(s,"int16")==0) return FT_INT16;
-  if(strcmp(s,"dict")==0)  return FT_ENUM;   /* compat */
-  if(strcmp(s,"enum")==0)  return FT_ENUM;   /* compat */
-  return FT_INT;
+  if(!strcasecmp(s,"int"))   return FT_INT;
+  if(!strcasecmp(s,"bool") || !strcasecmp(s,"boolean")) return FT_BOOL;
+  if(!strcasecmp(s,"hex") || !strcasecmp(s,"rgb"))      return FT_HEX;
+  if(!strcasecmp(s,"int16")|| !strcasecmp(s,"u16") || !strcasecmp(s,"uint16")) return FT_INT16;
+  if(!strcasecmp(s,"enum") || !strcasecmp(s,"dict"))    return FT_ENUM;
+  return FT_INT; /* par défaut */
 }
 
-static void free_enum_list(enum_kv_t *p){
-  while(p){ enum_kv_t *n=p->next; free(p->key); free(p); p=n; }
-}
-
-static void free_entry(entry_t *e){
-  if(!e) return;
-  free(e->topic);
-  if(e->fields){
-    for(size_t i=0;i<e->field_count;i++){
-      free(e->fields[i].name);
-      if(e->fields[i].enum_list) free_enum_list(e->fields[i].enum_list);
+static bool build_fields_from_node(cJSON *data, field_spec_t **out_arr, size_t *out_n){
+  *out_arr=NULL; *out_n=0;
+  /* Accepte data = array d’objets {name,type[,dict]} ou data = objet {name:type} */
+  if(cJSON_IsArray(data)){
+    size_t n = cJSON_GetArraySize(data);
+    if(n==0) return true;
+    field_spec_t *arr = (field_spec_t*)calloc(n, sizeof(field_spec_t));
+    if(!arr) return false;
+    size_t k=0;
+    for(cJSON *it=data->child; it; it=it->next){
+      if(!cJSON_IsObject(it)) continue;
+      cJSON *jname = cJSON_GetObjectItemCaseSensitive(it,"name");
+      cJSON *jtype = cJSON_GetObjectItemCaseSensitive(it,"type");
+      if(!cJSON_IsString(jname)||!cJSON_IsString(jtype)) continue;
+      arr[k].name = sdup(jname->valuestring);
+      arr[k].type = parse_type(jtype->valuestring);
+      if(arr[k].type==FT_ENUM){
+        cJSON *jdict = cJSON_GetObjectItemCaseSensitive(it,"dict");
+        if(!jdict) jdict = cJSON_GetObjectItemCaseSensitive(it,"enum");
+        arr[k].enum_list = enum_list_from_obj(jdict);
+      }
+      k++;
     }
-    free(e->fields);
+    *out_arr = arr; *out_n = k;
+    return true;
+  } else if(cJSON_IsObject(data)){
+    /* { "field":"int", ... } */
+    size_t n=0;
+    for(cJSON *it=data->child; it; it=it->next) n++;
+    if(n==0) return true;
+    field_spec_t *arr = (field_spec_t*)calloc(n, sizeof(field_spec_t));
+    if(!arr) return false;
+    size_t k=0;
+    for(cJSON *it=data->child; it; it=it->next){
+      arr[k].name = sdup(it->string);
+      arr[k].type = parse_type(cJSON_IsString(it)? it->valuestring : "int");
+      arr[k].enum_list = NULL;
+      k++;
+    }
+    *out_arr=arr; *out_n=n; return true;
   }
-  free(e);
+  return false;
 }
 
-static bool entry_push_field(entry_t *e, const char *name, field_type_t t, cJSON *jdict){
-  size_t newn = e->field_count + 1;
-  field_spec_t *nf = realloc(e->fields, newn * sizeof(field_spec_t));
-  if(!nf) return false;
-  e->fields = nf;
+bool table_load(table_t *t, const char *json_path){
+  if(!t||!json_path) return false;
+  memset(t,0,sizeof(*t));
 
-  field_spec_t *fs = &e->fields[e->field_count];
-  fs->name = strdup(name);
-  fs->type = t;
-  fs->enum_list = NULL;
-
-  if (t == FT_ENUM && jdict && cJSON_IsObject(jdict)) {
-    cJSON *it=NULL; enum_kv_t **tail=&fs->enum_list;
-    cJSON_ArrayForEach(it, jdict){
-      if(!cJSON_IsNumber(it)) continue;
-      enum_kv_t *kv = calloc(1,sizeof(enum_kv_t));
-      kv->key   = strdup(it->string);
-      kv->value = (int)it->valuedouble;
-      *tail = kv; tail = &kv->next;
-    }
-  }
-  e->field_count = newn;
-  return true;
-}
-
-/* data = objet: clé=nom, valeur= "int"/"bool"/"hex"/"int16" ou {enum} */
-static bool parse_data_object_into_entry(cJSON *jdata, entry_t *e){
-  if (!cJSON_IsObject(jdata)) return false;
-  cJSON *it = NULL;
-  cJSON_ArrayForEach(it, jdata){
-    const char *fname = it->string;
-    if (!fname) continue;
-
-    if (cJSON_IsString(it)) {
-      /* "fname": "int" */
-      field_type_t ft = parse_ftype(it->valuestring);
-      if (!entry_push_field(e, fname, ft, NULL)) return false;
-    } else if (cJSON_IsObject(it)) {
-      /* "mode": { "ON":1, "OFF":2, ... }  => ENUM */
-      if (!entry_push_field(e, fname, FT_ENUM, it)) return false;
-    } else {
-      /* non supporté => ignore poliment */
-      LOGW("Champ ignoré (type non supporté) : %s", fname);
-    }
-  }
-  return true;
-}
-
-/* Détecte une entrée valide: a "arbitration_id" (ou alias), "topic" et "data" (objet), puis la construit */
-static entry_t* try_build_entry_from_block(cJSON *blk){
-  if(!cJSON_IsObject(blk)) return NULL;
-
-  cJSON *jtopic = cJSON_GetObjectItemCaseSensitive(blk, "topic");
-  cJSON *jid    = cJSON_GetObjectItemCaseSensitive(blk, "arbitration_id");
-  if(!cJSON_IsString(jtopic) || !(cJSON_IsNumber(jid) || cJSON_IsString(jid))) return NULL;
-
-  /* ID numérique (décimal) ou texte (0x...) */
-  uint32_t can_id = 0;
-  if (cJSON_IsNumber(jid)) can_id = (uint32_t)jid->valuedouble;
-  else                     can_id = (uint32_t)strtoul(jid->valuestring, NULL, 0);
-
-  cJSON *jdata  = cJSON_GetObjectItemCaseSensitive(blk, "data");
-  if(!jdata || !cJSON_IsObject(jdata)) return NULL; /* on veut un objet (peut être vide) */
-
-  entry_t *e = calloc(1, sizeof(entry_t));
-  e->topic = strdup(jtopic->valuestring);
-  e->can_id = can_id;
-  e->fields = NULL;
-  e->field_count = 0;
-
-  /* data peut être vide {} : OK (0 champ) */
-  if (!parse_data_object_into_entry(jdata, e)) {
-    free_entry(e);
-    return NULL;
-  }
-  return e;
-}
-
-/* Parcourt récursivement l'objet racine (rfid/sensors/... -> init/update/...) et collecte les entrées */
-static void walk_and_collect(cJSON *node, table_t *t, int *topics, int *ids){
-  if (!node) return;
-
-  if (cJSON_IsObject(node)) {
-    /* 1) Essaye de le traiter comme "bloc d'entrée" */
-    entry_t *e = try_build_entry_from_block(node);
-    if (e) {
-      topic_map_t *tm = calloc(1,sizeof(topic_map_t));
-      tm->topic = strdup(e->topic); tm->entry = e;
-      HASH_ADD_KEYPTR(hh, t->topic_index, tm->topic, strlen(tm->topic), tm); (*topics)++;
-
-      id_map_t *im = calloc(1,sizeof(id_map_t));
-      im->can_id = e->can_id; im->entry = e;
-      HASH_ADD(hh, t->id_index, can_id, sizeof(uint32_t), im); (*ids)++;
-      return; /* ne pas descendre plus : on a consommé ce bloc */
-    }
-
-    /* 2) Sinon, descendre dans ses enfants (rfid, sensors, ... puis init/update...) */
-    cJSON *it=NULL;
-    cJSON_ArrayForEach(it, node){
-      walk_and_collect(it, t, topics, ids);
-    }
-    return;
+  char *txt = NULL;
+  { /* lire fichier */
+    FILE *f = fopen(json_path,"rb");
+    if(!f){ LOGE("Ouvrir %s", json_path); return false; }
+    fseek(f,0,SEEK_END); long L = ftell(f); fseek(f,0,SEEK_SET);
+    txt = (char*)malloc((size_t)L+1);
+    if(!txt){ fclose(f); return false; }
+    if(fread(txt,1,(size_t)L,f)!=(size_t)L){ fclose(f); free(txt); return false; }
+    fclose(f); txt[L]='\0';
   }
 
-  if (cJSON_IsArray(node)) {
-    cJSON *it=NULL;
-    cJSON_ArrayForEach(it, node){
-      walk_and_collect(it, t, topics, ids);
-    }
-    return;
-  }
-
-  /* autres types: rien à faire */
-}
-
-/* ===== API ===== */
-bool table_load(table_t *t, const char *path_json){
-  t->topic_index = NULL; t->id_index = NULL;
-
-  FILE *f = fopen(path_json,"rb");
-  if(!f){ LOGE("Ouvrir %s: %s", path_json, strerror(errno)); return false; }
-  if(fseek(f,0,SEEK_END)!=0){ fclose(f); LOGE("fseek fin"); return false; }
-  long sz = ftell(f);
-  if(sz<0){ fclose(f); LOGE("ftell"); return false; }
-  if(fseek(f,0,SEEK_SET)!=0){ fclose(f); LOGE("fseek debut"); return false; }
-
-  char *buf = malloc((size_t)sz+1);
-  size_t rd = fread(buf,1,(size_t)sz,f); fclose(f);
-  if(rd!=(size_t)sz){ free(buf); LOGE("fread incomplet"); return false; }
-  buf[sz]=0;
-
-  cJSON *root = cJSON_Parse(buf); free(buf);
+  cJSON *root = cJSON_Parse(txt); free(txt);
   if(!root){ LOGE("JSON invalide"); return false; }
 
-  int topics=0, ids=0;
-  walk_and_collect(root, t, &topics, &ids);
-  cJSON_Delete(root);
+  /* Collecter toutes les entrées contenant "topic" et "data" */
+  size_t cap=16; size_t n=0;
+  entry_t *arr = (entry_t*)calloc(cap,sizeof(entry_t));
+  if(!arr){ cJSON_Delete(root); return false; }
 
-  LOGI("Table chargée: %d topics, %d IDs", topics, ids);
-  return (topics>0 && ids>0);
+  /* DFS */
+  cJSON *stack[64]; int sp=0; stack[sp++]=root;
+  while(sp>0){
+    cJSON *node = stack[--sp];
+    if(cJSON_IsObject(node)){
+      cJSON *jtopic = cJSON_GetObjectItemCaseSensitive(node,"topic");
+      cJSON *jdata  = cJSON_GetObjectItemCaseSensitive(node,"data");
+      cJSON *jid    = cJSON_GetObjectItemCaseSensitive(node,"arbitration_id");
+      if(!jid)      jid = cJSON_GetObjectItemCaseSensitive(node,"id");
+      if(jtopic && cJSON_IsString(jtopic) && jdata && jid && cJSON_IsNumber(jid)){
+        if(n==cap){ cap*=2; arr=(entry_t*)realloc(arr, cap*sizeof(entry_t)); }
+        entry_t *e = &arr[n];
+        memset(e,0,sizeof(*e));
+        e->topic = sdup(jtopic->valuestring);
+        e->can_id= (uint32_t)jid->valuedouble;
+        if(!build_fields_from_node(jdata, &e->fields, &e->field_count)){
+          LOGW("data invalide pour %s", e->topic);
+        } else {
+          n++;
+        }
+      }
+      for(cJSON *it=node->child; it; it=it->next){
+        if(cJSON_IsObject(it) || cJSON_IsArray(it)) stack[sp++]=it;
+      }
+    } else if(cJSON_IsArray(node)){
+      for(cJSON *it=node->child; it; it=it->next){
+        if(cJSON_IsObject(it) || cJSON_IsArray(it)) stack[sp++]=it;
+      }
+    }
+  }
+
+  cJSON_Delete(root);
+  t->entries = arr; t->count = n;
+  LOGI("Table chargée: %zu topics, %zu IDs", n, n);
+  return (n>0);
 }
 
 void table_free(table_t *t){
-  if(!t) return;
-  topic_map_t *tm,*tm_tmp;
-  HASH_ITER(hh, t->topic_index, tm, tm_tmp){
-    HASH_DEL(t->topic_index, tm);
-    free(tm->topic);
-    free(tm);
+  if(!t||!t->entries) return;
+  for(size_t i=0;i<t->count;i++){
+    entry_t *e = &t->entries[i];
+    free(e->topic);
+    if(e->fields){
+      for(size_t k=0;k<e->field_count;k++){
+        free(e->fields[k].name);
+        enum_list_free(e->fields[k].enum_list);
+      }
+      free(e->fields);
+    }
   }
-  t->topic_index = NULL;
-
-  id_map_t *im,*im_tmp;
-  HASH_ITER(hh, t->id_index, im, im_tmp){
-    HASH_DEL(t->id_index, im);
-    free_entry(im->entry);
-    free(im);
-  }
-  t->id_index = NULL;
+  free(t->entries);
+  memset(t,0,sizeof(*t));
 }
 
 const entry_t* table_find_by_topic(const table_t *t, const char *topic){
-  topic_map_t *tm=NULL;
-  HASH_FIND_STR(t->topic_index, topic, tm);
-  return tm ? tm->entry : NULL;
+  if(!t||!topic) return NULL;
+  for(size_t i=0;i<t->count;i++){
+    if(t->entries[i].topic && strcmp(t->entries[i].topic, topic)==0) return &t->entries[i];
+  }
+  return NULL;
 }
-
-const entry_t* table_find_by_id(const table_t *t, uint32_t can_id){
-  id_map_t *im=NULL;
-  HASH_FIND(hh, t->id_index, &can_id, sizeof(uint32_t), im);
-  return im ? im->entry : NULL;
+const entry_t* table_find_by_canid(const table_t *t, uint32_t can_id){
+  if(!t) return NULL;
+  for(size_t i=0;i<t->count;i++){
+    if(t->entries[i].can_id == can_id) return &t->entries[i];
+  }
+  return NULL;
 }
