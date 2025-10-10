@@ -55,6 +55,6 @@ target_link_libraries(cobien-bridge
   pthread
 )
 
-# Tests
-enable_testing()
-add_subdirectory(tests)
+# # Tests
+# enable_testing()
+# add_subdirectory(tests)

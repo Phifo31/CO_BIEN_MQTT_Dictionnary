@@ -1,1 +1,0 @@
-/usr/bin/cc -O2 -g -DNDEBUG -fsanitize=address -fsanitize=undefined CMakeFiles/test_runner.dir/test_runner.c.o -o test_runner 
