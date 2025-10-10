@@ -1,4 +1,5 @@
 #include "bridge_app.h"
+#include <stddef.h>
 
 int main(int argc, char **argv){
   const char *cfg = (argc > 1 && argv[1] && argv[1][0]) ? argv[1] : NULL;
