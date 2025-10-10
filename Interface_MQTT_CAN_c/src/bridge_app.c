@@ -12,7 +12,7 @@
 
 
 // --- paramètres "fixes" (fais simple)
-static const char *CFG_PATH  = "config/conversion.json";
+static const char *CFG_PATH  = (argc>1) ? argv[1] : "config/conversion.json";
 static const char *IFNAME    = "can0";        // ou "vcan0" en test logiciel
 static const char *MQTT_HOST = "localhost";
 static const int   MQTT_PORT = 1883;
