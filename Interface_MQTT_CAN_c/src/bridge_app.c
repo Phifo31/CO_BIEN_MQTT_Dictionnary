@@ -67,7 +67,7 @@ bool my_loop(void)
   can_poll(&g_can, &g_table, &g_mqtt, 8);
 
   /* 3) Petite sieste pour ne pas monopoliser le CPU si tout est vide */
-  usleep(1000); // 1 ms
+  sleep(1000); // 1 ms
 
   return true;
 }
