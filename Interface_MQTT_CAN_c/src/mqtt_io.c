@@ -117,6 +117,7 @@ bool mqtt_subscribe_all(mqtt_ctx_t *ctx) {
 }
 
 
+
 /* Pompe non-bloquante; à appeler dans my_loop */
 bool mqtt_poll(mqtt_ctx_t *ctx){
   if(!ctx||!ctx->mosq) return false;

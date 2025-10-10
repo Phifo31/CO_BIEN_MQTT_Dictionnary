@@ -14,6 +14,9 @@ static char* sdup(const char *s){
   return p;
 }
 
+void *tmp = realloc(arr, cap*sizeof(entry_t));
+if(!tmp){ free(arr); cJSON_Delete(root); return false; }
+arr = (entry_t*)tmp;
 
 static enum_kv_t* enum_list_from_obj(cJSON *obj){
   if(!cJSON_IsObject(obj)) return NULL;

@@ -4,10 +4,12 @@
 #include "can_io.h"
 #include "log.h"
 #include <stdlib.h>
+#include <mosquitto.h>
+#include <unistd.h>   
 
 #include <signal.h>
 #include <string.h>
-#include <unistd.h>   // usleep
+
 
 // --- paramètres "fixes" (fais simple)
 static const char *CFG_PATH  = "config/conversion.json";
@@ -35,7 +37,7 @@ bool my_setup(void) {
     return false;
   }
 
-  if (!mqtt_init(&g_mqtt, &g_table, MQTT_HOST, MQTT_PORT, /*keepalive*/60))
+  if (!mqtt_init(&g_mqtt, MQTT_HOST, MQTT_PORT, 60))
     return false;
   mqtt_set_qos(&g_mqtt, 1, 1);
 
@@ -46,9 +48,8 @@ bool my_setup(void) {
   ub->t = &g_table; ub->c = &g_can; ub->m = &g_mqtt;
   mqtt_set_user_data(&g_mqtt, ub);
 
-  if (!mqtt_subscribe_all(&g_mqtt)) return false;
-
-  if (!can_init(&g_can, &g_table, &g_mqtt, IFNAME)) return false;
+ if (!mqtt_subscribe_all(&g_mqtt)) return false;
+ if (!can_init(&g_can, IFNAME)) return false;
 
   LOGI("Setup OK (cfg=%s, if=%s, mqtt=%s:%d)", CFG_PATH, IFNAME, MQTT_HOST, MQTT_PORT);
   return true;
@@ -59,12 +60,11 @@ bool my_loop(void)
   if (!g_running) return false;
 
   /* 1) Traite MQTT disponible (jusqu'à 100 paquets par tick, non-bloquant) */
-  if (g_mqtt.mosq) {
-    mosquitto_loop(g_mqtt.mosq, /*timeout_ms*/0, /*max_packets*/100);
-  }
+  if (g_mqtt.mosq)
+  mosquitto_loop(g_mqtt.mosq, 0, 100);
 
   /* 2) Draine le CAN disponible (non-bloquant) */
-  can_poll(&g_can, &g_table, &g_mqtt, /*max_frames*/256);
+  can_poll(&g_can, &g_table, &g_mqtt, 8);
 
   /* 3) Petite sieste pour ne pas monopoliser le CPU si tout est vide */
   usleep(1000); // 1 ms
@@ -75,7 +75,8 @@ bool my_loop(void)
 
 void my_shutdown(void) {
   // libérer le userdata qu’on a alloué
-  void *ud = mosquitto_userdata(g_mqtt.mosq);
+  void *ud = g_mqtt.mosq ? mosquitto_userdata(g_mqtt.mosq) : NULL;
+  
   if (ud) free(ud);
 
   can_cleanup(&g_can);

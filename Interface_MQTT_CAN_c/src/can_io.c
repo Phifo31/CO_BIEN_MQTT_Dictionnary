@@ -6,6 +6,8 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 #include <sys/socket.h>
+#include <sys/types.h>
+#include <linux/if.h> 
 #include <net/if.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
@@ -82,7 +84,7 @@ void can_poll(can_ctx_t *c, const table_t *t, mqtt_ctx_t *m, int max_frames){
   if (max_frames <= 0) max_frames = 8;
 
   fd_set rfds;
-  struct timeval tv = {0, 0}; // non-bloquant
+  struct timeval tv = (struct timeval){0, 0}; // non-bloquant
   FD_ZERO(&rfds);
   FD_SET(c->fd, &rfds);
 
@@ -97,14 +99,15 @@ void can_poll(can_ctx_t *c, const table_t *t, mqtt_ctx_t *m, int max_frames){
       LOGW("CAN read: %s", strerror(errno));
       break;
     }
-    if ((size_t)n < sizeof(f)) break; // lecture incomplète
+    if ((size_t)n != sizeof(f)) break; // lecture incomplète
 
-    const entry_t *e = (t ? table_find_by_id(t, f.can_id) : NULL);
+    const entry_t *e = t ? table_find_by_canid(t, f.can_id) : NULL;
     if (!e) continue;
 
-    (void)mqtt_on_can_message(m, e, f.data);
+    (void)mqtt_handle_can_message(m, e, f.data);
   }
 }
+
 
 void can_cleanup(can_ctx_t *c){
   if (!c) return;
