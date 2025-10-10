@@ -3,10 +3,11 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "types.h"
 
-/* cJSON: on peut soit inclure l'en-tête, soit forward-declarer.
-   Je choisis l'inclusion pour éviter les soucis de type. */
+/* IMPORTANT: on a besoin des définitions complètes de entry_t/field_spec_t */
+#include "table.h"
+
+/* cJSON */
 #include <cjson/cJSON.h>
 
 /* Packe un objet JSON vers 8 octets CAN selon l'entry. */

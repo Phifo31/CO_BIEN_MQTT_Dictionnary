@@ -1,9 +1,10 @@
 #include "pack.h"
 #include "log.h"
-#include <cjson/cJSON.h>
+#include "table.h"      
 #include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+#include <ctype.h>
+
+
 
 static inline uint8_t clamp_u8(int x){ if(x<0) return 0; if(x>255) return 255; return (uint8_t)x; }
 

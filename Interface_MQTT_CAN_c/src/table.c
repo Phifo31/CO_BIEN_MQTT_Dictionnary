@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <stdio.h> 
 
 static char* sdup(const char *s){
   if(!s) return NULL;
@@ -11,6 +12,13 @@ static char* sdup(const char *s){
   char *p = (char*)malloc(n);
   if(p) memcpy(p, s, n);
   return p;
+}
+
+if (n == cap) {
+  cap *= 2;
+  void *tmp = realloc(arr, cap * sizeof(entry_t));
+  if (!tmp) { free(arr); cJSON_Delete(root); return false; }
+  arr = (entry_t*)tmp;
 }
 
 static enum_kv_t* enum_list_from_obj(cJSON *obj){
@@ -175,3 +183,4 @@ const entry_t* table_find_by_canid(const table_t *t, uint32_t can_id){
   }
   return NULL;
 }
+

@@ -106,20 +106,16 @@ bool mqtt_init(mqtt_ctx_t *ctx, const char *host, int port, int keepalive){
   return true;
 }
 
-bool mqtt_subscribe_all_nolocal(mqtt_ctx_t *ctx){
-  if(!ctx || !ctx->mosq) return false;
-  struct mosquitto_subscribe_options opts;
-  memset(&opts,0,sizeof(opts));
-  opts.no_local = 1;               /* clé pour éviter les boucles d’écho */
-  opts.retain_as_published = 0;
-  opts.retain_handling = 0;
-  int rc = mosquitto_subscribe_v5(ctx->mosq, NULL, "#", ctx->qos_sub, &opts);
-  if(rc != MOSQ_ERR_SUCCESS){
-    LOGE("subscribe_v5 '#' rc=%d", rc);
+bool mqtt_subscribe_all(mqtt_ctx_t *ctx) {
+  if (!ctx || !ctx->mosq) return false;
+  int rc = mosquitto_subscribe(ctx->mosq, NULL, "#", ctx->qos_sub);
+  if (rc != MOSQ_ERR_SUCCESS) {
+    LOGE("Subscribe '#' rc=%d", rc);
     return false;
   }
   return true;
 }
+
 
 /* Pompe non-bloquante; à appeler dans my_loop */
 bool mqtt_poll(mqtt_ctx_t *ctx){
