@@ -3,6 +3,7 @@
 #include <cjson/cJSON.h>
 #include <string.h>
 #include <stdlib.h>
+#include <strings.h>
 
 static char* sdup(const char *s){
   if(!s) return NULL;
@@ -138,14 +139,14 @@ bool table_load(table_t *t, const char *json_path){
   }
 
   cJSON_Delete(root);
-  t->entries = arr; t->count = n;
+  t->entries = arr; t->entry_count = n;
   LOGI("Table chargée: %zu topics, %zu IDs", n, n);
   return (n>0);
 }
 
 void table_free(table_t *t){
   if(!t||!t->entries) return;
-  for(size_t i=0;i<t->count;i++){
+  for(size_t i=0;i<t->entry_count;i++){
     entry_t *e = &t->entries[i];
     free(e->topic);
     if(e->fields){
@@ -162,14 +163,14 @@ void table_free(table_t *t){
 
 const entry_t* table_find_by_topic(const table_t *t, const char *topic){
   if(!t||!topic) return NULL;
-  for(size_t i=0;i<t->count;i++){
+  for(size_t i=0;i<t->entry_count;i++){
     if(t->entries[i].topic && strcmp(t->entries[i].topic, topic)==0) return &t->entries[i];
   }
   return NULL;
 }
 const entry_t* table_find_by_canid(const table_t *t, uint32_t can_id){
   if(!t) return NULL;
-  for(size_t i=0;i<t->count;i++){
+  for(size_t i=0;i<t->entry_count;i++){
     if(t->entries[i].can_id == can_id) return &t->entries[i];
   }
   return NULL;
