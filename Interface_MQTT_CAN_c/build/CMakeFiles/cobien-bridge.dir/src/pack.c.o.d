@@ -52,4 +52,6 @@ CMakeFiles/cobien-bridge.dir/src/pack.c.o: \
  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
- /usr/include/x86_64-linux-gnu/bits/stdlib.h /usr/include/ctype.h
+ /usr/include/x86_64-linux-gnu/bits/stdlib.h /usr/include/ctype.h \
+ /usr/include/string.h \
+ /usr/include/x86_64-linux-gnu/bits/string_fortified.h

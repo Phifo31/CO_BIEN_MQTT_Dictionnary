@@ -71,8 +71,9 @@ CMakeFiles/cobien-bridge.dir/src/can_io.c.o: \
  /usr/include/x86_64-linux-gnu/bits/socket_type.h \
  /usr/include/x86_64-linux-gnu/bits/sockaddr.h \
  /usr/include/x86_64-linux-gnu/bits/socket-constants.h \
- /usr/include/x86_64-linux-gnu/bits/socket2.h /usr/include/net/if.h \
- /usr/include/x86_64-linux-gnu/sys/ioctl.h \
+ /usr/include/x86_64-linux-gnu/bits/socket2.h /usr/include/linux/if.h \
+ /usr/include/linux/libc-compat.h /usr/include/linux/hdlc/ioctl.h \
+ /usr/include/net/if.h /usr/include/x86_64-linux-gnu/sys/ioctl.h \
  /usr/include/x86_64-linux-gnu/bits/ioctls.h \
  /usr/include/x86_64-linux-gnu/asm/ioctls.h \
  /usr/include/asm-generic/ioctls.h /usr/include/linux/ioctl.h \
