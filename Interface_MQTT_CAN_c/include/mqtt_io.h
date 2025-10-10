@@ -33,6 +33,9 @@ bool mqtt_handle_can_message(mqtt_ctx_t *ctx, const struct entry_s *e, const uin
 /* User-data: passer {table,can,mqtt} au callback on_message */
 void mqtt_set_user_data(mqtt_ctx_t *ctx, void *userdata);
 
+/* QoS (manquait -> causait l'undefined reference) */
+void mqtt_set_qos(mqtt_ctx_t *ctx, int qos_sub, int qos_pub);
+
 /* Nettoyage */
 void mqtt_cleanup(mqtt_ctx_t *ctx);
 

@@ -139,6 +139,12 @@ bool mqtt_publish_json(mqtt_ctx_t *ctx, const char *topic, const char *json_str)
   return true;
 }
 
+void mqtt_set_qos(mqtt_ctx_t *ctx, int qos_sub, int qos_pub){
+  if(!ctx) return;
+  if(qos_sub >= 0 && qos_sub <= 2) ctx->qos_sub = qos_sub;
+  if(qos_pub  >= 0 && qos_pub  <= 2) ctx->qos_pub  = qos_pub;
+}
+
 bool mqtt_handle_can_message(mqtt_ctx_t *ctx, const entry_t *e, const uint8_t data[8]){
   if(!ctx || !e) return false;
   cJSON *obj = unpack_payload(data, e);
