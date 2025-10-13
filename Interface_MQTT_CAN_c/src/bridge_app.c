@@ -3,34 +3,41 @@
 #include "mqtt_io.h"
 #include "can_io.h"
 #include "log.h"
-
+#include <stdlib.h>
 #include <mosquitto.h>
+#include <unistd.h>   
+#include <stddef.h>
+
 #include <signal.h>
 #include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <time.h>   // nanosleep
 
-// Défauts (peuvent être override par la ligne de commande via main)
-static const char *CFG_PATH_DEF = "config/conversion.json";
-static const char *IFNAME       = "can0";        // "vcan0" en test
-static const char *MQTT_HOST    = "localhost";
-static const int   MQTT_PORT    = 1883;
+
+// --- paramètres "fixes" (fais simple)
+static const char *CFG_PATH  = (argc > 1) ? argv[1] : "config/conversion.json" ;
+#include "bridge_app.h"
+#include <stddef.h>
+
+int main(int argc, char **argv){
+  const char *cfg_path = (argc > 1) ? argv[1] : "config/conversion.json";
+  if (!my_setup(cfg_path)) return 1;
+  while (my_loop()) {}
+  my_shutdown();
+  return 0;
+}
+
+
+static const char *IFNAME    = "can0";        // ou "vcan0" en test logiciel
+static const char *MQTT_HOST = "localhost";
+static const int   MQTT_PORT = 1883;
 
 static volatile int g_running = 1;
-static table_t    g_table;
+static table_t   g_table;
 static mqtt_ctx_t g_mqtt;
 static can_ctx_t  g_can;
 
 static void on_sig(int s){ (void)s; g_running = 0; }
 
-static bool try_load(table_t *t, const char *p){
-  if (p && table_load(t, p)) { LOGI("Table chargée depuis: %s", p); return true; }
-  LOGW("Echec chargement table: %s", p ? p : "(null)");
-  return false;
-}
-
-bool my_setup(const char *cfg_path_opt) {
+bool my_setup(void) {
   signal(SIGINT,  on_sig);
   signal(SIGTERM, on_sig);
 
@@ -38,46 +45,55 @@ bool my_setup(const char *cfg_path_opt) {
   memset(&g_mqtt,  0, sizeof(g_mqtt));
   memset(&g_can,   0, sizeof(g_can));
 
-  // 1) Charger la table
-  const char *p = (cfg_path_opt && *cfg_path_opt) ? cfg_path_opt : CFG_PATH_DEF;
-  if (!try_load(&g_table, p)) {
-    // fallback courant quand on lance depuis build/
-    if (!cfg_path_opt && strcmp(p, CFG_PATH_DEF)==0) {
-      if (!try_load(&g_table, "../config/conversion.json")) return false;
-    } else {
-      return false;
-    }
+  if (!table_load(&g_table, CFG_PATH)) {
+    LOGE("Echec chargement table: %s", CFG_PATH);
+    return false;
   }
 
-  // 2) MQTT
-  if (!mqtt_init(&g_mqtt, MQTT_HOST, MQTT_PORT, 60)) return false;
+  if (!mqtt_init(&g_mqtt, MQTT_HOST, MQTT_PORT, 60))
+    return false;
   mqtt_set_qos(&g_mqtt, 1, 1);
-  if (!mqtt_subscribe_all(&g_mqtt)) return false;
 
-  // 3) CAN
-  if (!can_init(&g_can, IFNAME)) return false;
+  // Lier la callback MQTT -> CAN avec userdata (table+can+mqtt)
+  struct { const table_t *t; can_ctx_t *c; mqtt_ctx_t *m; } *ub =
+    (void*)malloc(sizeof(*ub));
+  if (!ub) return false;
+  ub->t = &g_table; ub->c = &g_can; ub->m = &g_mqtt;
+  mqtt_set_user_data(&g_mqtt, ub);
 
-  LOGI("Setup OK (if=%s, mqtt=%s:%d)", IFNAME, MQTT_HOST, MQTT_PORT);
+ if (!mqtt_subscribe_all(&g_mqtt)) return false;
+ if (!can_init(&g_can, IFNAME)) return false;
+
+  LOGI("Setup OK (cfg=%s, if=%s, mqtt=%s:%d)", CFG_PATH, IFNAME, MQTT_HOST, MQTT_PORT);
   return true;
 }
 
-bool my_loop(void) {
+bool my_loop(void)
+{
   if (!g_running) return false;
 
-  if (g_mqtt.mosq) mosquitto_loop(g_mqtt.mosq, 0, 100);
-  can_poll(&g_can, &g_table, &g_mqtt, 16);
+  /* 1) Traite MQTT disponible (jusqu'à 100 paquets par tick, non-bloquant) */
+  if (g_mqtt.mosq)
+  mosquitto_loop(g_mqtt.mosq, 0, 100);
 
-  struct timespec ts = { .tv_sec = 0, .tv_nsec = 1 * 1000 * 1000 }; // ~1 ms
-  nanosleep(&ts, NULL);
+  /* 2) Draine le CAN disponible (non-bloquant) */
+  can_poll(&g_can, &g_table, &g_mqtt, 8);
+
+  /* 3) Petite sieste pour ne pas monopoliser le CPU si tout est vide */
+  sleep(1000); // 1 ms
 
   return true;
 }
 
+
 void my_shutdown(void) {
+  // libérer le userdata qu’on a alloué
+  void *ud = g_mqtt.mosq ? mosquitto_userdata(g_mqtt.mosq) : NULL;
+  
+  if (ud) free(ud);
+
   can_cleanup(&g_can);
   mqtt_cleanup(&g_mqtt);
   table_free(&g_table);
   LOGI("Shutdown OK");
 }
-
-
