@@ -1,19 +1,26 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-
-#include "types.h"
 #include <cjson/cJSON.h>
 #include <stdbool.h>
+#include <stdint.h>
+#include "types.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-bool table_load(table_t *t, const char *path_json);
+bool table_load(table_t *t, const char *json_path);
 void table_free(table_t *t);
 
-
-// lookups (O(1))
+/* lookups (O(1)) */
 const entry_t* table_find_by_topic(const table_t *t, const char *topic);
-const entry_t* table_find_by_id(const table_t *t, uint32_t can_id);
+const entry_t* table_find_by_canid(const table_t *t, uint32_t can_id);
 
-
+#ifdef __cplusplus
+}
 #endif
+
+#endif /* TABLE_H */
+
+

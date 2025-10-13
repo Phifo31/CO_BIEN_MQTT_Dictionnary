@@ -69,24 +69,10 @@ include CMakeFiles/cobien-bridge.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/cobien-bridge.dir/flags.make
 
-CMakeFiles/cobien-bridge.dir/src/main.c.o: CMakeFiles/cobien-bridge.dir/flags.make
-CMakeFiles/cobien-bridge.dir/src/main.c.o: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/main.c
-CMakeFiles/cobien-bridge.dir/src/main.c.o: CMakeFiles/cobien-bridge.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/cobien-bridge.dir/src/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/cobien-bridge.dir/src/main.c.o -MF CMakeFiles/cobien-bridge.dir/src/main.c.o.d -o CMakeFiles/cobien-bridge.dir/src/main.c.o -c /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/main.c
-
-CMakeFiles/cobien-bridge.dir/src/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/cobien-bridge.dir/src/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/main.c > CMakeFiles/cobien-bridge.dir/src/main.c.i
-
-CMakeFiles/cobien-bridge.dir/src/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/cobien-bridge.dir/src/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/main.c -o CMakeFiles/cobien-bridge.dir/src/main.c.s
-
 CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o: CMakeFiles/cobien-bridge.dir/flags.make
 CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/bridge_app.c
 CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o: CMakeFiles/cobien-bridge.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o -MF CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o.d -o CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o -c /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/bridge_app.c
 
 CMakeFiles/cobien-bridge.dir/src/bridge_app.c.i: cmake_force
@@ -100,7 +86,7 @@ CMakeFiles/cobien-bridge.dir/src/bridge_app.c.s: cmake_force
 CMakeFiles/cobien-bridge.dir/src/pack.c.o: CMakeFiles/cobien-bridge.dir/flags.make
 CMakeFiles/cobien-bridge.dir/src/pack.c.o: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/pack.c
 CMakeFiles/cobien-bridge.dir/src/pack.c.o: CMakeFiles/cobien-bridge.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/cobien-bridge.dir/src/pack.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/cobien-bridge.dir/src/pack.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/cobien-bridge.dir/src/pack.c.o -MF CMakeFiles/cobien-bridge.dir/src/pack.c.o.d -o CMakeFiles/cobien-bridge.dir/src/pack.c.o -c /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/pack.c
 
 CMakeFiles/cobien-bridge.dir/src/pack.c.i: cmake_force
@@ -114,7 +100,7 @@ CMakeFiles/cobien-bridge.dir/src/pack.c.s: cmake_force
 CMakeFiles/cobien-bridge.dir/src/table.c.o: CMakeFiles/cobien-bridge.dir/flags.make
 CMakeFiles/cobien-bridge.dir/src/table.c.o: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c
 CMakeFiles/cobien-bridge.dir/src/table.c.o: CMakeFiles/cobien-bridge.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/cobien-bridge.dir/src/table.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/cobien-bridge.dir/src/table.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/cobien-bridge.dir/src/table.c.o -MF CMakeFiles/cobien-bridge.dir/src/table.c.o.d -o CMakeFiles/cobien-bridge.dir/src/table.c.o -c /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/table.c
 
 CMakeFiles/cobien-bridge.dir/src/table.c.i: cmake_force
@@ -128,7 +114,7 @@ CMakeFiles/cobien-bridge.dir/src/table.c.s: cmake_force
 CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o: CMakeFiles/cobien-bridge.dir/flags.make
 CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/mqtt_io.c
 CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o: CMakeFiles/cobien-bridge.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o -MF CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o.d -o CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o -c /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/mqtt_io.c
 
 CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.i: cmake_force
@@ -142,7 +128,7 @@ CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.s: cmake_force
 CMakeFiles/cobien-bridge.dir/src/can_io.c.o: CMakeFiles/cobien-bridge.dir/flags.make
 CMakeFiles/cobien-bridge.dir/src/can_io.c.o: /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/can_io.c
 CMakeFiles/cobien-bridge.dir/src/can_io.c.o: CMakeFiles/cobien-bridge.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/cobien-bridge.dir/src/can_io.c.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/cobien-bridge.dir/src/can_io.c.o"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/cobien-bridge.dir/src/can_io.c.o -MF CMakeFiles/cobien-bridge.dir/src/can_io.c.o.d -o CMakeFiles/cobien-bridge.dir/src/can_io.c.o -c /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/src/can_io.c
 
 CMakeFiles/cobien-bridge.dir/src/can_io.c.i: cmake_force
@@ -155,7 +141,6 @@ CMakeFiles/cobien-bridge.dir/src/can_io.c.s: cmake_force
 
 # Object files for target cobien-bridge
 cobien__bridge_OBJECTS = \
-"CMakeFiles/cobien-bridge.dir/src/main.c.o" \
 "CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o" \
 "CMakeFiles/cobien-bridge.dir/src/pack.c.o" \
 "CMakeFiles/cobien-bridge.dir/src/table.c.o" \
@@ -165,7 +150,6 @@ cobien__bridge_OBJECTS = \
 # External object files for target cobien-bridge
 cobien__bridge_EXTERNAL_OBJECTS =
 
-cobien-bridge: CMakeFiles/cobien-bridge.dir/src/main.c.o
 cobien-bridge: CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o
 cobien-bridge: CMakeFiles/cobien-bridge.dir/src/pack.c.o
 cobien-bridge: CMakeFiles/cobien-bridge.dir/src/table.c.o
@@ -173,7 +157,7 @@ cobien-bridge: CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o
 cobien-bridge: CMakeFiles/cobien-bridge.dir/src/can_io.c.o
 cobien-bridge: CMakeFiles/cobien-bridge.dir/build.make
 cobien-bridge: CMakeFiles/cobien-bridge.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking C executable cobien-bridge"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable cobien-bridge"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cobien-bridge.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -4,6 +4,7 @@ CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o: \
  /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/include/bridge_app.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdbool.h \
  /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/include/table.h \
+ /usr/include/cjson/cJSON.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \

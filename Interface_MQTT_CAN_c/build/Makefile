@@ -177,30 +177,6 @@ src/can_io.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/cobien-bridge.dir/build.make CMakeFiles/cobien-bridge.dir/src/can_io.c.s
 .PHONY : src/can_io.c.s
 
-src/main.o: src/main.c.o
-.PHONY : src/main.o
-
-# target to build an object file
-src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cobien-bridge.dir/build.make CMakeFiles/cobien-bridge.dir/src/main.c.o
-.PHONY : src/main.c.o
-
-src/main.i: src/main.c.i
-.PHONY : src/main.i
-
-# target to preprocess a source file
-src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cobien-bridge.dir/build.make CMakeFiles/cobien-bridge.dir/src/main.c.i
-.PHONY : src/main.c.i
-
-src/main.s: src/main.c.s
-.PHONY : src/main.s
-
-# target to generate assembly for a file
-src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/cobien-bridge.dir/build.make CMakeFiles/cobien-bridge.dir/src/main.c.s
-.PHONY : src/main.c.s
-
 src/mqtt_io.o: src/mqtt_io.c.o
 .PHONY : src/mqtt_io.o
 
@@ -288,9 +264,6 @@ help:
 	@echo "... src/can_io.o"
 	@echo "... src/can_io.i"
 	@echo "... src/can_io.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
 	@echo "... src/mqtt_io.o"
 	@echo "... src/mqtt_io.i"
 	@echo "... src/mqtt_io.s"

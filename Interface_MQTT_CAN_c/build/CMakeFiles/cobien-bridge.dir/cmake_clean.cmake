@@ -3,8 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/cobien-bridge.dir/src/bridge_app.c.o.d"
   "CMakeFiles/cobien-bridge.dir/src/can_io.c.o"
   "CMakeFiles/cobien-bridge.dir/src/can_io.c.o.d"
-  "CMakeFiles/cobien-bridge.dir/src/main.c.o"
-  "CMakeFiles/cobien-bridge.dir/src/main.c.o.d"
   "CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o"
   "CMakeFiles/cobien-bridge.dir/src/mqtt_io.c.o.d"
   "CMakeFiles/cobien-bridge.dir/src/pack.c.o"

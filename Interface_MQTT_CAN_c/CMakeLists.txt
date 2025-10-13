@@ -39,12 +39,11 @@ pkg_check_modules(CJSON REQUIRED libcjson)
 
 # Binaire principal
 add_executable(cobien-bridge
- src/main.c
- src/bridge_app.c    
- src/pack.c
- src/table.c
- src/mqtt_io.c
- src/can_io.c
+  src/bridge_app.c
+  src/pack.c
+  src/table.c
+  src/mqtt_io.c
+  src/can_io.c
 )
 
 

@@ -19,6 +19,7 @@ CMakeFiles/cobien-bridge.dir/src/can_io.c.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/include/table.h \
+ /usr/include/cjson/cJSON.h \
  /usr/lib/gcc/x86_64-linux-gnu/11/include/stddef.h \
  /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/include/types.h \
  /home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/Interface_MQTT_CAN_c/include/mqtt_io.h \
