@@ -37,6 +37,12 @@ bool can_init(can_ctx_t *c, const char *ifname){
     close(fd); return false;
   }
 
+  // IMPORTANT : ne pas recevoir nos propres trames (coupe les doublons)
+  int recv_own = 0; // 0 = off
+  if (setsockopt(fd, SOL_CAN_RAW, CAN_RAW_RECV_OWN_MSGS, &recv_own, sizeof(recv_own)) < 0) {
+    LOGW("setsockopt(CAN_RAW_RECV_OWN_MSGS): %s", strerror(errno));
+  }
+
   struct sockaddr_can addr; memset(&addr, 0, sizeof(addr));
   addr.can_family  = AF_CAN;
   addr.can_ifindex = ifr.ifr_ifindex;
@@ -47,10 +53,9 @@ bool can_init(can_ctx_t *c, const char *ifname){
   }
 
   if (!set_nonblock(fd)){
-    LOGW("fcntl nonblock échoué (CAN FD restera bloquant)");
+    LOGW("fcntl(O_NONBLOCK) échoué (socket bloquant)");
   }
 
-  /* Buffers kernel un peu plus grands (best-effort) */
   int rcvbuf = 256*1024;
   (void)setsockopt(fd, SOL_SOCKET, SO_RCVBUF, &rcvbuf, sizeof(rcvbuf));
   int sndbuf = 256*1024;
@@ -59,6 +64,7 @@ bool can_init(can_ctx_t *c, const char *ifname){
   c->fd = fd;
   return true;
 }
+
 
 bool can_send(can_ctx_t *c, uint32_t can_id, const uint8_t data[8]){
   if (!c || c->fd < 0) return false;

@@ -13,7 +13,7 @@
 
 
 // --- paramètres fixes par défaut ---
-static const char *IFNAME    = "can0";        // ou "vcan0" en test logiciel
+static const char *IFNAME    = "vcan0";        // ou "vcan0" en test logiciel
 static const char *MQTT_HOST = "localhost";
 static const int   MQTT_PORT = 1883;
 
@@ -54,7 +54,8 @@ bool my_setup(const char *cfg_path) {
     ub->t = &g_table; ub->c = &g_can; ub->m = &g_mqtt;
     mqtt_set_user_data(&g_mqtt, ub);
 
-    if (!mqtt_subscribe_all(&g_mqtt)) return false;
+    if (!mqtt_subscribe_all_nolocal(&g_mqtt)) return false;
+
     if (!can_init(&g_can, IFNAME)) return false;
 
     LOGI("Setup OK (cfg=%s, if=%s, mqtt=%s:%d)", cfg_path, IFNAME, MQTT_HOST, MQTT_PORT);

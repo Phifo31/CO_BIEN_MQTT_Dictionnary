@@ -106,15 +106,20 @@ bool mqtt_init(mqtt_ctx_t *ctx, const char *host, int port, int keepalive){
   return true;
 }
 
-bool mqtt_subscribe_all(mqtt_ctx_t *ctx) {
-  if (!ctx || !ctx->mosq) return false;
-  int rc = mosquitto_subscribe(ctx->mosq, NULL, "#", ctx->qos_sub);
-  if (rc != MOSQ_ERR_SUCCESS) {
-    LOGE("Subscribe '#' rc=%d", rc);
+bool mqtt_subscribe_all_nolocal(mqtt_ctx_t *ctx){
+  if(!ctx || !ctx->mosq) return false;
+
+  // mosquitto_subscribe_v5(..., options, properties)
+  // options: bitmask -> NO_LOCAL = 4 (MOSQ_SUB_OPT_NO_LOCAL)
+  int options = 4; // NO_LOCAL
+  int rc = mosquitto_subscribe_v5(ctx->mosq, NULL, "#", ctx->qos_sub, options, NULL);
+  if(rc != MOSQ_ERR_SUCCESS){
+    LOGE("Subscribe v5 '#' rc=%d", rc);
     return false;
   }
   return true;
 }
+
 
 
 
