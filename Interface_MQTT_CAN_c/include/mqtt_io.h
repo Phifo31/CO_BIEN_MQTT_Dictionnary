@@ -19,7 +19,7 @@ typedef struct mqtt_ctx_s {
 bool mqtt_init(mqtt_ctx_t *ctx, const char *host, int port, int keepalive);
 
 /* Subscription large (‘#’) avec option v5 no_local */
-bool mqtt_subscribe_all(mqtt_ctx_t *ctx);
+bool mqtt_subscribe_all_nolocal(mqtt_ctx_t *ctx);
 
 /* Pompe non-bloquante (à appeler dans my_loop) */
 bool mqtt_poll(mqtt_ctx_t *ctx);
