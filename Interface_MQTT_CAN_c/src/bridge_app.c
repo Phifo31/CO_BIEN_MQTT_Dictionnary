@@ -13,7 +13,7 @@
 
 
 // --- paramètres fixes par défaut ---
-static const char *IFNAME    = "vcan0";        // ou "vcan0" en test logiciel
+static const char *IFNAME    = "can0";        // ou "vcan0" en test logiciel
 static const char *MQTT_HOST = "localhost";
 static const int   MQTT_PORT = 1883;
 
