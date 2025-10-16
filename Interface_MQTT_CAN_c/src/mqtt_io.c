@@ -11,16 +11,24 @@
 #include <stdio.h>
 #include <errno.h>
 
+/* ============= Config pont ============= */
+/* ID de transport pour le “tunnel” (coté STM32) */
+#ifndef BRIDGE_TUNNEL_CANID
+#define BRIDGE_TUNNEL_CANID 0x431
+#endif
+
 typedef struct user_bundle_s {
-  const table_t *table;
+  const table_t   *table;
   struct can_ctx_s *can;
-  mqtt_ctx_t *mqtt;
+  mqtt_ctx_t      *mqtt;
 } user_bundle_t;
 
+/* ============= Helpers ============= */
 static int ends_with(const char *s, const char *suf){
   size_t a=strlen(s), b=strlen(suf);
   return (a>=b) && (strcmp(s+(a-b),suf)==0);
 }
+
 static void topic_base_from_input(const char *in, char *base, size_t n){
   if(!in||!base||!n) return;
   if(ends_with(in,"/state")){ base[0]='\0'; return; } /* ignoré */
@@ -33,17 +41,19 @@ static void topic_base_from_input(const char *in, char *base, size_t n){
   snprintf(base,n,"%s",in);
 }
 
-/* MQTT callbacks */
+/* ============= Callbacks MQTT ============= */
 static void on_connect(struct mosquitto *m, void *ud, int rc){
   (void)m; (void)ud;
   if(rc==0) LOGI("MQTT connecté");
   else      LOGW("MQTT connect rc=%d", rc);
 }
+
 static void on_disconnect(struct mosquitto *m, void *ud, int rc){
-  (void)m; (void)ud; LOGW("MQTT déconnecté rc=%d", rc);
+  (void)m; (void)ud;
+  LOGW("MQTT déconnecté rc=%d", rc);
 }
 
-/* MQTT -> CAN */
+/* MQTT -> CAN (mode “tunnel”) */
 static void on_message(struct mosquitto *m, void *ud, const struct mosquitto_message *msg){
   (void)m;
   if(!ud || !msg || !msg->topic) return;
@@ -55,8 +65,12 @@ static void on_message(struct mosquitto *m, void *ud, const struct mosquitto_mes
   if(base[0]=='\0') return; /* /state ignoré */
 
   const entry_t *e = table_find_by_topic(ub->table, base);
-  if(!e){ LOGW("Topic inconnu: %s", msg->topic); return; }
+  if(!e){
+    LOGW("Topic inconnu: %s", msg->topic);
+    return;
+  }
 
+  /* Parse JSON */
   cJSON *in = NULL;
   if(msg->payload && msg->payloadlen>0){
     char *buf = (char*)malloc((size_t)msg->payloadlen+1);
@@ -66,21 +80,37 @@ static void on_message(struct mosquitto *m, void *ud, const struct mosquitto_mes
     in = cJSON_Parse(buf);
     free(buf);
   }
-  if(!in){ LOGW("Payload JSON invalide sur %s", msg->topic); return; }
-
-  uint8_t out8[8]={0};
-  bool ok = pack_payload(out8, e, in);
-  cJSON_Delete(in);
-  if(!ok){ LOGE("Pack échoué pour topic %s", base); return; }
-
-  if(!can_send(ub->can, e->can_id, out8)){
-    LOGE("Envoi CAN échoué id=0x%X", e->can_id);
+  if(!in){
+    LOGW("Payload JSON invalide sur %s", msg->topic);
     return;
   }
-  LOGI("MQTT->CAN OK topic=%s id=0x%X", base, e->can_id);
+
+  /* 1) On packe le “corps” jusqu’à 8 octets */
+  uint8_t body[8]={0};
+  bool ok_body = pack_payload(body, e, in);
+  cJSON_Delete(in);
+  if(!ok_body){
+    LOGE("Pack échoué pour topic %s", base);
+    return;
+  }
+
+  /* 2) Mode tunnel : [MSB(inner_id), LSB(inner_id), body[0..5]] */
+  uint8_t out8[8]={0};
+  out8[0] = (uint8_t)((e->can_id >> 8) & 0xFF);
+  out8[1] = (uint8_t)( e->can_id       & 0xFF);
+  memcpy(out8+2, body, 6); /* on place au plus 6 octets derrière */
+
+  /* 3) Envoi sur l’ID de transport attendu par la STM32 */
+  if(!can_send(ub->can, BRIDGE_TUNNEL_CANID, out8)){
+    LOGE("Envoi CAN échoué (transport=0x%X, inner_id=0x%X)",
+         BRIDGE_TUNNEL_CANID, e->can_id);
+    return;
+  }
+  LOGI("MQTT->CAN OK topic=%s transport=0x%X inner_id=0x%X",
+       base, BRIDGE_TUNNEL_CANID, e->can_id);
 }
 
-/* API */
+/* ============= API ============= */
 bool mqtt_init(mqtt_ctx_t *ctx, const char *host, int port, int keepalive){
   if(!ctx) return false;
   memset(ctx,0,sizeof(*ctx));
@@ -88,30 +118,36 @@ bool mqtt_init(mqtt_ctx_t *ctx, const char *host, int port, int keepalive){
 
   mosquitto_lib_init();
   ctx->mosq = mosquitto_new(NULL, true, NULL);
-  if(!ctx->mosq){ LOGE("mosquitto_new"); return false; }
+  if(!ctx->mosq){
+    LOGE("mosquitto_new");
+    return false;
+  }
 
-  /* Forcer MQTT v5 pour pouvoir utiliser no_local */
+  /* Forcer MQTT v5 pour autoriser NO_LOCAL */
   mosquitto_int_option(ctx->mosq, MOSQ_OPT_PROTOCOL_VERSION, MQTT_PROTOCOL_V5);
 
   mosquitto_connect_callback_set(ctx->mosq, on_connect);
   mosquitto_disconnect_callback_set(ctx->mosq, on_disconnect);
   mosquitto_message_callback_set(ctx->mosq, on_message);
 
-  if(mosquitto_connect(ctx->mosq, host?host:"localhost", port>0?port:1883, keepalive>0?keepalive:60) != MOSQ_ERR_SUCCESS){
+  if(mosquitto_connect(ctx->mosq,
+                       host?host:"localhost",
+                       port>0?port:1883,
+                       keepalive>0?keepalive:60) != MOSQ_ERR_SUCCESS){
     LOGE("mosquitto_connect");
-    mosquitto_destroy(ctx->mosq); ctx->mosq=NULL;
+    mosquitto_destroy(ctx->mosq);
+    ctx->mosq=NULL;
     mosquitto_lib_cleanup();
     return false;
   }
   return true;
 }
 
+/* Abonnement “tout” avec NO_LOCAL (évite les re-bouclages) */
 bool mqtt_subscribe_all_nolocal(mqtt_ctx_t *ctx){
   if(!ctx || !ctx->mosq) return false;
-
-  // mosquitto_subscribe_v5(..., options, properties)
-  // options: bitmask -> NO_LOCAL = 4 (MOSQ_SUB_OPT_NO_LOCAL)
-  int options = 4; // NO_LOCAL
+  /* options = bitmask, NO_LOCAL = 4 (MOSQ_SUB_OPT_NO_LOCAL) */
+  int options = 4;
   int rc = mosquitto_subscribe_v5(ctx->mosq, NULL, "#", ctx->qos_sub, options, NULL);
   if(rc != MOSQ_ERR_SUCCESS){
     LOGE("Subscribe v5 '#' rc=%d", rc);
@@ -120,8 +156,10 @@ bool mqtt_subscribe_all_nolocal(mqtt_ctx_t *ctx){
   return true;
 }
 
-
-
+/* Raccourci “legacy” -> utilise v5 NO_LOCAL par défaut */
+bool mqtt_subscribe_all(mqtt_ctx_t *ctx){
+  return mqtt_subscribe_all_nolocal(ctx);
+}
 
 /* Pompe non-bloquante; à appeler dans my_loop */
 bool mqtt_poll(mqtt_ctx_t *ctx){
@@ -136,7 +174,9 @@ bool mqtt_poll(mqtt_ctx_t *ctx){
 
 bool mqtt_publish_json(mqtt_ctx_t *ctx, const char *topic, const char *json_str){
   if(!ctx||!ctx->mosq||!topic||!json_str) return false;
-  int rc = mosquitto_publish(ctx->mosq, NULL, topic, (int)strlen(json_str), json_str, ctx->qos_pub, false);
+  int rc = mosquitto_publish(ctx->mosq, NULL, topic,
+                             (int)strlen(json_str), json_str,
+                             ctx->qos_pub, false);
   if(rc != MOSQ_ERR_SUCCESS){
     LOGE("publish '%s' rc=%d", topic, rc);
     return false;
@@ -150,13 +190,20 @@ void mqtt_set_qos(mqtt_ctx_t *ctx, int qos_sub, int qos_pub){
   if(qos_pub  >= 0 && qos_pub  <= 2) ctx->qos_pub  = qos_pub;
 }
 
+/* CAN -> MQTT : publie sur le topic “de base” */
 bool mqtt_handle_can_message(mqtt_ctx_t *ctx, const entry_t *e, const uint8_t data[8]){
   if(!ctx || !e) return false;
   cJSON *obj = unpack_payload(data, e);
-  if(!obj){ LOGE("Unpack échoué id=0x%X", e->can_id); return false; }
+  if(!obj){
+    LOGE("Unpack échoué id=0x%X", e->can_id);
+    return false;
+  }
   char *out = cJSON_PrintUnformatted(obj);
   cJSON_Delete(obj);
-  if(!out){ LOGE("cJSON_PrintUnformatted"); return false; }
+  if(!out){
+    LOGE("cJSON_PrintUnformatted");
+    return false;
+  }
 
   bool ok = mqtt_publish_json(ctx, e->topic, out); /* publier sur le topic de base */
   free(out);
@@ -179,3 +226,5 @@ void mqtt_cleanup(mqtt_ctx_t *ctx){
   }
   mosquitto_lib_cleanup();
 }
+
+

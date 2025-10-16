@@ -89,30 +89,47 @@ void can_poll(can_ctx_t *c, const table_t *t, mqtt_ctx_t *m, int max_frames){
   if (!c || c->fd < 0) return;
   if (max_frames <= 0) max_frames = 8;
 
-  fd_set rfds;
-  struct timeval tv = (struct timeval){0, 0}; // non-bloquant
-  FD_ZERO(&rfds);
-  FD_SET(c->fd, &rfds);
-
+  fd_set rfds; struct timeval tv = (struct timeval){0,0};
+  FD_ZERO(&rfds); FD_SET(c->fd, &rfds);
   int rv = select(c->fd + 1, &rfds, NULL, NULL, &tv);
-  if (rv <= 0 || !FD_ISSET(c->fd, &rfds)) return; /* rien à lire */
+  if (rv <= 0 || !FD_ISSET(c->fd, &rfds)) return;
 
   for (int i = 0; i < max_frames; i++){
-    struct can_frame f;
-    ssize_t n = read(c->fd, &f, sizeof(f));
+    struct can_frame f; ssize_t n = read(c->fd, &f, sizeof(f));
     if (n < 0){
-      if (errno == EAGAIN || errno == EWOULDBLOCK) break; // plus rien
+      if (errno == EAGAIN || errno == EWOULDBLOCK) break;
       LOGW("CAN read: %s", strerror(errno));
       break;
     }
-    if ((size_t)n != sizeof(f)) break; // lecture incomplète
+    if ((size_t)n != sizeof(f)) break;
 
+    /* 1) tentative par ID de trame normal */
     const entry_t *e = t ? table_find_by_canid(t, f.can_id) : NULL;
-    if (!e) continue;
+    const uint8_t *payload = f.data;
+    uint8_t shifted[8];
 
-    (void)mqtt_handle_can_message(m, e, f.data);
+    /* 2) si inconnu, tenter le mode tunnel: ID 16 bits dans data[0..1] */
+    if (!e && f.can_dlc >= 2){
+      uint16_t inner_id = ((uint16_t)f.data[0] << 8) | f.data[1];
+      e = table_find_by_canid(t, inner_id);
+      if (e){
+        /* on “retire” les 2 octets d’en-tête et on recale le payload */
+        memset(shifted, 0, sizeof(shifted));
+        size_t copy = (f.can_dlc > 2) ? (size_t)(f.can_dlc - 2) : 0;
+        if (copy > 6) copy = 6;                 /* place restante (8-2) */
+        memcpy(shifted, f.data + 2, copy);
+        payload = shifted;
+      }
+    }
+
+    if (!e) continue;
+    (void)mqtt_handle_can_message(m, e, payload);
   }
 }
+
+
+
+
 
 
 void can_cleanup(can_ctx_t *c){
