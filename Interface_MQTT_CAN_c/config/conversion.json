@@ -36,7 +36,7 @@
             "arbitration_id": 1220,
             "topic": "sensors/update",
             "data": {
-                "PIC_id": "int",
+                "PIC": "int",
                 "activated": "bool"
             }
             
@@ -130,5 +130,15 @@
                 
             }
         }
-    }
+    },
+    
+    "button": {
+        "config": {
+            "arbitration_id": 1810,
+            "topic": "button/config",
+            "data": {
+                "touched": "bool"
+            }
+        }
+}
 }
