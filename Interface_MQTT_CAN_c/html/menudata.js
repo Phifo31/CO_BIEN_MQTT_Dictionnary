@@ -24,21 +24,6 @@
 */
 var menudata={children:[
 {text:"Main Page",url:"index.html"},
-{text:"Namespaces",url:"namespaces.html",children:[
-{text:"Namespace List",url:"namespaces.html"},
-{text:"Namespace Members",url:"namespacemembers.html",children:[
-{text:"All",url:"namespacemembers.html",children:[
-{text:"b",url:"namespacemembers.html#index_b"},
-{text:"c",url:"namespacemembers.html#index_c"},
-{text:"e",url:"namespacemembers.html#index_e"},
-{text:"l",url:"namespacemembers.html#index_l"},
-{text:"m",url:"namespacemembers.html#index_m"},
-{text:"o",url:"namespacemembers.html#index_o"},
-{text:"p",url:"namespacemembers.html#index_p"},
-{text:"r",url:"namespacemembers.html#index_r"},
-{text:"t",url:"namespacemembers.html#index_t"}]},
-{text:"Functions",url:"namespacemembers_func.html"},
-{text:"Variables",url:"namespacemembers_vars.html"}]}]},
 {text:"Data Structures",url:"annotated.html",children:[
 {text:"Data Structures",url:"annotated.html"},
 {text:"Data Structure Index",url:"classes.html"},

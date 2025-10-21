@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['palette_0',['PALETTE',['../namespacecan__sender.html#a648247c8f2930fe7f0472779c01d8950',1,'can_sender.PALETTE'],['../namespacemqtt__sender.html#a648247c8f2930fe7f0472779c01d8950',1,'mqtt_sender.PALETTE']]],
-  ['period_5fs_1',['PERIOD_S',['../namespacecan__sender.html#a042f2ed090143f34986281dd18d8555d',1,'can_sender.PERIOD_S'],['../namespacemqtt__sender.html#a042f2ed090143f34986281dd18d8555d',1,'mqtt_sender.PERIOD_S']]]
+  ['qos_5fpub_0',['qos_pub',['../structmqtt__ctx__s.html#a27ec1c4d48166c59d1c22a920a95b107',1,'mqtt_ctx_s']]],
+  ['qos_5fsub_1',['qos_sub',['../structmqtt__ctx__s.html#a7e6c9af15ce9d884b415098256bf9ef6',1,'mqtt_ctx_s']]]
 ];
