@@ -36,8 +36,8 @@
             "arbitration_id": 1220,
             "topic": "sensors/update",
             "data": {
-                "PIC": "int",
-                "activated": "bool"
+                "PIC": "int"
+                
             }
             
         }
@@ -61,6 +61,17 @@
             }
             
         }
+    },
+
+    "ledstrip" : {
+        "config": {
+            "arbitration_id" : 2310,
+            "group": "int",          
+            "intensity": "int",      
+            "color": "hex",        
+            "mode": "string"       
+        }             
+
     },
 
     "proximity": {
@@ -131,8 +142,7 @@
             }
         }
     },
-    
-    "button": {
+     "button": {
         "config": {
             "arbitration_id": 1810,
             "topic": "button/config",
