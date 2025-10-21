@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Interface MQTT/CAN C: include/pack.h File Reference</title>
+<title>Interface MQTT/CAN en C: include/pack.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Interface MQTT/CAN C
+   <div id="projectname">Interface MQTT/CAN en C
    </div>
   </td>
  </tr>
@@ -126,9 +126,9 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><img src="pack_8h__dep__incl.png" border="0" usemap="#ainclude_2pack_8hdep" loading="lazy" alt=""/></div>
 <map name="ainclude_2pack_8hdep" id="ainclude_2pack_8hdep">
 <area shape="rect" title=" " alt="" coords="61,5,177,31"/>
-<area shape="rect" href="mqtt__io_8c.html" title=" " alt="" coords="5,79,112,104"/>
+<area shape="rect" href="mqtt__io_8c.html" title="Gestion des échanges MQTT pour le pont MQTT ↔ CAN." alt="" coords="5,79,112,104"/>
 <area shape="poly" title=" " alt="" coords="102,43,70,80,66,77,98,40"/>
-<area shape="rect" href="pack_8c.html" title=" " alt="" coords="137,79,223,104"/>
+<area shape="rect" href="pack_8c.html" title="Conversion des données entre format JSON et trame CAN (8 octets)." alt="" coords="137,79,223,104"/>
 <area shape="poly" title=" " alt="" coords="140,40,172,77,168,80,136,43"/>
 </map>
 </div>
@@ -138,7 +138,9 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a955c8b7768fda97bd5fb530cfb62fb3b" id="r_a955c8b7768fda97bd5fb530cfb62fb3b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a955c8b7768fda97bd5fb530cfb62fb3b">pack_payload</a> (uint8_t out8[8], const <a class="el" href="types_8h.html#aff70b3df5009c537270cbf72acd96ceb">entry_t</a> *entry, cJSON *json_in)</td></tr>
+<tr class="memdesc:a955c8b7768fda97bd5fb530cfb62fb3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convertit un objet JSON en tableau de 8 octets CAN.  <br /></td></tr>
 <tr class="memitem:a2837f0e285558a990b8744989b460647" id="r_a2837f0e285558a990b8744989b460647"><td class="memItemLeft" align="right" valign="top">cJSON *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2837f0e285558a990b8744989b460647">unpack_payload</a> (const uint8_t in8[8], const <a class="el" href="types_8h.html#aff70b3df5009c537270cbf72acd96ceb">entry_t</a> *entry)</td></tr>
+<tr class="memdesc:a2837f0e285558a990b8744989b460647"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convertit une trame CAN (8 octets) en objet JSON.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a955c8b7768fda97bd5fb530cfb62fb3b" name="a955c8b7768fda97bd5fb530cfb62fb3b"></a>
@@ -165,7 +167,20 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pack_8c_source.html#l00040">40</a> of file <a class="el" href="pack_8c_source.html">pack.c</a>.</p>
+<p>Convertit un objet JSON en tableau de 8 octets CAN. </p>
+<p>Cette fonction transforme chaque champ du JSON (int, bool, hex, etc.) selon le type défini dans la table. <br  />
+ Les valeurs sont ensuite placées dans le tableau de 8 octets à envoyer sur le bus CAN.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">out8</td><td>Tableau de 8 octets à remplir. </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">entry</td><td>Structure décrivant le message (topic, champs, types). </td></tr>
+    <tr><td class="paramdir"></td><td class="paramname">json_in</td><td>Objet JSON d’entrée. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true si la conversion a réussi, false sinon. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="pack_8c_source.html#l00110">110</a> of file <a class="el" href="pack_8c_source.html">pack.c</a>.</p>
 
 </div>
 </div>
@@ -188,14 +203,25 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="pack_8c_source.html#l00097">97</a> of file <a class="el" href="pack_8c_source.html">pack.c</a>.</p>
+<p>Convertit une trame CAN (8 octets) en objet JSON. </p>
+<p>Cette fonction fait l’opération inverse de <span class="tt"><a class="el" href="pack_8c.html#a955c8b7768fda97bd5fb530cfb62fb3b" title="Convertit un objet JSON en tableau de 8 octets CAN.">pack_payload()</a></span> : elle lit les 8 octets d’une trame CAN et reconstruit un objet JSON lisible pour MQTT.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in8</td><td>Tableau d’octets CAN reçu. </td></tr>
+    <tr><td class="paramname">entry</td><td>Structure décrivant le message attendu. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Objet JSON reconstruit, ou NULL en cas d’erreur. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="pack_8c_source.html#l00184">184</a> of file <a class="el" href="pack_8c_source.html">pack.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="pack_8h_a2837f0e285558a990b8744989b460647_icgraph.png" border="0" usemap="#apack_8h_a2837f0e285558a990b8744989b460647_icgraph" loading="lazy" alt=""/></div>
 <map name="apack_8h_a2837f0e285558a990b8744989b460647_icgraph" id="apack_8h_a2837f0e285558a990b8744989b460647_icgraph">
-<area shape="rect" title=" " alt="" coords="253,5,381,31"/>
-<area shape="rect" href="mqtt__io_8c.html#a207df8e885df905dfd9b41ac80b3edb7" title=" " alt="" coords="5,5,205,31"/>
+<area shape="rect" title="Convertit une trame CAN (8 octets) en objet JSON." alt="" coords="253,5,381,31"/>
+<area shape="rect" href="mqtt__io_8c.html#a207df8e885df905dfd9b41ac80b3edb7" title="Traite un message CAN et le publie sur MQTT." alt="" coords="5,5,205,31"/>
 <area shape="poly" title=" " alt="" coords="240,21,205,21,205,15,240,15"/>
 </map>
 </div>

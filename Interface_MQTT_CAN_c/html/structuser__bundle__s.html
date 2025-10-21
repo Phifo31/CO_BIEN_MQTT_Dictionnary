@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Interface MQTT/CAN C: user_bundle_s Struct Reference</title>
+<title>Interface MQTT/CAN en C: user_bundle_s Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Interface MQTT/CAN C
+   <div id="projectname">Interface MQTT/CAN en C
    </div>
   </td>
  </tr>
@@ -91,12 +91,15 @@ $(function(){initNavTree('structuser__bundle__s.html','',''); });
   <div class="headertitle"><div class="title">user_bundle_s Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Structure interne contenant les pointeurs nécessaires aux callbacks MQTT.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Collaboration diagram for user_bundle_s:</div>
 <div class="dyncontent">
 <div class="center"><img src="structuser__bundle__s__coll__graph.png" border="0" usemap="#auser__bundle__s_coll__map" loading="lazy" alt="Collaboration graph"/></div>
 <map name="auser__bundle__s_coll__map" id="auser__bundle__s_coll__map">
-<area shape="rect" title=" " alt="" coords="101,389,216,415"/>
+<area shape="rect" title="Structure interne contenant les pointeurs nécessaires aux callbacks MQTT." alt="" coords="101,389,216,415"/>
 <area shape="rect" href="structtable__s.html" title=" " alt="" coords="21,293,91,319"/>
 <area shape="poly" title=" " alt="" coords="77,327,114,363,144,387,141,391,110,367,73,331"/>
 <area shape="rect" href="structentry__s.html" title=" " alt="" coords="21,197,91,223"/>
@@ -120,8 +123,14 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a36aeb56fab68051bd72fbf53cf615129" id="r_a36aeb56fab68051bd72fbf53cf615129"><td class="memItemLeft" align="right" valign="top"><a class="el" href="mqtt__io_8h.html#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36aeb56fab68051bd72fbf53cf615129">mqtt</a></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00020">20</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<div class="textblock"><p>Structure interne contenant les pointeurs nécessaires aux callbacks MQTT. </p>
+<p>Cette structure regroupe :</p><ul>
+<li>la table de correspondance (topics ↔ IDs CAN)</li>
+<li>le contexte CAN</li>
+<li>le contexte MQTT </li>
+</ul>
+
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00058">58</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
 <a id="a856ebcb1153689e86fcc5ec45df37f25" name="a856ebcb1153689e86fcc5ec45df37f25"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a856ebcb1153689e86fcc5ec45df37f25">&#9670;&#160;</a></span>can</h2>
@@ -135,7 +144,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00022">22</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00060">60</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 
 </div>
 </div>
@@ -151,7 +160,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00023">23</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00061">61</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 
 </div>
 </div>
@@ -167,7 +176,7 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00021">21</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00059">59</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 
 </div>
 </div>

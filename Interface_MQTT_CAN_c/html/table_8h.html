@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Interface MQTT/CAN C: include/table.h File Reference</title>
+<title>Interface MQTT/CAN en C: include/table.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Interface MQTT/CAN C
+   <div id="projectname">Interface MQTT/CAN en C
    </div>
   </td>
  </tr>
@@ -123,17 +123,17 @@ This graph shows which files directly or indirectly include this file:</div>
 <area shape="rect" title=" " alt="" coords="263,5,382,31"/>
 <area shape="rect" href="can__io_8h.html" title=" " alt="" coords="158,79,285,104"/>
 <area shape="poly" title=" " alt="" coords="297,41,239,81,236,76,294,36"/>
-<area shape="rect" href="bridge__app_8c.html" title=" " alt="" coords="5,152,133,177"/>
+<area shape="rect" href="bridge__app_8c.html" title="Application principale du pont MQTT ↔ CAN." alt="" coords="5,152,133,177"/>
 <area shape="poly" title=" " alt="" coords="251,34,193,52,137,81,118,98,101,117,78,153,73,150,97,114,114,94,135,76,191,47,249,29"/>
-<area shape="rect" href="can__io_8c.html" title=" " alt="" coords="157,152,256,177"/>
+<area shape="rect" href="can__io_8c.html" title="Gestion des communications sur le bus CAN." alt="" coords="157,152,256,177"/>
 <area shape="poly" title=" " alt="" coords="250,27,222,33,193,44,168,59,148,80,143,89,143,98,153,117,170,135,189,150,186,154,166,139,148,121,138,99,138,88,143,77,165,55,191,39,220,28,249,22"/>
-<area shape="rect" href="mqtt__io_8c.html" title=" " alt="" coords="280,152,387,177"/>
+<area shape="rect" href="mqtt__io_8c.html" title="Gestion des échanges MQTT pour le pont MQTT ↔ CAN." alt="" coords="280,152,387,177"/>
 <area shape="poly" title=" " alt="" coords="327,44,335,152,330,152,322,45"/>
 <area shape="rect" href="pack_8h.html" title=" " alt="" coords="361,79,477,104"/>
 <area shape="poly" title=" " alt="" coords="351,37,405,76,401,81,348,41"/>
-<area shape="rect" href="pack_8c.html" title=" " alt="" coords="441,152,527,177"/>
+<area shape="rect" href="pack_8c.html" title="Conversion des données entre format JSON et trame CAN (8 octets)." alt="" coords="441,152,527,177"/>
 <area shape="poly" title=" " alt="" coords="397,24,449,42,472,57,492,77,499,96,500,117,492,152,486,151,495,117,494,97,487,80,469,61,446,46,395,29"/>
-<area shape="rect" href="table_8c.html" title=" " alt="" coords="553,79,642,104"/>
+<area shape="rect" href="table_8c.html" title="Gestion du dictionnaire de conversion JSON ↔ CAN." alt="" coords="553,79,642,104"/>
 <area shape="poly" title=" " alt="" coords="381,32,554,76,552,81,379,37"/>
 <area shape="poly" title=" " alt="" coords="186,112,95,154,93,149,184,107"/>
 <area shape="poly" title=" " alt="" coords="219,118,212,152,206,151,214,117"/>
@@ -148,9 +148,13 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a27d13d8175cc65993955b84d170025c9" id="r_a27d13d8175cc65993955b84d170025c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a27d13d8175cc65993955b84d170025c9">table_load</a> (<a class="el" href="types_8h.html#a6e24467563886efcac107e4870a0f31c">table_t</a> *t, const char *json_path)</td></tr>
+<tr class="memdesc:a27d13d8175cc65993955b84d170025c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Charge le fichier JSON et construit la table de correspondance.  <br /></td></tr>
 <tr class="memitem:a4090a82886591000906bcda15ba305e9" id="r_a4090a82886591000906bcda15ba305e9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4090a82886591000906bcda15ba305e9">table_free</a> (<a class="el" href="types_8h.html#a6e24467563886efcac107e4870a0f31c">table_t</a> *t)</td></tr>
+<tr class="memdesc:a4090a82886591000906bcda15ba305e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Libère toute la mémoire associée à une table.  <br /></td></tr>
 <tr class="memitem:acf38b827be578fe2925651d010fd4b4a" id="r_acf38b827be578fe2925651d010fd4b4a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="types_8h.html#aff70b3df5009c537270cbf72acd96ceb">entry_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acf38b827be578fe2925651d010fd4b4a">table_find_by_topic</a> (const <a class="el" href="types_8h.html#a6e24467563886efcac107e4870a0f31c">table_t</a> *t, const char *topic)</td></tr>
+<tr class="memdesc:acf38b827be578fe2925651d010fd4b4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recherche une entrée à partir d’un topic MQTT.  <br /></td></tr>
 <tr class="memitem:ad9d7dc3cc60377cf140f584cd0e7cc1e" id="r_ad9d7dc3cc60377cf140f584cd0e7cc1e"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="types_8h.html#aff70b3df5009c537270cbf72acd96ceb">entry_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9d7dc3cc60377cf140f584cd0e7cc1e">table_find_by_canid</a> (const <a class="el" href="types_8h.html#a6e24467563886efcac107e4870a0f31c">table_t</a> *t, uint32_t can_id)</td></tr>
+<tr class="memdesc:ad9d7dc3cc60377cf140f584cd0e7cc1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recherche une entrée à partir d’un identifiant CAN.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="ad9d7dc3cc60377cf140f584cd0e7cc1e" name="ad9d7dc3cc60377cf140f584cd0e7cc1e"></a>
@@ -172,18 +176,28 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table_8c_source.html#l00219">219</a> of file <a class="el" href="table_8c_source.html">table.c</a>.</p>
+<p>Recherche une entrée à partir d’un identifiant CAN. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Table chargée. </td></tr>
+    <tr><td class="paramname">can_id</td><td>Identifiant CAN (11 bits). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointeur vers l’entrée trouvée ou NULL. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="table_8c_source.html#l00339">339</a> of file <a class="el" href="table_8c_source.html">table.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="table_8h_ad9d7dc3cc60377cf140f584cd0e7cc1e_icgraph.png" border="0" usemap="#atable_8h_ad9d7dc3cc60377cf140f584cd0e7cc1e_icgraph" loading="lazy" alt=""/></div>
 <map name="atable_8h_ad9d7dc3cc60377cf140f584cd0e7cc1e_icgraph" id="atable_8h_ad9d7dc3cc60377cf140f584cd0e7cc1e_icgraph">
-<area shape="rect" title=" " alt="" coords="359,5,509,31"/>
-<area shape="rect" href="can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title=" " alt="" coords="235,5,311,31"/>
+<area shape="rect" title="Recherche une entrée à partir d’un identifiant CAN." alt="" coords="359,5,509,31"/>
+<area shape="rect" href="can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title="Lit les trames disponibles sur le bus CAN (mode non bloquant)." alt="" coords="235,5,311,31"/>
 <area shape="poly" title=" " alt="" coords="345,21,311,21,311,15,345,15"/>
-<area shape="rect" href="bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title=" " alt="" coords="108,5,187,31"/>
+<area shape="rect" href="bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title="Boucle principale du pont." alt="" coords="108,5,187,31"/>
 <area shape="poly" title=" " alt="" coords="221,21,187,21,187,15,221,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -209,7 +223,17 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table_8c_source.html#l00211">211</a> of file <a class="el" href="table_8c_source.html">table.c</a>.</p>
+<p>Recherche une entrée à partir d’un topic MQTT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Table chargée. </td></tr>
+    <tr><td class="paramname">topic</td><td>Nom du topic à chercher. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointeur vers l’entrée trouvée ou NULL. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="table_8c_source.html#l00323">323</a> of file <a class="el" href="table_8c_source.html">table.c</a>.</p>
 
 </div>
 </div>
@@ -228,16 +252,24 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table_8c_source.html#l00194">194</a> of file <a class="el" href="table_8c_source.html">table.c</a>.</p>
+<p>Libère toute la mémoire associée à une table. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Table à libérer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="table_8c_source.html#l00298">298</a> of file <a class="el" href="table_8c_source.html">table.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="table_8h_a4090a82886591000906bcda15ba305e9_icgraph.png" border="0" usemap="#atable_8h_a4090a82886591000906bcda15ba305e9_icgraph" loading="lazy" alt=""/></div>
 <map name="atable_8h_a4090a82886591000906bcda15ba305e9_icgraph" id="atable_8h_a4090a82886591000906bcda15ba305e9_icgraph">
-<area shape="rect" title=" " alt="" coords="269,5,357,31"/>
-<area shape="rect" href="bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title=" " alt="" coords="108,5,221,31"/>
+<area shape="rect" title="Libère toute la mémoire associée à une table." alt="" coords="269,5,357,31"/>
+<area shape="rect" href="bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title="Ferme proprement tous les modules du pont." alt="" coords="108,5,221,31"/>
 <area shape="poly" title=" " alt="" coords="255,21,222,21,222,15,255,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -263,16 +295,32 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="table_8c_source.html#l00112">112</a> of file <a class="el" href="table_8c_source.html">table.c</a>.</p>
+<p>Charge le fichier JSON et construit la table de correspondance. </p>
+<p>Cette fonction parcourt récursivement tout le JSON à la recherche d’objets contenant :</p><ul>
+<li>un topic,</li>
+<li>un identifiant CAN (<span class="tt">arbitration_id</span>),</li>
+<li>et une section <span class="tt">data</span> décrivant la structure.</li>
+</ul>
+<p>Chaque correspondance est ajoutée à la table.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Table à remplir. </td></tr>
+    <tr><td class="paramname">json_path</td><td>Chemin du fichier de configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true si le fichier est valide et chargé, false sinon. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="table_8c_source.html#l00210">210</a> of file <a class="el" href="table_8c_source.html">table.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="table_8h_a27d13d8175cc65993955b84d170025c9_icgraph.png" border="0" usemap="#atable_8h_a27d13d8175cc65993955b84d170025c9_icgraph" loading="lazy" alt=""/></div>
 <map name="atable_8h_a27d13d8175cc65993955b84d170025c9_icgraph" id="atable_8h_a27d13d8175cc65993955b84d170025c9_icgraph">
-<area shape="rect" title=" " alt="" coords="243,5,333,31"/>
-<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title=" " alt="" coords="108,5,195,31"/>
+<area shape="rect" title="Charge le fichier JSON et construit la table de correspondance." alt="" coords="243,5,333,31"/>
+<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="108,5,195,31"/>
 <area shape="poly" title=" " alt="" coords="229,21,195,21,195,15,229,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>

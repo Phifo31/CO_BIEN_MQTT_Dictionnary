@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Interface MQTT/CAN C: include/mqtt_io.h File Reference</title>
+<title>Interface MQTT/CAN en C: include/mqtt_io.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Interface MQTT/CAN C
+   <div id="projectname">Interface MQTT/CAN en C
    </div>
   </td>
  </tr>
@@ -113,11 +113,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <area shape="rect" title=" " alt="" coords="162,5,297,31"/>
 <area shape="rect" href="can__io_8h.html" title=" " alt="" coords="115,79,242,104"/>
 <area shape="poly" title=" " alt="" coords="215,44,189,80,185,77,211,41"/>
-<area shape="rect" href="bridge__app_8c.html" title=" " alt="" coords="5,152,133,177"/>
+<area shape="rect" href="bridge__app_8c.html" title="Application principale du pont MQTT ↔ CAN." alt="" coords="5,152,133,177"/>
 <area shape="poly" title=" " alt="" coords="174,38,137,55,105,81,92,98,83,117,74,152,69,151,78,115,88,95,101,77,134,51,172,33"/>
-<area shape="rect" href="can__io_8c.html" title=" " alt="" coords="157,152,256,177"/>
+<area shape="rect" href="can__io_8c.html" title="Gestion des communications sur le bus CAN." alt="" coords="157,152,256,177"/>
 <area shape="poly" title=" " alt="" coords="247,42,258,71,260,88,257,105,241,133,222,154,218,150,237,129,252,103,255,88,253,73,242,44"/>
-<area shape="rect" href="mqtt__io_8c.html" title=" " alt="" coords="280,152,387,177"/>
+<area shape="rect" href="mqtt__io_8c.html" title="Gestion des échanges MQTT pour le pont MQTT ↔ CAN." alt="" coords="280,152,387,177"/>
 <area shape="poly" title=" " alt="" coords="249,40,277,77,328,150,323,153,273,80,245,43"/>
 <area shape="poly" title=" " alt="" coords="151,114,89,154,86,150,148,109"/>
 <area shape="poly" title=" " alt="" coords="191,116,205,151,200,153,186,118"/>
@@ -138,13 +138,20 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ac5946356df0e81cb767db87b8bfeac62" id="r_ac5946356df0e81cb767db87b8bfeac62"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5946356df0e81cb767db87b8bfeac62">mqtt_init</a> (<a class="el" href="#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *ctx, const char *host, int port, int keepalive)</td></tr>
+<tr class="memdesc:ac5946356df0e81cb767db87b8bfeac62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise la connexion MQTT et configure les callbacks.  <br /></td></tr>
 <tr class="memitem:a3fae89a71b3eea618106b8284e9d1ff0" id="r_a3fae89a71b3eea618106b8284e9d1ff0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3fae89a71b3eea618106b8284e9d1ff0">mqtt_subscribe_all_nolocal</a> (<a class="el" href="#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *ctx)</td></tr>
+<tr class="memdesc:a3fae89a71b3eea618106b8284e9d1ff0"><td class="mdescLeft">&#160;</td><td class="mdescRight">S’abonne à tous les topics MQTT avec l’option “NO_LOCAL”.  <br /></td></tr>
 <tr class="memitem:a21b10480890992179fd958f87e4ccc1e" id="r_a21b10480890992179fd958f87e4ccc1e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21b10480890992179fd958f87e4ccc1e">mqtt_poll</a> (<a class="el" href="#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *ctx)</td></tr>
+<tr class="memdesc:a21b10480890992179fd958f87e4ccc1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appelle périodiquement la boucle interne Mosquitto (non bloquante).  <br /></td></tr>
 <tr class="memitem:adc21d738712301cb4b535cd9c0ad1103" id="r_adc21d738712301cb4b535cd9c0ad1103"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc21d738712301cb4b535cd9c0ad1103">mqtt_publish_json</a> (<a class="el" href="#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *ctx, const char *topic, const char *json_str)</td></tr>
+<tr class="memdesc:adc21d738712301cb4b535cd9c0ad1103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publie une chaîne JSON sur un topic MQTT.  <br /></td></tr>
 <tr class="memitem:a59d99036bffa46cea2a985ce3be00222" id="r_a59d99036bffa46cea2a985ce3be00222"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59d99036bffa46cea2a985ce3be00222">mqtt_handle_can_message</a> (<a class="el" href="#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *ctx, const struct <a class="el" href="structentry__s.html">entry_s</a> *e, const uint8_t data[8])</td></tr>
 <tr class="memitem:a950c0463793d6b5c823a11b8f7769bb2" id="r_a950c0463793d6b5c823a11b8f7769bb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a950c0463793d6b5c823a11b8f7769bb2">mqtt_set_user_data</a> (<a class="el" href="#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *ctx, void *userdata)</td></tr>
+<tr class="memdesc:a950c0463793d6b5c823a11b8f7769bb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enregistre un pointeur utilisateur (utile pour les callbacks MQTT).  <br /></td></tr>
 <tr class="memitem:a770227d9b5545bb3b772f0fe6ea1e18d" id="r_a770227d9b5545bb3b772f0fe6ea1e18d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a770227d9b5545bb3b772f0fe6ea1e18d">mqtt_set_qos</a> (<a class="el" href="#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *ctx, int qos_sub, int qos_pub)</td></tr>
+<tr class="memdesc:a770227d9b5545bb3b772f0fe6ea1e18d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifie les niveaux de QoS (Quality of Service) MQTT.  <br /></td></tr>
 <tr class="memitem:aed91c3e380684d50f0e7024dd327e169" id="r_aed91c3e380684d50f0e7024dd327e169"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed91c3e380684d50f0e7024dd327e169">mqtt_cleanup</a> (<a class="el" href="#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *ctx)</td></tr>
+<tr class="memdesc:aed91c3e380684d50f0e7024dd327e169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ferme proprement la connexion MQTT.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="a36bbd436103bb88814f89ba5511e3c85" name="a36bbd436103bb88814f89ba5511e3c85"></a>
@@ -177,16 +184,25 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00220">220</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p>Ferme proprement la connexion MQTT. </p>
+<p>Déconnecte du broker, libère les ressources Mosquitto, et nettoie la mémoire associée.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctx</td><td>Contexte MQTT à fermer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00398">398</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="mqtt__io_8h_aed91c3e380684d50f0e7024dd327e169_icgraph.png" border="0" usemap="#amqtt__io_8h_aed91c3e380684d50f0e7024dd327e169_icgraph" loading="lazy" alt=""/></div>
 <map name="amqtt__io_8h_aed91c3e380684d50f0e7024dd327e169_icgraph" id="amqtt__io_8h_aed91c3e380684d50f0e7024dd327e169_icgraph">
-<area shape="rect" title=" " alt="" coords="269,5,380,31"/>
-<area shape="rect" href="bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title=" " alt="" coords="108,5,221,31"/>
+<area shape="rect" title="Ferme proprement la connexion MQTT." alt="" coords="269,5,380,31"/>
+<area shape="rect" href="bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title="Ferme proprement tous les modules du pont." alt="" coords="108,5,221,31"/>
 <area shape="poly" title=" " alt="" coords="256,21,222,21,222,15,256,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -222,11 +238,11 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="mqtt__io_8h_a59d99036bffa46cea2a985ce3be00222_icgraph.png" border="0" usemap="#amqtt__io_8h_a59d99036bffa46cea2a985ce3be00222_icgraph" loading="lazy" alt=""/></div>
 <map name="amqtt__io_8h_a59d99036bffa46cea2a985ce3be00222_icgraph" id="amqtt__io_8h_a59d99036bffa46cea2a985ce3be00222_icgraph">
 <area shape="rect" title=" " alt="" coords="359,5,559,31"/>
-<area shape="rect" href="can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title=" " alt="" coords="235,5,311,31"/>
+<area shape="rect" href="can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title="Lit les trames disponibles sur le bus CAN (mode non bloquant)." alt="" coords="235,5,311,31"/>
 <area shape="poly" title=" " alt="" coords="344,21,311,21,311,15,344,15"/>
-<area shape="rect" href="bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title=" " alt="" coords="108,5,187,31"/>
+<area shape="rect" href="bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title="Boucle principale du pont." alt="" coords="108,5,187,31"/>
 <area shape="poly" title=" " alt="" coords="221,21,187,21,187,15,221,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -262,16 +278,28 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00114">114</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p>Initialise la connexion MQTT et configure les callbacks. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctx</td><td>Structure du contexte MQTT à remplir. </td></tr>
+    <tr><td class="paramname">host</td><td>Adresse du broker (par défaut : localhost). </td></tr>
+    <tr><td class="paramname">port</td><td>Port du broker (par défaut : 1883). </td></tr>
+    <tr><td class="paramname">keepalive</td><td>Délai keepalive MQTT en secondes. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true si la connexion est réussie, false sinon. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00227">227</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="mqtt__io_8h_ac5946356df0e81cb767db87b8bfeac62_icgraph.png" border="0" usemap="#amqtt__io_8h_ac5946356df0e81cb767db87b8bfeac62_icgraph" loading="lazy" alt=""/></div>
 <map name="amqtt__io_8h_ac5946356df0e81cb767db87b8bfeac62_icgraph" id="amqtt__io_8h_ac5946356df0e81cb767db87b8bfeac62_icgraph">
-<area shape="rect" title=" " alt="" coords="243,5,324,31"/>
-<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title=" " alt="" coords="108,5,195,31"/>
+<area shape="rect" title="Initialise la connexion MQTT et configure les callbacks." alt="" coords="243,5,324,31"/>
+<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="108,5,195,31"/>
 <area shape="poly" title=" " alt="" coords="229,21,195,21,195,15,229,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -293,7 +321,17 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00165">165</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p>Appelle périodiquement la boucle interne Mosquitto (non bloquante). </p>
+<p>À exécuter à chaque tour dans la boucle principale du pont.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctx</td><td>Contexte MQTT. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true si la boucle s’exécute correctement. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00298">298</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 
 </div>
 </div>
@@ -321,14 +359,25 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00175">175</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p>Publie une chaîne JSON sur un topic MQTT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctx</td><td>Contexte MQTT. </td></tr>
+    <tr><td class="paramname">topic</td><td>Nom du topic cible. </td></tr>
+    <tr><td class="paramname">json_str</td><td>Chaîne JSON à publier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true si succès, false sinon. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00317">317</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="mqtt__io_8h_adc21d738712301cb4b535cd9c0ad1103_icgraph.png" border="0" usemap="#amqtt__io_8h_adc21d738712301cb4b535cd9c0ad1103_icgraph" loading="lazy" alt=""/></div>
 <map name="amqtt__io_8h_adc21d738712301cb4b535cd9c0ad1103_icgraph" id="amqtt__io_8h_adc21d738712301cb4b535cd9c0ad1103_icgraph">
-<area shape="rect" title=" " alt="" coords="253,5,395,31"/>
-<area shape="rect" href="mqtt__io_8c.html#a207df8e885df905dfd9b41ac80b3edb7" title=" " alt="" coords="5,5,205,31"/>
+<area shape="rect" title="Publie une chaîne JSON sur un topic MQTT." alt="" coords="253,5,395,31"/>
+<area shape="rect" href="mqtt__io_8c.html#a207df8e885df905dfd9b41ac80b3edb7" title="Traite un message CAN et le publie sur MQTT." alt="" coords="5,5,205,31"/>
 <area shape="poly" title=" " alt="" coords="240,21,206,21,206,15,240,15"/>
 </map>
 </div>
@@ -359,16 +408,26 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00187">187</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p>Modifie les niveaux de QoS (Quality of Service) MQTT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctx</td><td>Contexte MQTT. </td></tr>
+    <tr><td class="paramname">qos_sub</td><td>QoS de souscription (0,1,2). </td></tr>
+    <tr><td class="paramname">qos_pub</td><td>QoS de publication (0,1,2). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00337">337</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="mqtt__io_8h_a770227d9b5545bb3b772f0fe6ea1e18d_icgraph.png" border="0" usemap="#amqtt__io_8h_a770227d9b5545bb3b772f0fe6ea1e18d_icgraph" loading="lazy" alt=""/></div>
 <map name="amqtt__io_8h_a770227d9b5545bb3b772f0fe6ea1e18d_icgraph" id="amqtt__io_8h_a770227d9b5545bb3b772f0fe6ea1e18d_icgraph">
-<area shape="rect" title=" " alt="" coords="243,5,353,31"/>
-<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title=" " alt="" coords="108,5,195,31"/>
+<area shape="rect" title="Modifie les niveaux de QoS (Quality of Service) MQTT." alt="" coords="243,5,353,31"/>
+<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="108,5,195,31"/>
 <area shape="poly" title=" " alt="" coords="229,21,195,21,195,15,229,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -394,16 +453,25 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00215">215</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p>Enregistre un pointeur utilisateur (utile pour les callbacks MQTT). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctx</td><td>Contexte MQTT. </td></tr>
+    <tr><td class="paramname">userdata</td><td>Pointeur à transmettre aux callbacks. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00384">384</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="mqtt__io_8h_a950c0463793d6b5c823a11b8f7769bb2_icgraph.png" border="0" usemap="#amqtt__io_8h_a950c0463793d6b5c823a11b8f7769bb2_icgraph" loading="lazy" alt=""/></div>
 <map name="amqtt__io_8h_a950c0463793d6b5c823a11b8f7769bb2_icgraph" id="amqtt__io_8h_a950c0463793d6b5c823a11b8f7769bb2_icgraph">
-<area shape="rect" title=" " alt="" coords="243,5,393,31"/>
-<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title=" " alt="" coords="108,5,195,31"/>
+<area shape="rect" title="Enregistre un pointeur utilisateur (utile pour les callbacks MQTT)." alt="" coords="243,5,393,31"/>
+<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="108,5,195,31"/>
 <area shape="poly" title=" " alt="" coords="229,21,195,21,195,15,229,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -425,18 +493,28 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00147">147</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
+<p>S’abonne à tous les topics MQTT avec l’option “NO_LOCAL”. </p>
+<p>Cela empêche le pont de recevoir ses propres publications (évite les boucles infinies).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ctx</td><td>Contexte MQTT. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true si succès, false sinon. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="mqtt__io_8c_source.html#l00269">269</a> of file <a class="el" href="mqtt__io_8c_source.html">mqtt_io.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="mqtt__io_8h_a3fae89a71b3eea618106b8284e9d1ff0_icgraph.png" border="0" usemap="#amqtt__io_8h_a3fae89a71b3eea618106b8284e9d1ff0_icgraph" loading="lazy" alt=""/></div>
 <map name="amqtt__io_8h_a3fae89a71b3eea618106b8284e9d1ff0_icgraph" id="amqtt__io_8h_a3fae89a71b3eea618106b8284e9d1ff0_icgraph">
-<area shape="rect" title=" " alt="" coords="301,23,447,63"/>
-<area shape="rect" href="mqtt__io_8c.html#aee0548107b1c31fa8592e50e8bd776cb" title=" " alt="" coords="108,5,253,31"/>
+<area shape="rect" title="S’abonne à tous les topics MQTT avec l’option “NO_LOCAL”." alt="" coords="301,23,447,63"/>
+<area shape="rect" href="mqtt__io_8c.html#aee0548107b1c31fa8592e50e8bd776cb" title="Raccourci vers mqtt_subscribe_all_nolocal()." alt="" coords="108,5,253,31"/>
 <area shape="poly" title=" " alt="" coords="287,35,254,30,254,25,288,29"/>
-<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title=" " alt="" coords="137,55,224,80"/>
+<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="137,55,224,80"/>
 <area shape="poly" title=" " alt="" coords="288,57,224,65,224,59,287,51"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,55,60,80"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,55,60,80"/>
 <area shape="poly" title=" " alt="" coords="123,70,60,70,60,65,123,65"/>
 </map>
 </div>

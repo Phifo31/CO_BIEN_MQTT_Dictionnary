@@ -1,33 +1,33 @@
 <map id="main" name="main">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,203,60,228"/>
-<area shape="rect" id="Node000002" href="$bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title=" " alt="" coords="125,80,204,105"/>
+<area shape="rect" id="Node000001" title="Point d’entrée du programme." alt="" coords="5,203,60,228"/>
+<area shape="rect" id="Node000002" href="$bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title="Boucle principale du pont." alt="" coords="125,80,204,105"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="46,200,138,113,142,117,50,204"/>
-<area shape="rect" id="Node000006" href="$bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title=" " alt="" coords="121,203,208,228"/>
+<area shape="rect" id="Node000006" href="$bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="121,203,208,228"/>
 <area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="60,213,107,213,107,218,60,218"/>
-<area shape="rect" id="Node000013" href="$bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title=" " alt="" coords="108,415,221,440"/>
+<area shape="rect" id="Node000013" href="$bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title="Ferme proprement tous les modules du pont." alt="" coords="108,415,221,440"/>
 <area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="44,227,151,401,146,404,40,230"/>
-<area shape="rect" id="Node000003" href="$can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title=" " alt="" coords="307,29,383,55"/>
+<area shape="rect" id="Node000003" href="$can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title="Lit les trames disponibles sur le bus CAN (mode non bloquant)." alt="" coords="307,29,383,55"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="203,79,293,54,294,59,205,84"/>
 <area shape="rect" id="Node000004" href="$mqtt__io_8h.html#a59d99036bffa46cea2a985ce3be00222" title=" " alt="" coords="468,5,668,31"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="383,35,454,28,455,33,383,41"/>
-<area shape="rect" id="Node000005" href="$table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title=" " alt="" coords="493,55,643,80"/>
+<area shape="rect" id="Node000005" href="$table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title="Recherche une entrée à partir d’un identifiant CAN." alt="" coords="493,55,643,80"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="383,44,479,55,479,60,383,49"/>
-<area shape="rect" id="Node000007" href="$can__io_8c.html#a7f605a87974d731cfcc2eb88d7877fd2" title=" " alt="" coords="308,79,381,104"/>
+<area shape="rect" id="Node000007" href="$can__io_8c.html#a7f605a87974d731cfcc2eb88d7877fd2" title="Initialise la connexion au bus CAN (via socket PF_CAN)." alt="" coords="308,79,381,104"/>
 <area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="174,201,212,158,239,134,268,113,294,101,296,106,271,118,242,138,216,162,178,204"/>
-<area shape="rect" id="Node000008" href="$mqtt__io_8c.html#ac5946356df0e81cb767db87b8bfeac62" title=" " alt="" coords="304,128,385,153"/>
+<area shape="rect" id="Node000008" href="$mqtt__io_8c.html#ac5946356df0e81cb767db87b8bfeac62" title="Initialise la connexion MQTT et configure les callbacks." alt="" coords="304,128,385,153"/>
 <area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="189,200,268,162,290,154,292,159,270,167,191,205"/>
-<area shape="rect" id="Node000009" href="$mqtt__io_8c.html#a770227d9b5545bb3b772f0fe6ea1e18d" title=" " alt="" coords="289,177,400,203"/>
+<area shape="rect" id="Node000009" href="$mqtt__io_8c.html#a770227d9b5545bb3b772f0fe6ea1e18d" title="Modifie les niveaux de QoS (Quality of Service) MQTT." alt="" coords="289,177,400,203"/>
 <area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="208,207,275,197,275,202,208,212"/>
-<area shape="rect" id="Node000010" href="$mqtt__io_8c.html#a950c0463793d6b5c823a11b8f7769bb2" title=" " alt="" coords="269,227,420,252"/>
+<area shape="rect" id="Node000010" href="$mqtt__io_8c.html#a950c0463793d6b5c823a11b8f7769bb2" title="Enregistre un pointeur utilisateur (utile pour les callbacks MQTT)." alt="" coords="269,227,420,252"/>
 <area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="208,218,256,225,255,230,208,224"/>
-<area shape="rect" id="Node000011" href="$mqtt__io_8c.html#a3fae89a71b3eea618106b8284e9d1ff0" title=" " alt="" coords="272,277,417,317"/>
+<area shape="rect" id="Node000011" href="$mqtt__io_8c.html#a3fae89a71b3eea618106b8284e9d1ff0" title="S’abonne à tous les topics MQTT avec l’option “NO_LOCAL”." alt="" coords="272,277,417,317"/>
 <area shape="poly" id="edge10_Node000006_Node000011" title=" " alt="" coords="194,226,270,261,287,269,285,273,268,266,192,230"/>
-<area shape="rect" id="Node000012" href="$table_8c.html#a27d13d8175cc65993955b84d170025c9" title=" " alt="" coords="299,341,390,367"/>
+<area shape="rect" id="Node000012" href="$table_8c.html#a27d13d8175cc65993955b84d170025c9" title="Charge le fichier JSON et construit la table de correspondance." alt="" coords="299,341,390,367"/>
 <area shape="poly" id="edge11_Node000006_Node000012" title=" " alt="" coords="176,227,214,275,241,302,271,326,288,336,285,340,268,331,237,306,210,278,172,230"/>
-<area shape="rect" id="Node000014" href="$can__io_8c.html#a99efe8b72487b48ed029c2365e3faaec" title=" " alt="" coords="293,391,396,416"/>
+<area shape="rect" id="Node000014" href="$can__io_8c.html#a99efe8b72487b48ed029c2365e3faaec" title="Ferme proprement la socket CAN." alt="" coords="293,391,396,416"/>
 <area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="221,417,279,409,280,415,222,422"/>
-<area shape="rect" id="Node000015" href="$mqtt__io_8c.html#aed91c3e380684d50f0e7024dd327e169" title=" " alt="" coords="289,440,400,465"/>
+<area shape="rect" id="Node000015" href="$mqtt__io_8c.html#aed91c3e380684d50f0e7024dd327e169" title="Ferme proprement la connexion MQTT." alt="" coords="289,440,400,465"/>
 <area shape="poly" id="edge14_Node000013_Node000015" title=" " alt="" coords="222,433,276,440,275,446,221,438"/>
-<area shape="rect" id="Node000016" href="$table_8c.html#a4090a82886591000906bcda15ba305e9" title=" " alt="" coords="301,489,389,515"/>
+<area shape="rect" id="Node000016" href="$table_8c.html#a4090a82886591000906bcda15ba305e9" title="Libère toute la mémoire associée à une table." alt="" coords="301,489,389,515"/>
 <area shape="poly" id="edge15_Node000013_Node000016" title=" " alt="" coords="191,438,270,476,289,482,287,487,268,480,189,443"/>
 </map>

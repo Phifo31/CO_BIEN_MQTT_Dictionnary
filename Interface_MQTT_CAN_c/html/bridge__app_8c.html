@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Interface MQTT/CAN C: src/bridge_app.c File Reference</title>
+<title>Interface MQTT/CAN en C: src/bridge_app.c File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Interface MQTT/CAN C
+   <div id="projectname">Interface MQTT/CAN en C
    </div>
   </td>
  </tr>
@@ -91,6 +91,9 @@ $(function(){initNavTree('bridge__app_8c.html','',''); });
   <div class="headertitle"><div class="title">bridge_app.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Application principale du pont MQTT ↔ CAN.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="bridge__app_8h_source.html">bridge_app.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="table_8h_source.html">table.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="mqtt__io_8h_source.html">mqtt_io.h</a>&quot;</code><br />
@@ -106,7 +109,7 @@ Include dependency graph for bridge_app.c:</div>
 <div class="dyncontent">
 <div class="center"><img src="bridge__app_8c__incl.png" border="0" usemap="#asrc_2bridge__app_8c" loading="lazy" alt=""/></div>
 <map name="asrc_2bridge__app_8c" id="asrc_2bridge__app_8c">
-<area shape="rect" title=" " alt="" coords="615,5,743,31"/>
+<area shape="rect" title="Application principale du pont MQTT ↔ CAN." alt="" coords="615,5,743,31"/>
 <area shape="rect" href="bridge__app_8h.html" title=" " alt="" coords="549,225,656,251"/>
 <area shape="poly" title=" " alt="" coords="648,33,616,52,602,65,590,80,580,113,580,149,586,183,595,212,590,213,581,185,574,150,575,113,586,77,598,61,613,47,646,28"/>
 <area shape="rect" href="table_8h.html" title=" " alt="" coords="233,152,300,177"/>
@@ -158,11 +161,33 @@ Include dependency graph for bridge_app.c:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ac6997d15eb259679e195a767ec3a7d65" id="r_ac6997d15eb259679e195a767ec3a7d65"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6997d15eb259679e195a767ec3a7d65">my_setup</a> (const char *cfg_path)</td></tr>
+<tr class="memdesc:ac6997d15eb259679e195a767ec3a7d65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise tous les modules du pont (table, MQTT, CAN).  <br /></td></tr>
 <tr class="memitem:aa7d452b01bf4935c2a222b9e24e81b2b" id="r_aa7d452b01bf4935c2a222b9e24e81b2b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7d452b01bf4935c2a222b9e24e81b2b">my_loop</a> (void)</td></tr>
+<tr class="memdesc:aa7d452b01bf4935c2a222b9e24e81b2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Boucle principale du pont.  <br /></td></tr>
 <tr class="memitem:ad8bf703fb5ad43733cb7129f4cab68f6" id="r_ad8bf703fb5ad43733cb7129f4cab68f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8bf703fb5ad43733cb7129f4cab68f6">my_shutdown</a> (void)</td></tr>
+<tr class="memdesc:ad8bf703fb5ad43733cb7129f4cab68f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ferme proprement tous les modules du pont.  <br /></td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627" id="r_a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
+<tr class="memdesc:a3c04138a5bfe5d72780bb7e82a18e627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Point d’entrée du programme.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Application principale du pont MQTT ↔ CAN. </p>
+<p>Ce fichier contient la logique principale du pont :</p><ul>
+<li>Initialisation des modules (MQTT, CAN, table de conversion)</li>
+<li>Boucle de fonctionnement (traitement en temps réel des échanges)</li>
+<li>Libération des ressources à l’arrêt</li>
+</ul>
+<p>Le pont permet de faire communiquer deux mondes :</p><ul>
+<li><b>MQTT / JSON</b> : échanges haut niveau avec une interface ou un serveur ;</li>
+<li><b>CAN / trames 8 octets</b> : communication bas niveau avec les capteurs, actionneurs ou la STM32.</li>
+</ul>
+<p>L’architecture est modulaire :</p><ul>
+<li><span class="tt"><a class="el" href="table_8c.html" title="Gestion du dictionnaire de conversion JSON ↔ CAN.">table.c</a></span> → interprète le fichier <span class="tt">conversion.json</span></li>
+<li><span class="tt"><a class="el" href="mqtt__io_8c.html" title="Gestion des échanges MQTT pour le pont MQTT ↔ CAN.">mqtt_io.c</a></span> → gère la connexion au broker et la conversion JSON → CAN</li>
+<li><span class="tt"><a class="el" href="can__io_8c.html" title="Gestion des communications sur le bus CAN.">can_io.c</a></span> → envoie et reçoit les trames CAN </li>
+</ul>
+
+<p class="definition">Definition in file <a class="el" href="bridge__app_8c_source.html">bridge_app.c</a>.</p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a3c04138a5bfe5d72780bb7e82a18e627" name="a3c04138a5bfe5d72780bb7e82a18e627"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3c04138a5bfe5d72780bb7e82a18e627">&#9670;&#160;</a></span>main()</h2>
 
@@ -182,42 +207,54 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bridge__app_8c_source.html#l00097">97</a> of file <a class="el" href="bridge__app_8c_source.html">bridge_app.c</a>.</p>
+<p>Point d’entrée du programme. </p>
+<p>Lit le fichier de configuration (par défaut <span class="tt">config/conversion.json</span>), initialise le pont, puis entre dans la boucle principale.</p>
+<p>L’application s’arrête proprement à la réception d’un signal (CTRL+C ou SIGTERM).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">argc</td><td>Nombre d’arguments de la ligne de commande. </td></tr>
+    <tr><td class="paramname">argv</td><td>Tableau contenant les arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 si tout s’est bien passé, 1 en cas d’erreur d’initialisation. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="bridge__app_8c_source.html#l00203">203</a> of file <a class="el" href="bridge__app_8c_source.html">bridge_app.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="bridge__app_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph.png" border="0" usemap="#abridge__app_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" loading="lazy" alt=""/></div>
 <map name="abridge__app_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph" id="abridge__app_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph">
-<area shape="rect" title=" " alt="" coords="5,203,60,228"/>
-<area shape="rect" href="bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title=" " alt="" coords="125,80,204,105"/>
+<area shape="rect" title="Point d’entrée du programme." alt="" coords="5,203,60,228"/>
+<area shape="rect" href="bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title="Boucle principale du pont." alt="" coords="125,80,204,105"/>
 <area shape="poly" title=" " alt="" coords="46,200,138,113,142,117,50,204"/>
-<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title=" " alt="" coords="121,203,208,228"/>
+<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="121,203,208,228"/>
 <area shape="poly" title=" " alt="" coords="60,213,107,213,107,218,60,218"/>
-<area shape="rect" href="bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title=" " alt="" coords="108,415,221,440"/>
+<area shape="rect" href="bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title="Ferme proprement tous les modules du pont." alt="" coords="108,415,221,440"/>
 <area shape="poly" title=" " alt="" coords="44,227,151,401,146,404,40,230"/>
-<area shape="rect" href="can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title=" " alt="" coords="307,29,383,55"/>
+<area shape="rect" href="can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title="Lit les trames disponibles sur le bus CAN (mode non bloquant)." alt="" coords="307,29,383,55"/>
 <area shape="poly" title=" " alt="" coords="203,79,293,54,294,59,205,84"/>
 <area shape="rect" href="mqtt__io_8h.html#a59d99036bffa46cea2a985ce3be00222" title=" " alt="" coords="468,5,668,31"/>
 <area shape="poly" title=" " alt="" coords="383,35,454,28,455,33,383,41"/>
-<area shape="rect" href="table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title=" " alt="" coords="493,55,643,80"/>
+<area shape="rect" href="table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title="Recherche une entrée à partir d’un identifiant CAN." alt="" coords="493,55,643,80"/>
 <area shape="poly" title=" " alt="" coords="383,44,479,55,479,60,383,49"/>
-<area shape="rect" href="can__io_8c.html#a7f605a87974d731cfcc2eb88d7877fd2" title=" " alt="" coords="308,79,381,104"/>
+<area shape="rect" href="can__io_8c.html#a7f605a87974d731cfcc2eb88d7877fd2" title="Initialise la connexion au bus CAN (via socket PF_CAN)." alt="" coords="308,79,381,104"/>
 <area shape="poly" title=" " alt="" coords="174,201,212,158,239,134,268,113,294,101,296,106,271,118,242,138,216,162,178,204"/>
-<area shape="rect" href="mqtt__io_8c.html#ac5946356df0e81cb767db87b8bfeac62" title=" " alt="" coords="304,128,385,153"/>
+<area shape="rect" href="mqtt__io_8c.html#ac5946356df0e81cb767db87b8bfeac62" title="Initialise la connexion MQTT et configure les callbacks." alt="" coords="304,128,385,153"/>
 <area shape="poly" title=" " alt="" coords="189,200,268,162,290,154,292,159,270,167,191,205"/>
-<area shape="rect" href="mqtt__io_8c.html#a770227d9b5545bb3b772f0fe6ea1e18d" title=" " alt="" coords="289,177,400,203"/>
+<area shape="rect" href="mqtt__io_8c.html#a770227d9b5545bb3b772f0fe6ea1e18d" title="Modifie les niveaux de QoS (Quality of Service) MQTT." alt="" coords="289,177,400,203"/>
 <area shape="poly" title=" " alt="" coords="208,207,275,197,275,202,208,212"/>
-<area shape="rect" href="mqtt__io_8c.html#a950c0463793d6b5c823a11b8f7769bb2" title=" " alt="" coords="269,227,420,252"/>
+<area shape="rect" href="mqtt__io_8c.html#a950c0463793d6b5c823a11b8f7769bb2" title="Enregistre un pointeur utilisateur (utile pour les callbacks MQTT)." alt="" coords="269,227,420,252"/>
 <area shape="poly" title=" " alt="" coords="208,218,256,225,255,230,208,224"/>
-<area shape="rect" href="mqtt__io_8c.html#a3fae89a71b3eea618106b8284e9d1ff0" title=" " alt="" coords="272,277,417,317"/>
+<area shape="rect" href="mqtt__io_8c.html#a3fae89a71b3eea618106b8284e9d1ff0" title="S’abonne à tous les topics MQTT avec l’option “NO_LOCAL”." alt="" coords="272,277,417,317"/>
 <area shape="poly" title=" " alt="" coords="194,226,270,261,287,269,285,273,268,266,192,230"/>
-<area shape="rect" href="table_8c.html#a27d13d8175cc65993955b84d170025c9" title=" " alt="" coords="299,341,390,367"/>
+<area shape="rect" href="table_8c.html#a27d13d8175cc65993955b84d170025c9" title="Charge le fichier JSON et construit la table de correspondance." alt="" coords="299,341,390,367"/>
 <area shape="poly" title=" " alt="" coords="176,227,214,275,241,302,271,326,288,336,285,340,268,331,237,306,210,278,172,230"/>
-<area shape="rect" href="can__io_8c.html#a99efe8b72487b48ed029c2365e3faaec" title=" " alt="" coords="293,391,396,416"/>
+<area shape="rect" href="can__io_8c.html#a99efe8b72487b48ed029c2365e3faaec" title="Ferme proprement la socket CAN." alt="" coords="293,391,396,416"/>
 <area shape="poly" title=" " alt="" coords="221,417,279,409,280,415,222,422"/>
-<area shape="rect" href="mqtt__io_8c.html#aed91c3e380684d50f0e7024dd327e169" title=" " alt="" coords="289,440,400,465"/>
+<area shape="rect" href="mqtt__io_8c.html#aed91c3e380684d50f0e7024dd327e169" title="Ferme proprement la connexion MQTT." alt="" coords="289,440,400,465"/>
 <area shape="poly" title=" " alt="" coords="222,433,276,440,275,446,221,438"/>
-<area shape="rect" href="table_8c.html#a4090a82886591000906bcda15ba305e9" title=" " alt="" coords="301,489,389,515"/>
+<area shape="rect" href="table_8c.html#a4090a82886591000906bcda15ba305e9" title="Libère toute la mémoire associée à une table." alt="" coords="301,489,389,515"/>
 <area shape="poly" title=" " alt="" coords="191,438,270,476,289,482,287,487,268,480,189,443"/>
 </map>
 </div>
@@ -239,18 +276,26 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bridge__app_8c_source.html#l00068">68</a> of file <a class="el" href="bridge__app_8c_source.html">bridge_app.c</a>.</p>
+<p>Boucle principale du pont. </p>
+<p>Cette fonction est appelée en continu</p>
+<p>Tâches effectuées à chaque itération :</p><ol type="1">
+<li>Traitement des paquets MQTT disponibles</li>
+<li>Lecture et traitement des trames CAN reçues</li>
+</ol>
+<dl class="section return"><dt>Returns</dt><dd>true si le pont doit continuer à tourner, false sinon. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="bridge__app_8c_source.html#l00148">148</a> of file <a class="el" href="bridge__app_8c_source.html">bridge_app.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="bridge__app_8c_aa7d452b01bf4935c2a222b9e24e81b2b_cgraph.png" border="0" usemap="#abridge__app_8c_aa7d452b01bf4935c2a222b9e24e81b2b_cgraph" loading="lazy" alt=""/></div>
 <map name="abridge__app_8c_aa7d452b01bf4935c2a222b9e24e81b2b_cgraph" id="abridge__app_8c_aa7d452b01bf4935c2a222b9e24e81b2b_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,84,56"/>
-<area shape="rect" href="can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title=" " alt="" coords="132,31,208,56"/>
+<area shape="rect" title="Boucle principale du pont." alt="" coords="5,31,84,56"/>
+<area shape="rect" href="can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title="Lit les trames disponibles sur le bus CAN (mode non bloquant)." alt="" coords="132,31,208,56"/>
 <area shape="poly" title=" " alt="" coords="84,41,118,41,118,46,84,46"/>
 <area shape="rect" href="mqtt__io_8h.html#a59d99036bffa46cea2a985ce3be00222" title=" " alt="" coords="256,5,456,31"/>
 <area shape="poly" title=" " alt="" coords="208,36,249,30,250,35,209,41"/>
-<area shape="rect" href="table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title=" " alt="" coords="281,55,431,80"/>
+<area shape="rect" href="table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title="Recherche une entrée à partir d’un identifiant CAN." alt="" coords="281,55,431,80"/>
 <area shape="poly" title=" " alt="" coords="209,46,267,53,267,59,208,51"/>
 </map>
 </div>
@@ -259,8 +304,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="bridge__app_8c_aa7d452b01bf4935c2a222b9e24e81b2b_icgraph.png" border="0" usemap="#abridge__app_8c_aa7d452b01bf4935c2a222b9e24e81b2b_icgraph" loading="lazy" alt=""/></div>
 <map name="abridge__app_8c_aa7d452b01bf4935c2a222b9e24e81b2b_icgraph" id="abridge__app_8c_aa7d452b01bf4935c2a222b9e24e81b2b_icgraph">
-<area shape="rect" title=" " alt="" coords="108,5,187,31"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" title="Boucle principale du pont." alt="" coords="108,5,187,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -282,24 +327,39 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bridge__app_8c_source.html#l00031">31</a> of file <a class="el" href="bridge__app_8c_source.html">bridge_app.c</a>.</p>
+<p>Initialise tous les modules du pont (table, MQTT, CAN). </p>
+<p>Étapes principales :</p><ol type="1">
+<li>Chargement du fichier <span class="tt">conversion.json</span></li>
+<li>Initialisation du client MQTT et abonnement global</li>
+<li>Initialisation du bus CAN</li>
+<li>Liaison des modules entre eux via une structure commune (userdata)</li>
+</ol>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cfg_path</td><td>Chemin du fichier JSON de configuration. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true si tout est correctement initialisé, false sinon. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="bridge__app_8c_source.html#l00093">93</a> of file <a class="el" href="bridge__app_8c_source.html">bridge_app.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="bridge__app_8c_ac6997d15eb259679e195a767ec3a7d65_cgraph.png" border="0" usemap="#abridge__app_8c_ac6997d15eb259679e195a767ec3a7d65_cgraph" loading="lazy" alt=""/></div>
 <map name="abridge__app_8c_ac6997d15eb259679e195a767ec3a7d65_cgraph" id="abridge__app_8c_ac6997d15eb259679e195a767ec3a7d65_cgraph">
-<area shape="rect" title=" " alt="" coords="5,129,92,155"/>
-<area shape="rect" href="can__io_8c.html#a7f605a87974d731cfcc2eb88d7877fd2" title=" " alt="" coords="179,5,252,31"/>
+<area shape="rect" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="5,129,92,155"/>
+<area shape="rect" href="can__io_8c.html#a7f605a87974d731cfcc2eb88d7877fd2" title="Initialise la connexion au bus CAN (via socket PF_CAN)." alt="" coords="179,5,252,31"/>
 <area shape="poly" title=" " alt="" coords="56,128,89,85,112,61,139,40,164,27,167,32,141,44,116,65,93,88,60,131"/>
-<area shape="rect" href="mqtt__io_8c.html#ac5946356df0e81cb767db87b8bfeac62" title=" " alt="" coords="175,55,256,80"/>
+<area shape="rect" href="mqtt__io_8c.html#ac5946356df0e81cb767db87b8bfeac62" title="Initialise la connexion MQTT et configure les callbacks." alt="" coords="175,55,256,80"/>
 <area shape="poly" title=" " alt="" coords="69,127,139,89,160,80,162,85,141,94,71,131"/>
-<area shape="rect" href="mqtt__io_8c.html#a770227d9b5545bb3b772f0fe6ea1e18d" title=" " alt="" coords="160,104,271,129"/>
+<area shape="rect" href="mqtt__io_8c.html#a770227d9b5545bb3b772f0fe6ea1e18d" title="Modifie les niveaux de QoS (Quality of Service) MQTT." alt="" coords="160,104,271,129"/>
 <area shape="poly" title=" " alt="" coords="92,133,145,125,146,130,93,138"/>
-<area shape="rect" href="mqtt__io_8c.html#a950c0463793d6b5c823a11b8f7769bb2" title=" " alt="" coords="140,153,291,179"/>
+<area shape="rect" href="mqtt__io_8c.html#a950c0463793d6b5c823a11b8f7769bb2" title="Enregistre un pointeur utilisateur (utile pour les callbacks MQTT)." alt="" coords="140,153,291,179"/>
 <area shape="poly" title=" " alt="" coords="93,146,127,151,126,156,92,151"/>
-<area shape="rect" href="mqtt__io_8c.html#a3fae89a71b3eea618106b8284e9d1ff0" title=" " alt="" coords="143,203,288,243"/>
+<area shape="rect" href="mqtt__io_8c.html#a3fae89a71b3eea618106b8284e9d1ff0" title="S’abonne à tous les topics MQTT avec l’option “NO_LOCAL”." alt="" coords="143,203,288,243"/>
 <area shape="poly" title=" " alt="" coords="74,153,141,188,157,195,154,200,139,192,72,157"/>
-<area shape="rect" href="table_8c.html#a27d13d8175cc65993955b84d170025c9" title=" " alt="" coords="170,268,261,293"/>
+<area shape="rect" href="table_8c.html#a27d13d8175cc65993955b84d170025c9" title="Charge le fichier JSON et construit la table de correspondance." alt="" coords="170,268,261,293"/>
 <area shape="poly" title=" " alt="" coords="59,153,91,202,114,229,142,253,158,263,156,267,138,258,110,233,87,205,55,156"/>
 </map>
 </div>
@@ -308,8 +368,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="bridge__app_8c_ac6997d15eb259679e195a767ec3a7d65_icgraph.png" border="0" usemap="#abridge__app_8c_ac6997d15eb259679e195a767ec3a7d65_icgraph" loading="lazy" alt=""/></div>
 <map name="abridge__app_8c_ac6997d15eb259679e195a767ec3a7d65_icgraph" id="abridge__app_8c_ac6997d15eb259679e195a767ec3a7d65_icgraph">
-<area shape="rect" title=" " alt="" coords="108,5,195,31"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="108,5,195,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -331,18 +391,25 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="bridge__app_8c_source.html#l00084">84</a> of file <a class="el" href="bridge__app_8c_source.html">bridge_app.c</a>.</p>
+<p>Ferme proprement tous les modules du pont. </p>
+<p>Étapes :</p><ol type="1">
+<li>Libération des structures allouées</li>
+<li>Arrêt du CAN et du MQTT</li>
+<li>Libération de la table de conversion </li>
+</ol>
+
+<p class="definition">Definition at line <a class="el" href="bridge__app_8c_source.html#l00174">174</a> of file <a class="el" href="bridge__app_8c_source.html">bridge_app.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="bridge__app_8c_ad8bf703fb5ad43733cb7129f4cab68f6_cgraph.png" border="0" usemap="#abridge__app_8c_ad8bf703fb5ad43733cb7129f4cab68f6_cgraph" loading="lazy" alt=""/></div>
 <map name="abridge__app_8c_ad8bf703fb5ad43733cb7129f4cab68f6_cgraph" id="abridge__app_8c_ad8bf703fb5ad43733cb7129f4cab68f6_cgraph">
-<area shape="rect" title=" " alt="" coords="5,55,119,80"/>
-<area shape="rect" href="can__io_8c.html#a99efe8b72487b48ed029c2365e3faaec" title=" " alt="" coords="171,5,273,31"/>
+<area shape="rect" title="Ferme proprement tous les modules du pont." alt="" coords="5,55,119,80"/>
+<area shape="rect" href="can__io_8c.html#a99efe8b72487b48ed029c2365e3faaec" title="Ferme proprement la socket CAN." alt="" coords="171,5,273,31"/>
 <area shape="poly" title=" " alt="" coords="103,52,166,32,167,37,105,57"/>
-<area shape="rect" href="mqtt__io_8c.html#aed91c3e380684d50f0e7024dd327e169" title=" " alt="" coords="167,55,277,80"/>
+<area shape="rect" href="mqtt__io_8c.html#aed91c3e380684d50f0e7024dd327e169" title="Ferme proprement la connexion MQTT." alt="" coords="167,55,277,80"/>
 <area shape="poly" title=" " alt="" coords="119,65,153,65,153,70,119,70"/>
-<area shape="rect" href="table_8c.html#a4090a82886591000906bcda15ba305e9" title=" " alt="" coords="178,104,266,129"/>
+<area shape="rect" href="table_8c.html#a4090a82886591000906bcda15ba305e9" title="Libère toute la mémoire associée à une table." alt="" coords="178,104,266,129"/>
 <area shape="poly" title=" " alt="" coords="105,77,167,97,166,102,103,83"/>
 </map>
 </div>
@@ -351,8 +418,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="bridge__app_8c_ad8bf703fb5ad43733cb7129f4cab68f6_icgraph.png" border="0" usemap="#abridge__app_8c_ad8bf703fb5ad43733cb7129f4cab68f6_icgraph" loading="lazy" alt=""/></div>
 <map name="abridge__app_8c_ad8bf703fb5ad43733cb7129f4cab68f6_icgraph" id="abridge__app_8c_ad8bf703fb5ad43733cb7129f4cab68f6_icgraph">
-<area shape="rect" title=" " alt="" coords="108,5,221,31"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" title="Ferme proprement tous les modules du pont." alt="" coords="108,5,221,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>

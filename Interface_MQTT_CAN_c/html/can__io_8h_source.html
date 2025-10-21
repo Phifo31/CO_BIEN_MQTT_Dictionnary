@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Interface MQTT/CAN C: include/can_io.h Source File</title>
+<title>Interface MQTT/CAN en C: include/can_io.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Interface MQTT/CAN C
+   <div id="projectname">Interface MQTT/CAN en C
    </div>
   </td>
  </tr>
@@ -121,11 +121,11 @@ $(function(){initNavTree('can__io_8h_source.html','',''); });
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordtype">void</span> <a class="code hl_function" href="can__io_8h.html#a99efe8b72487b48ed029c2365e3faaec">can_cleanup</a>(<a class="code hl_typedef" href="can__io_8h.html#abbb39d28b2d54257a0c6984f4e577787">can_ctx_t</a> *c);</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="acan__io_8h_html_a7f605a87974d731cfcc2eb88d7877fd2"><div class="ttname"><a href="can__io_8h.html#a7f605a87974d731cfcc2eb88d7877fd2">can_init</a></div><div class="ttdeci">bool can_init(can_ctx_t *c, const char *ifname)</div><div class="ttdef"><b>Definition</b> <a href="can__io_8c_source.html#l00025">can_io.c:25</a></div></div>
+<div class="ttc" id="acan__io_8h_html_a7f605a87974d731cfcc2eb88d7877fd2"><div class="ttname"><a href="can__io_8h.html#a7f605a87974d731cfcc2eb88d7877fd2">can_init</a></div><div class="ttdeci">bool can_init(can_ctx_t *c, const char *ifname)</div><div class="ttdoc">Initialise la connexion au bus CAN (via socket PF_CAN).</div><div class="ttdef"><b>Definition</b> <a href="can__io_8c_source.html#l00069">can_io.c:69</a></div></div>
 <div class="ttc" id="acan__io_8h_html_a98fecce36e864928f1db81ad27d368d3"><div class="ttname"><a href="can__io_8h.html#a98fecce36e864928f1db81ad27d368d3">can_poll_burst</a></div><div class="ttdeci">int can_poll_burst(can_ctx_t *ctx, int max_frames, int timeout_ms)</div></div>
-<div class="ttc" id="acan__io_8h_html_a99efe8b72487b48ed029c2365e3faaec"><div class="ttname"><a href="can__io_8h.html#a99efe8b72487b48ed029c2365e3faaec">can_cleanup</a></div><div class="ttdeci">void can_cleanup(can_ctx_t *c)</div><div class="ttdef"><b>Definition</b> <a href="can__io_8c_source.html#l00135">can_io.c:135</a></div></div>
-<div class="ttc" id="acan__io_8h_html_aaf096f14dcadf54362614ae996c46274"><div class="ttname"><a href="can__io_8h.html#aaf096f14dcadf54362614ae996c46274">can_send</a></div><div class="ttdeci">bool can_send(can_ctx_t *c, uint32_t can_id, const uint8_t data[8])</div><div class="ttdef"><b>Definition</b> <a href="can__io_8c_source.html#l00069">can_io.c:69</a></div></div>
-<div class="ttc" id="acan__io_8h_html_aaf5395a632d4ab4dd8e33cc4fbfba22d"><div class="ttname"><a href="can__io_8h.html#aaf5395a632d4ab4dd8e33cc4fbfba22d">can_poll</a></div><div class="ttdeci">void can_poll(can_ctx_t *c, const table_t *t, mqtt_ctx_t *m, int max_frames)</div><div class="ttdef"><b>Definition</b> <a href="can__io_8c_source.html#l00088">can_io.c:88</a></div></div>
+<div class="ttc" id="acan__io_8h_html_a99efe8b72487b48ed029c2365e3faaec"><div class="ttname"><a href="can__io_8h.html#a99efe8b72487b48ed029c2365e3faaec">can_cleanup</a></div><div class="ttdeci">void can_cleanup(can_ctx_t *c)</div><div class="ttdoc">Ferme proprement la socket CAN.</div><div class="ttdef"><b>Definition</b> <a href="can__io_8c_source.html#l00226">can_io.c:226</a></div></div>
+<div class="ttc" id="acan__io_8h_html_aaf096f14dcadf54362614ae996c46274"><div class="ttname"><a href="can__io_8h.html#aaf096f14dcadf54362614ae996c46274">can_send</a></div><div class="ttdeci">bool can_send(can_ctx_t *c, uint32_t can_id, const uint8_t data[8])</div><div class="ttdoc">Envoie une trame CAN standard de 8 octets.</div><div class="ttdef"><b>Definition</b> <a href="can__io_8c_source.html#l00131">can_io.c:131</a></div></div>
+<div class="ttc" id="acan__io_8h_html_aaf5395a632d4ab4dd8e33cc4fbfba22d"><div class="ttname"><a href="can__io_8h.html#aaf5395a632d4ab4dd8e33cc4fbfba22d">can_poll</a></div><div class="ttdeci">void can_poll(can_ctx_t *c, const table_t *t, mqtt_ctx_t *m, int max_frames)</div><div class="ttdoc">Lit les trames disponibles sur le bus CAN (mode non bloquant).</div><div class="ttdef"><b>Definition</b> <a href="can__io_8c_source.html#l00170">can_io.c:170</a></div></div>
 <div class="ttc" id="acan__io_8h_html_abbb39d28b2d54257a0c6984f4e577787"><div class="ttname"><a href="can__io_8h.html#abbb39d28b2d54257a0c6984f4e577787">can_ctx_t</a></div><div class="ttdeci">struct can_ctx_s can_ctx_t</div></div>
 <div class="ttc" id="amqtt__io_8h_html"><div class="ttname"><a href="mqtt__io_8h.html">mqtt_io.h</a></div></div>
 <div class="ttc" id="amqtt__io_8h_html_a36bbd436103bb88814f89ba5511e3c85"><div class="ttname"><a href="mqtt__io_8h.html#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a></div><div class="ttdeci">struct mqtt_ctx_s mqtt_ctx_t</div></div>

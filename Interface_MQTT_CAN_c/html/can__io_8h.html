@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Interface MQTT/CAN C: include/can_io.h File Reference</title>
+<title>Interface MQTT/CAN en C: include/can_io.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Interface MQTT/CAN C
+   <div id="projectname">Interface MQTT/CAN en C
    </div>
   </td>
  </tr>
@@ -129,11 +129,11 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="center"><img src="can__io_8h__dep__incl.png" border="0" usemap="#ainclude_2can__io_8hdep" loading="lazy" alt=""/></div>
 <map name="ainclude_2can__io_8hdep" id="ainclude_2can__io_8hdep">
 <area shape="rect" title=" " alt="" coords="143,5,270,31"/>
-<area shape="rect" href="bridge__app_8c.html" title=" " alt="" coords="5,79,133,104"/>
+<area shape="rect" href="bridge__app_8c.html" title="Application principale du pont MQTT ↔ CAN." alt="" coords="5,79,133,104"/>
 <area shape="poly" title=" " alt="" coords="174,39,93,81,91,76,171,34"/>
-<area shape="rect" href="can__io_8c.html" title=" " alt="" coords="157,79,256,104"/>
+<area shape="rect" href="can__io_8c.html" title="Gestion des communications sur le bus CAN." alt="" coords="157,79,256,104"/>
 <area shape="poly" title=" " alt="" coords="209,44,209,79,204,79,204,44"/>
-<area shape="rect" href="mqtt__io_8c.html" title=" " alt="" coords="280,79,387,104"/>
+<area shape="rect" href="mqtt__io_8c.html" title="Gestion des échanges MQTT pour le pont MQTT ↔ CAN." alt="" coords="280,79,387,104"/>
 <area shape="poly" title=" " alt="" coords="240,35,314,76,311,81,238,40"/>
 </map>
 </div>
@@ -151,10 +151,14 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a7f605a87974d731cfcc2eb88d7877fd2" id="r_a7f605a87974d731cfcc2eb88d7877fd2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f605a87974d731cfcc2eb88d7877fd2">can_init</a> (<a class="el" href="#abbb39d28b2d54257a0c6984f4e577787">can_ctx_t</a> *c, const char *ifname)</td></tr>
+<tr class="memdesc:a7f605a87974d731cfcc2eb88d7877fd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise la connexion au bus CAN (via socket PF_CAN).  <br /></td></tr>
 <tr class="memitem:aaf096f14dcadf54362614ae996c46274" id="r_aaf096f14dcadf54362614ae996c46274"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf096f14dcadf54362614ae996c46274">can_send</a> (<a class="el" href="#abbb39d28b2d54257a0c6984f4e577787">can_ctx_t</a> *c, uint32_t can_id, const uint8_t data[8])</td></tr>
+<tr class="memdesc:aaf096f14dcadf54362614ae996c46274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Envoie une trame CAN standard de 8 octets.  <br /></td></tr>
 <tr class="memitem:aaf5395a632d4ab4dd8e33cc4fbfba22d" id="r_aaf5395a632d4ab4dd8e33cc4fbfba22d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf5395a632d4ab4dd8e33cc4fbfba22d">can_poll</a> (<a class="el" href="#abbb39d28b2d54257a0c6984f4e577787">can_ctx_t</a> *c, const <a class="el" href="types_8h.html#a6e24467563886efcac107e4870a0f31c">table_t</a> *t, <a class="el" href="mqtt__io_8h.html#a36bbd436103bb88814f89ba5511e3c85">mqtt_ctx_t</a> *m, int max_frames)</td></tr>
+<tr class="memdesc:aaf5395a632d4ab4dd8e33cc4fbfba22d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lit les trames disponibles sur le bus CAN (mode non bloquant).  <br /></td></tr>
 <tr class="memitem:a98fecce36e864928f1db81ad27d368d3" id="r_a98fecce36e864928f1db81ad27d368d3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98fecce36e864928f1db81ad27d368d3">can_poll_burst</a> (<a class="el" href="#abbb39d28b2d54257a0c6984f4e577787">can_ctx_t</a> *ctx, int max_frames, int timeout_ms)</td></tr>
 <tr class="memitem:a99efe8b72487b48ed029c2365e3faaec" id="r_a99efe8b72487b48ed029c2365e3faaec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99efe8b72487b48ed029c2365e3faaec">can_cleanup</a> (<a class="el" href="#abbb39d28b2d54257a0c6984f4e577787">can_ctx_t</a> *c)</td></tr>
+<tr class="memdesc:a99efe8b72487b48ed029c2365e3faaec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ferme proprement la socket CAN.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="abbb39d28b2d54257a0c6984f4e577787" name="abbb39d28b2d54257a0c6984f4e577787"></a>
@@ -187,16 +191,24 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="can__io_8c_source.html#l00135">135</a> of file <a class="el" href="can__io_8c_source.html">can_io.c</a>.</p>
+<p>Ferme proprement la socket CAN. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Contexte CAN à fermer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="can__io_8c_source.html#l00226">226</a> of file <a class="el" href="can__io_8c_source.html">can_io.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="can__io_8h_a99efe8b72487b48ed029c2365e3faaec_icgraph.png" border="0" usemap="#acan__io_8h_a99efe8b72487b48ed029c2365e3faaec_icgraph" loading="lazy" alt=""/></div>
 <map name="acan__io_8h_a99efe8b72487b48ed029c2365e3faaec_icgraph" id="acan__io_8h_a99efe8b72487b48ed029c2365e3faaec_icgraph">
-<area shape="rect" title=" " alt="" coords="269,5,372,31"/>
-<area shape="rect" href="bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title=" " alt="" coords="108,5,221,31"/>
+<area shape="rect" title="Ferme proprement la socket CAN." alt="" coords="269,5,372,31"/>
+<area shape="rect" href="bridge__app_8c.html#ad8bf703fb5ad43733cb7129f4cab68f6" title="Ferme proprement tous les modules du pont." alt="" coords="108,5,221,31"/>
 <area shape="poly" title=" " alt="" coords="256,21,222,21,222,15,256,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -222,16 +234,31 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="can__io_8c_source.html#l00025">25</a> of file <a class="el" href="can__io_8c_source.html">can_io.c</a>.</p>
+<p>Initialise la connexion au bus CAN (via socket PF_CAN). </p>
+<p>Cette fonction : e (RAW)</p><ul>
+<li>associe l’interface réseau (ex : "can0", "vcan0")</li>
+<li>désactive la réception de ses propres trames (évite les doublons)</li>
+<li>configure la socket en mode non bloquant</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Structure du contexte CAN à initialiser. </td></tr>
+    <tr><td class="paramname">ifname</td><td>Nom de l’interface CAN (par ex. "can0"). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true si l’initialisation réussit, false sinon. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="can__io_8c_source.html#l00069">69</a> of file <a class="el" href="can__io_8c_source.html">can_io.c</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="can__io_8h_a7f605a87974d731cfcc2eb88d7877fd2_icgraph.png" border="0" usemap="#acan__io_8h_a7f605a87974d731cfcc2eb88d7877fd2_icgraph" loading="lazy" alt=""/></div>
 <map name="acan__io_8h_a7f605a87974d731cfcc2eb88d7877fd2_icgraph" id="acan__io_8h_a7f605a87974d731cfcc2eb88d7877fd2_icgraph">
-<area shape="rect" title=" " alt="" coords="243,5,316,31"/>
-<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title=" " alt="" coords="108,5,195,31"/>
+<area shape="rect" title="Initialise la connexion au bus CAN (via socket PF_CAN)." alt="" coords="243,5,316,31"/>
+<area shape="rect" href="bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="108,5,195,31"/>
 <area shape="poly" title=" " alt="" coords="229,21,195,21,195,15,229,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -267,16 +294,33 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="can__io_8c_source.html#l00088">88</a> of file <a class="el" href="can__io_8c_source.html">can_io.c</a>.</p>
+<p>Lit les trames disponibles sur le bus CAN (mode non bloquant). </p>
+<p>Fonction appelée en boucle dans <span class="tt"><a class="el" href="bridge__app_8h.html#aa7d452b01bf4935c2a222b9e24e81b2b" title="Boucle principale du pont.">my_loop()</a></span>. <br  />
+ Elle récupère jusqu’à <span class="tt">max_frames</span> trames à chaque itération et transmet les données décodées vers MQTT.</p>
+<p>Deux cas sont gérés :</p><ul>
+<li>ID standard : trame directement connue dans la table.</li>
+<li>Mode tunnel : les deux premiers octets contiennent un "inner ID" à décoder.</li>
+</ul>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Contexte CAN. </td></tr>
+    <tr><td class="paramname">t</td><td>Table de conversion topic/ID. </td></tr>
+    <tr><td class="paramname">m</td><td>Contexte MQTT (pour republier). </td></tr>
+    <tr><td class="paramname">max_frames</td><td>Nombre maximum de trames à lire par itération. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="can__io_8c_source.html#l00170">170</a> of file <a class="el" href="can__io_8c_source.html">can_io.c</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="can__io_8h_aaf5395a632d4ab4dd8e33cc4fbfba22d_cgraph.png" border="0" usemap="#acan__io_8h_aaf5395a632d4ab4dd8e33cc4fbfba22d_cgraph" loading="lazy" alt=""/></div>
 <map name="acan__io_8h_aaf5395a632d4ab4dd8e33cc4fbfba22d_cgraph" id="acan__io_8h_aaf5395a632d4ab4dd8e33cc4fbfba22d_cgraph">
-<area shape="rect" title=" " alt="" coords="5,31,81,56"/>
+<area shape="rect" title="Lit les trames disponibles sur le bus CAN (mode non bloquant)." alt="" coords="5,31,81,56"/>
 <area shape="rect" href="mqtt__io_8h.html#a59d99036bffa46cea2a985ce3be00222" title=" " alt="" coords="129,5,329,31"/>
 <area shape="poly" title=" " alt="" coords="81,36,122,30,123,35,82,41"/>
-<area shape="rect" href="table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title=" " alt="" coords="154,55,305,80"/>
+<area shape="rect" href="table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title="Recherche une entrée à partir d’un identifiant CAN." alt="" coords="154,55,305,80"/>
 <area shape="poly" title=" " alt="" coords="82,46,141,53,140,59,81,51"/>
 </map>
 </div>
@@ -285,10 +329,10 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="can__io_8h_aaf5395a632d4ab4dd8e33cc4fbfba22d_icgraph.png" border="0" usemap="#acan__io_8h_aaf5395a632d4ab4dd8e33cc4fbfba22d_icgraph" loading="lazy" alt=""/></div>
 <map name="acan__io_8h_aaf5395a632d4ab4dd8e33cc4fbfba22d_icgraph" id="acan__io_8h_aaf5395a632d4ab4dd8e33cc4fbfba22d_icgraph">
-<area shape="rect" title=" " alt="" coords="235,5,311,31"/>
-<area shape="rect" href="bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title=" " alt="" coords="108,5,187,31"/>
+<area shape="rect" title="Lit les trames disponibles sur le bus CAN (mode non bloquant)." alt="" coords="235,5,311,31"/>
+<area shape="rect" href="bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title="Boucle principale du pont." alt="" coords="108,5,187,31"/>
 <area shape="poly" title=" " alt="" coords="221,21,187,21,187,15,221,15"/>
-<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title=" " alt="" coords="5,5,60,31"/>
+<area shape="rect" href="bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
 <area shape="poly" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
 </map>
 </div>
@@ -345,7 +389,20 @@ Here is the caller graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="can__io_8c_source.html#l00069">69</a> of file <a class="el" href="can__io_8c_source.html">can_io.c</a>.</p>
+<p>Envoie une trame CAN standard de 8 octets. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Contexte CAN actif. </td></tr>
+    <tr><td class="paramname">can_id</td><td>Identifiant CAN (11 bits). </td></tr>
+    <tr><td class="paramname">data</td><td>Tableau de 8 octets à envoyer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true si l’envoi réussit, false sinon. </dd></dl>
+<p>&lt; ID standard sur 11 bits</p>
+<p>&lt; Longueur fixe : 8 octets</p>
+
+<p class="definition">Definition at line <a class="el" href="can__io_8c_source.html#l00131">131</a> of file <a class="el" href="can__io_8c_source.html">can_io.c</a>.</p>
 
 </div>
 </div>

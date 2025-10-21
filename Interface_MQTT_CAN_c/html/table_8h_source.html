@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.14.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Interface MQTT/CAN C: include/table.h Source File</title>
+<title>Interface MQTT/CAN en C: include/table.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Interface MQTT/CAN C
+   <div id="projectname">Interface MQTT/CAN en C
    </div>
   </td>
  </tr>
@@ -117,10 +117,10 @@ $(function(){initNavTree('table_8h_source.html','',''); });
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif </span><span class="comment">/* TABLE_H */</span><span class="preprocessor"></span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="ttc" id="atable_8h_html_a27d13d8175cc65993955b84d170025c9"><div class="ttname"><a href="table_8h.html#a27d13d8175cc65993955b84d170025c9">table_load</a></div><div class="ttdeci">bool table_load(table_t *t, const char *json_path)</div><div class="ttdef"><b>Definition</b> <a href="table_8c_source.html#l00112">table.c:112</a></div></div>
-<div class="ttc" id="atable_8h_html_a4090a82886591000906bcda15ba305e9"><div class="ttname"><a href="table_8h.html#a4090a82886591000906bcda15ba305e9">table_free</a></div><div class="ttdeci">void table_free(table_t *t)</div><div class="ttdef"><b>Definition</b> <a href="table_8c_source.html#l00194">table.c:194</a></div></div>
-<div class="ttc" id="atable_8h_html_acf38b827be578fe2925651d010fd4b4a"><div class="ttname"><a href="table_8h.html#acf38b827be578fe2925651d010fd4b4a">table_find_by_topic</a></div><div class="ttdeci">const entry_t * table_find_by_topic(const table_t *t, const char *topic)</div><div class="ttdef"><b>Definition</b> <a href="table_8c_source.html#l00211">table.c:211</a></div></div>
-<div class="ttc" id="atable_8h_html_ad9d7dc3cc60377cf140f584cd0e7cc1e"><div class="ttname"><a href="table_8h.html#ad9d7dc3cc60377cf140f584cd0e7cc1e">table_find_by_canid</a></div><div class="ttdeci">const entry_t * table_find_by_canid(const table_t *t, uint32_t can_id)</div><div class="ttdef"><b>Definition</b> <a href="table_8c_source.html#l00219">table.c:219</a></div></div>
+<div class="ttc" id="atable_8h_html_a27d13d8175cc65993955b84d170025c9"><div class="ttname"><a href="table_8h.html#a27d13d8175cc65993955b84d170025c9">table_load</a></div><div class="ttdeci">bool table_load(table_t *t, const char *json_path)</div><div class="ttdoc">Charge le fichier JSON et construit la table de correspondance.</div><div class="ttdef"><b>Definition</b> <a href="table_8c_source.html#l00210">table.c:210</a></div></div>
+<div class="ttc" id="atable_8h_html_a4090a82886591000906bcda15ba305e9"><div class="ttname"><a href="table_8h.html#a4090a82886591000906bcda15ba305e9">table_free</a></div><div class="ttdeci">void table_free(table_t *t)</div><div class="ttdoc">Libère toute la mémoire associée à une table.</div><div class="ttdef"><b>Definition</b> <a href="table_8c_source.html#l00298">table.c:298</a></div></div>
+<div class="ttc" id="atable_8h_html_acf38b827be578fe2925651d010fd4b4a"><div class="ttname"><a href="table_8h.html#acf38b827be578fe2925651d010fd4b4a">table_find_by_topic</a></div><div class="ttdeci">const entry_t * table_find_by_topic(const table_t *t, const char *topic)</div><div class="ttdoc">Recherche une entrée à partir d’un topic MQTT.</div><div class="ttdef"><b>Definition</b> <a href="table_8c_source.html#l00323">table.c:323</a></div></div>
+<div class="ttc" id="atable_8h_html_ad9d7dc3cc60377cf140f584cd0e7cc1e"><div class="ttname"><a href="table_8h.html#ad9d7dc3cc60377cf140f584cd0e7cc1e">table_find_by_canid</a></div><div class="ttdeci">const entry_t * table_find_by_canid(const table_t *t, uint32_t can_id)</div><div class="ttdoc">Recherche une entrée à partir d’un identifiant CAN.</div><div class="ttdef"><b>Definition</b> <a href="table_8c_source.html#l00339">table.c:339</a></div></div>
 <div class="ttc" id="atypes_8h_html"><div class="ttname"><a href="types_8h.html">types.h</a></div></div>
 <div class="ttc" id="atypes_8h_html_a6e24467563886efcac107e4870a0f31c"><div class="ttname"><a href="types_8h.html#a6e24467563886efcac107e4870a0f31c">table_t</a></div><div class="ttdeci">struct table_s table_t</div></div>
 <div class="ttc" id="atypes_8h_html_aff70b3df5009c537270cbf72acd96ceb"><div class="ttname"><a href="types_8h.html#aff70b3df5009c537270cbf72acd96ceb">entry_t</a></div><div class="ttdeci">struct entry_s entry_t</div></div>

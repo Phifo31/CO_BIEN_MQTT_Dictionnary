@@ -1,5 +1,5 @@
 <map id="src/bridge_app.c" name="src/bridge_app.c">
-<area shape="rect" id="Node000001" title=" " alt="" coords="615,5,743,31"/>
+<area shape="rect" id="Node000001" title="Application principale du pont MQTT ↔ CAN." alt="" coords="615,5,743,31"/>
 <area shape="rect" id="Node000002" href="$bridge__app_8h.html" title=" " alt="" coords="549,225,656,251"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="648,33,616,52,602,65,590,80,580,113,580,149,586,183,595,212,590,213,581,185,574,150,575,113,586,77,598,61,613,47,646,28"/>
 <area shape="rect" id="Node000004" href="$table_8h.html" title=" " alt="" coords="233,152,300,177"/>

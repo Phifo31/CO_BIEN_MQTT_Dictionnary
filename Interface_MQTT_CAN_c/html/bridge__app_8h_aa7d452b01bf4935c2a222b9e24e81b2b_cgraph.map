@@ -1,9 +1,9 @@
 <map id="my_loop" name="my_loop">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,84,56"/>
-<area shape="rect" id="Node000002" href="$can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title=" " alt="" coords="132,31,208,56"/>
+<area shape="rect" id="Node000001" title="Boucle principale du pont." alt="" coords="5,31,84,56"/>
+<area shape="rect" id="Node000002" href="$can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title="Lit les trames disponibles sur le bus CAN (mode non bloquant)." alt="" coords="132,31,208,56"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,41,118,41,118,46,84,46"/>
 <area shape="rect" id="Node000003" href="$mqtt__io_8h.html#a59d99036bffa46cea2a985ce3be00222" title=" " alt="" coords="256,5,456,31"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="208,36,249,30,250,35,209,41"/>
-<area shape="rect" id="Node000004" href="$table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title=" " alt="" coords="281,55,431,80"/>
+<area shape="rect" id="Node000004" href="$table_8c.html#ad9d7dc3cc60377cf140f584cd0e7cc1e" title="Recherche une entrée à partir d’un identifiant CAN." alt="" coords="281,55,431,80"/>
 <area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="209,46,267,53,267,59,208,51"/>
 </map>

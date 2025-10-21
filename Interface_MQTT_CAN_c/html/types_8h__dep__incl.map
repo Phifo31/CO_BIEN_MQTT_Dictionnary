@@ -4,17 +4,17 @@
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="325,44,325,79,320,79,320,44"/>
 <area shape="rect" id="Node000003" href="$can__io_8h.html" title=" " alt="" coords="158,152,285,177"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="297,114,239,154,236,150,294,110"/>
-<area shape="rect" id="Node000004" href="$bridge__app_8c.html" title=" " alt="" coords="5,225,133,251"/>
+<area shape="rect" id="Node000004" href="$bridge__app_8c.html" title="Application principale du pont MQTT ↔ CAN." alt="" coords="5,225,133,251"/>
 <area shape="poly" id="edge9_Node000002_Node000004" title=" " alt="" coords="251,108,193,126,137,154,118,171,101,191,78,226,73,224,97,187,114,167,135,150,191,121,249,103"/>
-<area shape="rect" id="Node000005" href="$can__io_8c.html" title=" " alt="" coords="157,225,256,251"/>
+<area shape="rect" id="Node000005" href="$can__io_8c.html" title="Gestion des communications sur le bus CAN." alt="" coords="157,225,256,251"/>
 <area shape="poly" id="edge10_Node000002_Node000005" title=" " alt="" coords="250,100,222,107,193,117,168,133,148,154,143,163,143,172,153,191,170,209,189,223,186,227,166,213,148,194,138,173,138,161,143,150,165,128,191,112,220,102,249,95"/>
-<area shape="rect" id="Node000006" href="$mqtt__io_8c.html" title=" " alt="" coords="280,225,387,251"/>
+<area shape="rect" id="Node000006" href="$mqtt__io_8c.html" title="Gestion des échanges MQTT pour le pont MQTT ↔ CAN." alt="" coords="280,225,387,251"/>
 <area shape="poly" id="edge11_Node000002_Node000006" title=" " alt="" coords="327,118,335,225,330,225,322,118"/>
 <area shape="rect" id="Node000007" href="$pack_8h.html" title=" " alt="" coords="361,152,477,177"/>
 <area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="351,110,405,150,401,154,348,114"/>
-<area shape="rect" id="Node000008" href="$pack_8c.html" title=" " alt="" coords="441,225,527,251"/>
+<area shape="rect" id="Node000008" href="$pack_8c.html" title="Conversion des données entre format JSON et trame CAN (8 octets)." alt="" coords="441,225,527,251"/>
 <area shape="poly" id="edge12_Node000002_Node000008" title=" " alt="" coords="397,97,449,115,472,130,492,151,499,170,500,190,492,226,486,224,495,190,494,171,487,153,469,134,446,120,395,102"/>
-<area shape="rect" id="Node000009" href="$table_8c.html" title=" " alt="" coords="553,152,642,177"/>
+<area shape="rect" id="Node000009" href="$table_8c.html" title="Gestion du dictionnaire de conversion JSON ↔ CAN." alt="" coords="553,152,642,177"/>
 <area shape="poly" id="edge13_Node000002_Node000009" title=" " alt="" coords="381,105,554,149,552,154,379,110"/>
 <area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="186,185,95,228,93,223,184,181"/>
 <area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="219,191,212,226,206,225,214,190"/>

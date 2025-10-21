@@ -1,5 +1,5 @@
 <map id="src/mqtt_io.c" name="src/mqtt_io.c">
-<area shape="rect" id="Node000001" title=" " alt="" coords="563,5,669,31"/>
+<area shape="rect" id="Node000001" title="Gestion des échanges MQTT pour le pont MQTT ↔ CAN." alt="" coords="563,5,669,31"/>
 <area shape="rect" id="Node000002" href="$mqtt__io_8h.html" title=" " alt="" coords="23,225,107,251"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="563,26,379,45,287,61,250,71,223,81,178,111,138,147,106,184,83,216,78,212,102,181,135,143,175,106,220,76,248,65,286,56,379,40,562,21"/>
 <area shape="rect" id="Node000005" href="$table_8h.html" title=" " alt="" coords="360,152,427,177"/>

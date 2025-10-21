@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "Interface MQTT/CAN C", "index.html", [
+  [ "Interface MQTT/CAN en C", "index.html", [
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [

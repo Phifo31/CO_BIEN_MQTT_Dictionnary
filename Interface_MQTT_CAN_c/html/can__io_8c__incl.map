@@ -1,5 +1,5 @@
 <map id="src/can_io.c" name="src/can_io.c">
-<area shape="rect" id="Node000001" title=" " alt="" coords="984,5,1083,31"/>
+<area shape="rect" id="Node000001" title="Gestion des communications sur le bus CAN." alt="" coords="984,5,1083,31"/>
 <area shape="rect" id="Node000002" href="$can__io_8h.html" title=" " alt="" coords="309,79,385,104"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="984,25,735,44,571,60,404,81,398,82,398,77,404,76,570,55,734,39,984,20"/>
 <area shape="rect" id="Node000005" href="$table_8h.html" title=" " alt="" coords="176,152,243,177"/>
