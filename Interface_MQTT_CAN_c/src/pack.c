@@ -1,3 +1,15 @@
+/**
+ * @file pack.c
+ * @brief Conversion des données entre format JSON et trame CAN (8 octets).
+ *
+ * Ce module contient les fonctions responsables de la transformation :
+ * - du format JSON (utilisé par MQTT) vers le format binaire CAN (pack)
+ * - et inversement (unpack).
+ *
+ * Il s’appuie sur la table de conversion chargée depuis `conversion.json`,
+ * qui indique le type de chaque champ (int, bool, hex, enum…).
+ */
+
 #include "pack.h"
 #include "log.h"
 #include "table.h"      
@@ -5,9 +17,26 @@
 #include <ctype.h>
 #include <string.h>
 
+/* -------------------------------------------------------------------------- */
+/*                              Fonctions utilitaires                         */
+/* -------------------------------------------------------------------------- */
 
+
+/**
+ * @brief Sature une valeur entière entre 0 et 255.
+ * @param x Valeur d’entrée.
+ * @return Valeur tronquée sur 8 bits.
+ */
 
 static inline uint8_t clamp_u8(int x){ if(x<0) return 0; if(x>255) return 255; return (uint8_t)x; }
+
+
+/**
+ * @brief Convertit une couleur hexadécimale "#RRGGBB" en trois octets RGB.
+ * @param s Chaîne d’entrée (format "#RRGGBB").
+ * @param[out] rgb Tableau de 3 octets pour stocker les composantes.
+ * @return true si la conversion a réussi, false sinon.
+ */
 
 static bool parse_hex_rgb(const char *s, uint8_t rgb[3]){
   if(!s || s[0] != '#' || strlen(s) != 7) return false;
@@ -20,6 +49,18 @@ static bool parse_hex_rgb(const char *s, uint8_t rgb[3]){
   return true;
 }
 
+
+/**
+ * @brief Convertit une valeur texte d’un enum en code numérique.
+ *
+ * Exemple : "ON" → 1 (si défini ainsi dans conversion.json)
+ *
+ * @param fs Description du champ (avec sa liste d’enums).
+ * @param s Chaîne à convertir.
+ * @param[out] code Code numérique correspondant.
+ * @return true si trouvé, false sinon.
+ */
+
 static bool enum_str_to_code(const field_spec_t *fs, const char *s, uint8_t *code){
   if(!fs || fs->type!=FT_ENUM || !s) return false;
   for(enum_kv_t *kv=fs->enum_list; kv; kv=kv->next){
@@ -27,6 +68,16 @@ static bool enum_str_to_code(const field_spec_t *fs, const char *s, uint8_t *cod
   }
   return false;
 }
+
+/**
+ * @brief Convertit un code numérique d’un enum en texte.
+ *
+ * Exemple : 1 → "ON"
+ *
+ * @param fs Description du champ.
+ * @param code Code entier.
+ * @return Nom du champ correspondant, ou NULL si non trouvé.
+ */
 
 static const char* enum_code_to_str(const field_spec_t *fs, uint8_t code){
   if(!fs || fs->type!=FT_ENUM) return NULL;
@@ -36,7 +87,26 @@ static const char* enum_code_to_str(const field_spec_t *fs, uint8_t code){
   return NULL;
 }
 
-/* ---- Pack ---- */
+
+/* -------------------------------------------------------------------------- */
+/*                              Fonction de "pack"                            */
+/* -------------------------------------------------------------------------- */
+
+
+/**
+ * @brief Convertit un objet JSON en tableau de 8 octets CAN.
+ *
+ * Cette fonction transforme chaque champ du JSON (int, bool, hex, etc.)
+ * selon le type défini dans la table.  
+ * Les valeurs sont ensuite placées dans le tableau de 8 octets à envoyer
+ * sur le bus CAN.
+ *
+ * @param[out] out8 Tableau de 8 octets à remplir.
+ * @param entry Structure décrivant le message (topic, champs, types).
+ * @param json_in Objet JSON d’entrée.
+ * @return true si la conversion a réussi, false sinon.
+ */
+
 bool pack_payload(uint8_t out8[8], const entry_t *entry, cJSON *json_in){
   memset(out8,0,8);
   if(!entry || !json_in) return false;
@@ -89,11 +159,28 @@ bool pack_payload(uint8_t out8[8], const entry_t *entry, cJSON *json_in){
       }break;
     }
   }
-  /* padding déjà à 0 */
+   /* Les octets restants sont à 0 par défaut */
   return true;
 }
 
-/* ---- Unpack ---- */
+
+/* -------------------------------------------------------------------------- */
+/*                              Fonction de "unpack"                          */
+/* -------------------------------------------------------------------------- */
+
+
+/**
+ * @brief Convertit une trame CAN (8 octets) en objet JSON.
+ *
+ * Cette fonction fait l’opération inverse de `pack_payload()` :
+ * elle lit les 8 octets d’une trame CAN et reconstruit un
+ * objet JSON lisible pour MQTT.
+ *
+ * @param in8 Tableau d’octets CAN reçu.
+ * @param entry Structure décrivant le message attendu.
+ * @return Objet JSON reconstruit, ou NULL en cas d’erreur.
+ */
+
 cJSON* unpack_payload(const uint8_t in8[8], const entry_t *entry){
   if(!entry) return NULL;
   cJSON *obj = cJSON_CreateObject();
