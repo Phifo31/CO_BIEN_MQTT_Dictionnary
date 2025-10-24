@@ -66,10 +66,14 @@
     "ledstrip" : {
         "config": {
             "arbitration_id" : 2310,
-            "group": "int",          
-            "intensity": "int",      
-            "color": "hex",        
-            "mode": "string"       
+            "topic": "ledstrip/config",
+            "data" : {
+                "group": "int",          
+                "intensity": "int",      
+                "color": "hex",        
+                "mode": "string"   
+            }
+                     
         }             
 
     },
