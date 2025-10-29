@@ -1,23 +1,30 @@
 {
     "rfid": {
-        "init": {
-            "arbitration_id": 1110,
-            "topic": "rfid/init",
-            "data": {
-
-            }
-        },
-        "read":{
-            "arbitration_id": 1120,
-            "topic": "rfid/read",
-            "data": {
-                "action": {
-                
-                }
-            }
-            
+    "init": {
+        "arbitration_id": 1110,
+        "topic": "rfid/init",
+        "data": {
+        "mode": "int"
         }
     },
+
+    "read": {
+        "arbitration_id": 1120,
+        "topic": "rfid/read",
+        "data": {
+        "id": "int"
+        }
+    },
+
+    "config": {
+        "arbitration_id": 1130,
+        "topic": "rfid/config",
+        "data": {
+        "id": "int",
+        "action": "int"
+        }
+    }
+},
 
     "sensors": {
         "init": {
@@ -67,15 +74,13 @@
         "config": {
             "arbitration_id" : 2310,
             "topic": "ledstrip/config",
-            "data" : {
+            "data":{
                 "group": "int",          
                 "intensity": "int",      
                 "color": "hex",        
-                "mode": "string"   
-            }
-                     
+                "mode": "string"       
         }             
-
+    }
     },
 
     "proximity": {
@@ -146,7 +151,8 @@
             }
         }
     },
-     "button": {
+    
+    "button": {
         "config": {
             "arbitration_id": 1810,
             "topic": "button/config",
