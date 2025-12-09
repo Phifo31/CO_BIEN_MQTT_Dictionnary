@@ -75,9 +75,9 @@
             "arbitration_id" : 2310,
             "topic": "ledstrip/config",
             "data":{
-                "group": "int",          
+                "group": "int",    
+                "color": "hex",              
                 "intensity": "int",      
-                "color": "hex",        
                 "mode": "string"       
         }             
     }
