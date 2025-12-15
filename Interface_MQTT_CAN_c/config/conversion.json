@@ -157,7 +157,10 @@
             "arbitration_id": 1810,
             "topic": "button/config",
             "data": {
-                "touched": "bool"
+                "PIC": "int",
+                "shape_mode": "int",
+                "color": "hex",
+                "intensity": "int"
             }
         }
 }
