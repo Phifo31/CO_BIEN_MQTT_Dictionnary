@@ -84,22 +84,22 @@
     },
 
     "proximity": {
-        "config": {
-            "arbitration_id": 1410,
-            "topic": "proximity/config",
-            "data": {
-
-            }
-        },
-        "update": {
-            "arbitration_id": 1420,
-            "topic": "proximity/update",
-            "data": {
-
-            }
+    "config": {
+        "arbitration_id": 1410,
+        "topic": "proximity/config",
+        "data": {}
+    },
+    "update": {
+        "arbitration_id": 1420,
+        "topic": "proximity/update",
+        "data": {
+            "can_id": "int",
+            "event": "int"
         }
+    }
     },
 
+    
 
     "imu": {
         "config": {
@@ -115,6 +115,14 @@
             "data": {
                 
             }
+        }
+    },
+
+     "application_nav": {
+        "arbitration_id" : 3520,
+        "topic": "app/nav",
+        "data": {
+
         }
     },
 
