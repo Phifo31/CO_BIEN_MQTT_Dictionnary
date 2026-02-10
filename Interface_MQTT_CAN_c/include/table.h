@@ -1,10 +1,6 @@
 #ifndef TABLE_H
 #define TABLE_H
 
-#include <cjson/cJSON.h>
-#include <stdbool.h>
-#include <stdint.h>
-#include "types.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,4 +19,4 @@ const entry_t* table_find_by_canid(const table_t *t, uint32_t can_id);
 
 #endif /* TABLE_H */
 
-
+// End of file

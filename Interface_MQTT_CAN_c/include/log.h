@@ -1,13 +1,14 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include <stdio.h>
-#include <time.h>
+
 
 static inline const char* now_ts(void) {
   static char buf[32];
   time_t t = time(NULL);
-  struct tm tm; localtime_r(&t, &tm);
+  struct tm tm;
+  
+  localtime_r(&t, &tm);
   strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", &tm);
   return buf;
 }
@@ -17,3 +18,5 @@ static inline const char* now_ts(void) {
 #define LOGE(fmt, ...) fprintf(stderr, "[%s] [ERR ] " fmt "\n",  now_ts(), ##__VA_ARGS__)
 
 #endif
+
+// End of file

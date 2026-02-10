@@ -1,8 +1,6 @@
 #ifndef MQTT_IO_H
 #define MQTT_IO_H
 
-#include <stdbool.h>
-#include <stdint.h>
 
 struct mosquitto;
 struct table_s;
@@ -40,3 +38,5 @@ void mqtt_set_qos(mqtt_ctx_t *ctx, int qos_sub, int qos_pub);
 void mqtt_cleanup(mqtt_ctx_t *ctx);
 
 #endif
+
+// End of file

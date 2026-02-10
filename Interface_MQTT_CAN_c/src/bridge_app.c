@@ -17,18 +17,22 @@
  * - `can_io.c`  → envoie et reçoit les trames CAN
  */
 
-#include "bridge_app.h"
-#include "table.h"
-#include "mqtt_io.h"
-#include "can_io.h"
-#include "log.h"
 
-#include <mosquitto.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <time.h>
 #include <signal.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <mosquitto.h>
 
+#include "types.h"
+#include "table.h"
+#include "mqtt_io.h"
+#include "can_io.h"
+#include "log.h"
 
 
 // --- paramètres fixes par défaut ---
@@ -178,7 +182,7 @@ void my_shutdown(void) {
     can_cleanup(&g_can);
     mqtt_cleanup(&g_mqtt);
     table_free(&g_table);
-    LOGI("Shutdown OK");
+    LOGI("Shutdown OK %c", 0);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -214,4 +218,4 @@ int main(int argc, char **argv)
     return 0;
 }
 
-
+// End of file

@@ -14,27 +14,25 @@
  * du pont MQTT/CAN.
  */
 
-#include "table.h"
-#include "log.h"
-#include <cjson/cJSON.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include <time.h>
 #include <string.h>
 #include <stdlib.h>
 #include <strings.h>
-#include <stdio.h> 
+#include <cjson/cJSON.h>
 
-/* -------------------------------------------------------------------------- */
-/*                              Fonctions internes                            */
-/* -------------------------------------------------------------------------- */
-
+#include "types.h"
+#include "log.h"
+#include "table.h"
 
 /**
  * @brief Duplique une chaîne de caractères.
- * @param s Chaîne d’entrée.
- * @return Copie allouée dynamiquement (à libérer plus tard).
+ * 
+ * @param s chaîne d’entrée.
+ * @return copie allouée dynamiquement (à libérer plus tard).
  */
-
-/* ---------- Helpers ---------- */
-
 static char* sdup(const char *s){
   if(!s) return NULL;
   size_t n = strlen(s) + 1;
@@ -51,11 +49,9 @@ static char* sdup(const char *s){
  * "mode": { "ON":1, "OFF":2, "AUTO":3 }
  * ```
  *
- * @param obj Objet JSON représentant le dictionnaire enum.
- * @return Pointeur vers la liste allouée.
+ * @param obj objet JSON représentant le dictionnaire enum.
+ * @return pointeur vers la liste allouée.
  */
-
-
 static enum_kv_t* enum_list_from_obj(cJSON *obj){
   if(!obj || !cJSON_IsObject(obj)) return NULL;
   enum_kv_t *head = NULL, *tail = NULL;
@@ -74,7 +70,6 @@ static enum_kv_t* enum_list_from_obj(cJSON *obj){
  * @brief Libère la mémoire associée à une liste d’enums.
  * @param kv Pointeur vers la première entrée.
  */
-
 static void enum_list_free(enum_kv_t *kv){
   while(kv){
     enum_kv_t *n = kv->next;
@@ -92,10 +87,9 @@ static void enum_list_free(enum_kv_t *kv){
  * - "hex" → FT_HEX  
  * - "enum" → FT_ENUM  
  *
- * @param s Chaîne du type lue dans le JSON.
- * @return Type de champ correspondant.
+ * @param s chaîne du type lue dans le JSON.
+ * @return type de champ correspondant.
  */
-
 static field_type_t parse_type(const char *s){
   if(!s) return FT_INT;
   if(!strcasecmp(s, "int"))     return FT_INT;
@@ -111,7 +105,6 @@ static field_type_t parse_type(const char *s){
    - data = objet        : { "field1":"int", "field2":"hex", ... }
 */
 
-
 /**
  * @brief Construit le tableau de champs (nom + type) pour une entrée.
  *
@@ -125,12 +118,11 @@ static field_type_t parse_type(const char *s){
  *    "data": { "field1":"int", "field2":"bool" }
  *    ```
  *
- * @param data Nœud JSON correspondant à la clé "data".
- * @param[out] out_arr Tableau de champs (alloué).
- * @param[out] out_n Nombre d’éléments dans le tableau.
+ * @param data : nœud JSON correspondant à la clé "data".
+ * @param[out] out_arr : tableau de champs (alloué).
+ * @param[out] out_n : nombre d’éléments dans le tableau.
  * @return true si succès, false sinon.
  */
-
 static bool build_fields_from_node(cJSON *data, field_spec_t **out_arr, size_t *out_n){
   *out_arr = NULL; *out_n = 0;
 
@@ -185,11 +177,6 @@ static bool build_fields_from_node(cJSON *data, field_spec_t **out_arr, size_t *
   return false;
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                  API publique                              */
-/* -------------------------------------------------------------------------- */
-
-
 /**
  * @brief Charge le fichier JSON et construit la table de correspondance.
  *
@@ -201,12 +188,10 @@ static bool build_fields_from_node(cJSON *data, field_spec_t **out_arr, size_t *
  *
  * Chaque correspondance est ajoutée à la table.
  *
- * @param t Table à remplir.
- * @param json_path Chemin du fichier de configuration.
+ * @param t : table à remplir.
+ * @param json_path : chemin du fichier de configuration.
  * @return true si le fichier est valide et chargé, false sinon.
  */
-
-
 bool table_load(table_t *t, const char *json_path){
   if(!t || !json_path) return false;
   memset(t, 0, sizeof(*t));
@@ -228,7 +213,7 @@ bool table_load(table_t *t, const char *json_path){
 
   cJSON *root = cJSON_Parse(txt);
   free(txt);
-  if(!root){ LOGE("JSON invalide"); return false; }
+  if(!root){ LOGE("JSON invalide %c", 0); return false; }
 
   /* Collecte des entrées */
   size_t cap = 16, n = 0;
@@ -292,9 +277,9 @@ bool table_load(table_t *t, const char *json_path){
 
 /**
  * @brief Libère toute la mémoire associée à une table.
- * @param t Table à libérer.
+ * 
+ * @param t : table à libérer.
  */
-
 void table_free(table_t *t){
   if(!t || !t->entries) return;
   for(size_t i = 0; i < t->entry_count; i++){
@@ -315,11 +300,11 @@ void table_free(table_t *t){
 
 /**
  * @brief Recherche une entrée à partir d’un topic MQTT.
- * @param t Table chargée.
- * @param topic Nom du topic à chercher.
- * @return Pointeur vers l’entrée trouvée ou NULL.
+ * 
+ * @param t : table chargée.
+ * @param topic : nom du topic à chercher.
+ * @return pointeur vers l’entrée trouvée ou NULL.
  */
-
 const entry_t* table_find_by_topic(const table_t *t, const char *topic){
   if(!t || !topic) return NULL;
   for(size_t i = 0; i < t->entry_count; i++){
@@ -331,11 +316,11 @@ const entry_t* table_find_by_topic(const table_t *t, const char *topic){
 
 /**
  * @brief Recherche une entrée à partir d’un identifiant CAN.
- * @param t Table chargée.
- * @param can_id Identifiant CAN (11 bits).
- * @return Pointeur vers l’entrée trouvée ou NULL.
+ * 
+ * @param t : table chargée.
+ * @param can_id : identifiant CAN (11 bits).
+ * @return pointeur vers l’entrée trouvée ou NULL.
  */
-
 const entry_t* table_find_by_canid(const table_t *t, uint32_t can_id){
   if(!t) return NULL;
   for(size_t i = 0; i < t->entry_count; i++){
@@ -343,3 +328,5 @@ const entry_t* table_find_by_canid(const table_t *t, uint32_t can_id){
   }
   return NULL;
 }
+
+// End of file

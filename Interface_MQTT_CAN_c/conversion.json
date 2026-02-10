@@ -92,9 +92,10 @@
     "update": {
         "arbitration_id": 1420,
         "topic": "proximity/update",
-        "data": {
-            "can_id": "int",
-            "event": "int"
+        "data": {	    	
+            "event": "int16",
+	    "spare": "int16",
+            "can_id": "int16"
         }
     }
     },
@@ -171,5 +172,5 @@
                 "intensity": "int"
             }
         }
-}
+    }
 }

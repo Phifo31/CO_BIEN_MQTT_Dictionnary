@@ -1,10 +1,6 @@
 #ifndef CAN_IO_H
 #define CAN_IO_H
 
-#include <stdbool.h>
-#include <stdint.h>
-#include "table.h"
-#include "mqtt_io.h"
 
 /* Contexte SocketCAN simple */
 typedef struct can_ctx_s {
@@ -26,3 +22,5 @@ int can_poll_burst(can_ctx_t *ctx, int max_frames, int timeout_ms);
 void can_cleanup(can_ctx_t *c);
 
 #endif
+
+// End of file

@@ -2,11 +2,6 @@
 #define TYPES_H
 
 
-#include <stddef.h>
-#include <stdint.h>
-#include <stdbool.h>
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -60,6 +55,6 @@ typedef struct table_s {
 #endif /* TYPES_H */
 
 
-
+// End of file
 
 
