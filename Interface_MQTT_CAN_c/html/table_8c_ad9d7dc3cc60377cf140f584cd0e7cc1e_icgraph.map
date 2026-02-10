@@ -1,9 +1,0 @@
-<map id="table_find_by_canid" name="table_find_by_canid">
-<area shape="rect" id="Node000001" title="Recherche une entrée à partir d’un identifiant CAN." alt="" coords="359,5,509,31"/>
-<area shape="rect" id="Node000002" href="$can__io_8c.html#aaf5395a632d4ab4dd8e33cc4fbfba22d" title="Lit les trames disponibles sur le bus CAN (mode non bloquant)." alt="" coords="235,5,311,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="345,21,311,21,311,15,345,15"/>
-<area shape="rect" id="Node000003" href="$bridge__app_8c.html#aa7d452b01bf4935c2a222b9e24e81b2b" title="Boucle principale du pont." alt="" coords="108,5,187,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="221,21,187,21,187,15,221,15"/>
-<area shape="rect" id="Node000004" href="$bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,5,60,31"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
-</map>

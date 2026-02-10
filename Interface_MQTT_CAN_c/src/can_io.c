@@ -1,4 +1,3 @@
-
 /**
  * @file can_io.c
  * @brief Gestion des communications sur le bus CAN.
@@ -41,13 +40,12 @@
  * @param fd Descripteur de fichier (socket CAN).
  * @return true si la configuration réussit, false sinon.
  */
-static bool set_nonblock(int fd){
- int fl = fcntl(fd, F_GETFL, 0);
- if (fl < 0) return false;
- return (fcntl(fd, F_SETFL, fl | O_NONBLOCK) == 0);
+static bool set_nonblock(int fd) {
+    int fl = fcntl(fd, F_GETFL, 0);
+    if (fl < 0)
+        return false;
+    return (fcntl(fd, F_SETFL, fl | O_NONBLOCK) == 0);
 }
-
-
 
 /* -------------------------------------------------------------------------- */
 /*                            Initialisation du bus CAN                       */
@@ -56,7 +54,7 @@ static bool set_nonblock(int fd){
  * @brief Initialise la connexion au bus CAN (via socket PF_CAN).
  *
  * Cette fonction :
-e (RAW)
+ e (RAW)
  * - associe l’interface réseau (ex : "can0", "vcan0")
  * - désactive la réception de ses propres trames (évite les doublons)
  * - configure la socket en mode non bloquant
@@ -66,58 +64,65 @@ e (RAW)
  * @return true si l’initialisation réussit, false sinon.
  */
 
-bool can_init(can_ctx_t *c, const char *ifname){
-  if (!c || !ifname) return false;
-  memset(c, 0, sizeof(*c));
-  c->fd = -1;
+bool can_init(can_ctx_t *c, const char *ifname) {
+    if (!c || !ifname)
+        return false;
+    memset(c, 0, sizeof(*c));
+    c->fd = -1;
 
-  /* Création de la socket CAN brute */
-  int fd = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-  if (fd < 0){ LOGE("socket(PF_CAN): %s", strerror(errno)); return false; }
+    /* Création de la socket CAN brute */
+    int fd = socket(PF_CAN, SOCK_RAW, CAN_RAW);
+    if (fd < 0) {
+        LOGE("socket(PF_CAN): %s", strerror(errno));
+        return false;
+    }
 
-  /* Recherche de l’index de l’interface */
-  struct ifreq ifr; memset(&ifr, 0, sizeof(ifr));
-  snprintf(ifr.ifr_name, sizeof(ifr.ifr_name), "%s", ifname);
-  if (ioctl(fd, SIOCGIFINDEX, &ifr) < 0){
-    LOGE("SIOCGIFINDEX(%s): %s", ifname, strerror(errno));
-    close(fd); return false;
-  }
+    /* Recherche de l’index de l’interface */
+    struct ifreq ifr;
+    memset(&ifr, 0, sizeof(ifr));
+    snprintf(ifr.ifr_name, sizeof(ifr.ifr_name), "%s", ifname);
+    if (ioctl(fd, SIOCGIFINDEX, &ifr) < 0) {
+        LOGE("SIOCGIFINDEX(%s): %s", ifname, strerror(errno));
+        close(fd);
+        return false;
+    }
 
-   /* Ne pas recevoir nos propres trames (supprime les doublons) */
-  int recv_own = 0; // 0 = off
-  if (setsockopt(fd, SOL_CAN_RAW, CAN_RAW_RECV_OWN_MSGS, &recv_own, sizeof(recv_own)) < 0) {
-    LOGW("setsockopt(CAN_RAW_RECV_OWN_MSGS): %s", strerror(errno));
-  }
+    /* Ne pas recevoir nos propres trames (supprime les doublons) */
+    int recv_own = 0; // 0 = off
+    if (setsockopt(fd, SOL_CAN_RAW, CAN_RAW_RECV_OWN_MSGS, &recv_own, sizeof(recv_own)) < 0) {
+        LOGW("setsockopt(CAN_RAW_RECV_OWN_MSGS): %s", strerror(errno));
+    }
 
-   /* Liaison de la socket à l’interface CAN */
-  struct sockaddr_can addr; memset(&addr, 0, sizeof(addr));
-  addr.can_family  = AF_CAN;
-  addr.can_ifindex = ifr.ifr_ifindex;
+    /* Liaison de la socket à l’interface CAN */
+    struct sockaddr_can addr;
+    memset(&addr, 0, sizeof(addr));
+    addr.can_family = AF_CAN;
+    addr.can_ifindex = ifr.ifr_ifindex;
 
-  if (bind(fd, (struct sockaddr*)&addr, sizeof(addr)) < 0){
-    LOGE("bind CAN(%s): %s", ifname, strerror(errno));
-    close(fd); return false;
-  }
+    if (bind(fd, (struct sockaddr*) &addr, sizeof(addr)) < 0) {
+        LOGE("bind CAN(%s): %s", ifname, strerror(errno));
+        close(fd);
+        return false;
+    }
 
-  /* Mode non bloquant */
-  if (!set_nonblock(fd)){
-    LOGW("fcntl(O_NONBLOCK) échoué (socket bloquant)");
-  }
+    /* Mode non bloquant */
+    if (!set_nonblock(fd)) {
+        LOGW("fcntl(O_NONBLOCK) échoué (socket bloquant)");
+    }
 
-   /* Agrandir les buffers de réception/émission */
-  int rcvbuf = 256*1024;
-  (void)setsockopt(fd, SOL_SOCKET, SO_RCVBUF, &rcvbuf, sizeof(rcvbuf));
-  int sndbuf = 256*1024;
-  (void)setsockopt(fd, SOL_SOCKET, SO_SNDBUF, &sndbuf, sizeof(sndbuf));
+    /* Agrandir les buffers de réception/émission */
+    int rcvbuf = 256 * 1024;
+    (void) setsockopt(fd, SOL_SOCKET, SO_RCVBUF, &rcvbuf, sizeof(rcvbuf));
+    int sndbuf = 256 * 1024;
+    (void) setsockopt(fd, SOL_SOCKET, SO_SNDBUF, &sndbuf, sizeof(sndbuf));
 
-  c->fd = fd;
-  return true;
+    c->fd = fd;
+    return true;
 }
 
 /* -------------------------------------------------------------------------- */
 /*                             Envoi de trame CAN                             */
 /* -------------------------------------------------------------------------- */
-
 
 /**
  * @brief Envoie une trame CAN standard de 8 octets.
@@ -128,27 +133,28 @@ bool can_init(can_ctx_t *c, const char *ifname){
  * @return true si l’envoi réussit, false sinon.
  */
 
-bool can_send(can_ctx_t *c, uint32_t can_id, const uint8_t data[8]){
-  if (!c || c->fd < 0) return false;
+bool can_send(can_ctx_t *c, uint32_t can_id, const uint8_t data[8]) {
+    if (!c || c->fd < 0)
+        return false;
 
-  struct can_frame f; memset(&f, 0, sizeof(f));
-  f.can_id  = can_id & CAN_SFF_MASK;  /**< ID standard sur 11 bits */
-  f.can_dlc = 8;                      /**< Longueur fixe : 8 octets */
+    struct can_frame f;
+    memset(&f, 0, sizeof(f));
+    f.can_id = can_id & CAN_SFF_MASK; /**< ID standard sur 11 bits */
+    f.can_dlc = 8; /**< Longueur fixe : 8 octets */
 
-  memcpy(f.data, data, 8);
+    memcpy(f.data, data, 8);
 
-  ssize_t n = write(c->fd, &f, sizeof(f));
-  if (n < 0){
-    LOGE("CAN write: %s", strerror(errno));
-    return false;
-  }
-  return (n == (ssize_t)sizeof(f));
+    ssize_t n = write(c->fd, &f, sizeof(f));
+    if (n < 0) {
+        LOGE("CAN write: %s", strerror(errno));
+        return false;
+    }
+    return (n == (ssize_t) sizeof(f));
 }
 
 /* -------------------------------------------------------------------------- */
 /*                              Réception de trames                           */
 /* -------------------------------------------------------------------------- */
-
 
 /**
  * @brief Lit les trames disponibles sur le bus CAN (mode non bloquant).
@@ -167,55 +173,63 @@ bool can_send(can_ctx_t *c, uint32_t can_id, const uint8_t data[8]){
  * @param max_frames Nombre maximum de trames à lire par itération.
  */
 
-void can_poll(can_ctx_t *c, const table_t *t, mqtt_ctx_t *m, int max_frames){
-  if (!c || c->fd < 0) return;
-  if (max_frames <= 0) max_frames = 8;
+void can_poll(can_ctx_t *c, const table_t *t, mqtt_ctx_t *m, int max_frames) {
+    if (!c || c->fd < 0)
+        return;
+    if (max_frames <= 0)
+        max_frames = 8;
 
-  fd_set rfds; struct timeval tv = (struct timeval){0,0};
-  FD_ZERO(&rfds); FD_SET(c->fd, &rfds);
+    fd_set rfds;
+    struct timeval tv = (struct timeval ) { 0, 0 };
+    FD_ZERO(&rfds);
+    FD_SET(c->fd, &rfds);
 
-  /* Vérifie s’il y a des données à lire sans bloquer */
-  int rv = select(c->fd + 1, &rfds, NULL, NULL, &tv);
-  if (rv <= 0 || !FD_ISSET(c->fd, &rfds)) return;
+    /* Vérifie s’il y a des données à lire sans bloquer */
+    int rv = select(c->fd + 1, &rfds, NULL, NULL, &tv);
+    if (rv <= 0 || !FD_ISSET(c->fd, &rfds))
+        return;
 
-  for (int i = 0; i < max_frames; i++){
-    struct can_frame f; ssize_t n = read(c->fd, &f, sizeof(f));
-    if (n < 0){
-      if (errno == EAGAIN || errno == EWOULDBLOCK) break;
-      LOGW("CAN read: %s", strerror(errno));
-      break;
+    for (int i = 0; i < max_frames; i++) {
+        struct can_frame f;
+        ssize_t n = read(c->fd, &f, sizeof(f));
+        if (n < 0) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK)
+                break;
+            LOGW("CAN read: %s", strerror(errno));
+            break;
+        }
+        if ((size_t) n != sizeof(f))
+            break;
+
+        /* 1) tentative d'identification par ID CAN */
+        const entry_t *e = t ? table_find_by_canid(t, f.can_id) : NULL;
+        const uint8_t *payload = f.data;
+        uint8_t shifted[8];
+
+        /* 2) Si echec, on tente le mode tunnel (ID dans les 2 premiers octets) */
+        if (!e && f.can_dlc >= 2) {
+            uint16_t inner_id = ((uint16_t) f.data[0] << 8) | f.data[1];
+            e = table_find_by_canid(t, inner_id);
+            if (e) {
+                /* on “retire” les 2 octets d’en-tête et on recale le payload */
+                memset(shifted, 0, sizeof(shifted));
+                size_t copy = (f.can_dlc > 2) ? (size_t) (f.can_dlc - 2) : 0;
+                if (copy > 6)
+                    copy = 6; /* place restante (8-2) */
+                memcpy(shifted, f.data + 2, copy);
+                payload = shifted;
+            }
+        }
+        /* 3) Si l’entrée correspond, on renvoie vers MQTT */
+        if (!e)
+            continue;
+        (void) mqtt_handle_can_message(m, e, payload);
     }
-    if ((size_t)n != sizeof(f)) break;
-
-    /* 1) tentative d'identification par ID CAN */
-    const entry_t *e = t ? table_find_by_canid(t, f.can_id) : NULL;
-    const uint8_t *payload = f.data;
-    uint8_t shifted[8];
-
-    /* 2) Si echec, on tente le mode tunnel (ID dans les 2 premiers octets) */
-    if (!e && f.can_dlc >= 2){
-      uint16_t inner_id = ((uint16_t)f.data[0] << 8) | f.data[1];
-      e = table_find_by_canid(t, inner_id);
-      if (e){
-        /* on “retire” les 2 octets d’en-tête et on recale le payload */
-        memset(shifted, 0, sizeof(shifted));
-        size_t copy = (f.can_dlc > 2) ? (size_t)(f.can_dlc - 2) : 0;
-        if (copy > 6) copy = 6;                 /* place restante (8-2) */
-        memcpy(shifted, f.data + 2, copy);
-        payload = shifted;
-      }
-    }
-    /* 3) Si l’entrée correspond, on renvoie vers MQTT */
-    if (!e) continue;
-    (void)mqtt_handle_can_message(m, e, payload);
-  }
 }
-
 
 /* -------------------------------------------------------------------------- */
 /*                                Libération mémoire CAN                      */
 /* -------------------------------------------------------------------------- */
-
 
 /**
  * @brief Ferme proprement la socket CAN.
@@ -223,10 +237,11 @@ void can_poll(can_ctx_t *c, const table_t *t, mqtt_ctx_t *m, int max_frames){
  * @param c Contexte CAN à fermer.
  */
 
-void can_cleanup(can_ctx_t *c){
-  if (!c) return;
-  if (c->fd >= 0){
-    close(c->fd);
-    c->fd = -1;
-  }
+void can_cleanup(can_ctx_t *c) {
+    if (!c)
+        return;
+    if (c->fd >= 0) {
+        close(c->fd);
+        c->fd = -1;
+    }
 }

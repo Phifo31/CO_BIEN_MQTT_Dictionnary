@@ -1,9 +1,0 @@
-<map id="mqtt_subscribe_all_nolocal" name="mqtt_subscribe_all_nolocal">
-<area shape="rect" id="Node000001" title="S’abonne à tous les topics MQTT avec l’option “NO_LOCAL”." alt="" coords="301,23,447,63"/>
-<area shape="rect" id="Node000002" href="$mqtt__io_8c.html#aee0548107b1c31fa8592e50e8bd776cb" title="Raccourci vers mqtt_subscribe_all_nolocal()." alt="" coords="108,5,253,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="287,35,254,30,254,25,288,29"/>
-<area shape="rect" id="Node000003" href="$bridge__app_8c.html#ac6997d15eb259679e195a767ec3a7d65" title="Initialise tous les modules du pont (table, MQTT, CAN)." alt="" coords="137,55,224,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="288,57,224,65,224,59,287,51"/>
-<area shape="rect" id="Node000004" href="$bridge__app_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Point d’entrée du programme." alt="" coords="5,55,60,80"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="123,70,60,70,60,65,123,65"/>
-</map>
