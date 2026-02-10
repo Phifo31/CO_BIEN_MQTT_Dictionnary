@@ -268,7 +268,7 @@ if __name__ == '__main__':
     print("Virtual CAN interface initialized successfully")
 
     # Update path to your actual conversion file
-    path = Path.cwd() / '/home/iris/Desktop/CO_BIEN_MQTT_Dictionnary/mqtt_examples/imu_changes.json'  # MQTT/CAN translation json file
+    path = Path.cwd() / '/home/iris/Desktop/CoBien/CO_BIEN_MQTT_Dictionnary/conversion.json'  # MQTT/CAN translation json file
     
 
     if not path.exists():
